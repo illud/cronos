@@ -1,0 +1,1 @@
+start /d "G:\Games\Kena - Bridge of Spirits\" Kena.exe
