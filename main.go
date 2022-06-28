@@ -203,7 +203,7 @@ func (a *App) FindTotalTimePlayedLastMonth(today string, lastMonth string) int64
 
 func (a *App) FindTotalGamesPlayedLastWeek(today string, lastWeek string) []AppData {
 	var appData []AppData
-	db.Where("updated_at >= ? AND updated_at <= ?", lastWeek, today).Find(&appData)
+	db.Order("updated_at desc").Where("updated_at >= ? AND updated_at <= ?", lastWeek, today).Find(&appData)
 	return appData
 }
 

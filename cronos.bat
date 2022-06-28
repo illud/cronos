@@ -1,1 +1,1 @@
-start /d "G:\Games\Kena - Bridge of Spirits\" Kena.exe
+start /d "G:\Games\DOOM Eternal\" DOOMEternalx64vk.exe

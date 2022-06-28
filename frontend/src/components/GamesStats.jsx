@@ -54,7 +54,7 @@ function GamesStats() {
 
     let lastWeek = format(now.getTime() - 7 * 24 * 60 * 60 * 1000, 'yyyy-MM-dd')
 
-    let today = format(new Date(), 'yyyy-MM-dd')
+    let today = format(now.getTime() + 1 * 24 * 60 * 60 * 1000, 'yyyy-MM-dd')
 
     await FindTotalTimePlayedLastWeek(today, lastWeek).then((result) => {
       setTotalTimePlayedLastWeek(result)
@@ -69,7 +69,7 @@ function GamesStats() {
       'yyyy-MM-dd',
     )
 
-    let today = format(new Date(), 'yyyy-MM-dd')
+    let today = format(now.getTime() + 1 * 24 * 60 * 60 * 1000, 'yyyy-MM-dd')
 
     await FindTotalTimePlayedLastMonth(today, lastMonth).then((result) => {
       setTotalTimePlayedLastMonth(result)
@@ -81,13 +81,12 @@ function GamesStats() {
 
     let lastWeek = format(now.getTime() - 7 * 24 * 60 * 60 * 1000, 'yyyy-MM-dd')
 
-    let today = format(new Date(), 'yyyy-MM-dd')
+    let today = format(now.getTime() + 1 * 24 * 60 * 60 * 1000, 'yyyy-MM-dd')
 
     await FindTotalGamesPlayedLastWeek(today, lastWeek).then((result) => {
       console.log(result)
       setTotalGamePlayedLastWeek(result)
     })
-    // totalGamePlayedLastWeek
   }
 
   const handleMostPlayedGame = async () => {
@@ -97,7 +96,7 @@ function GamesStats() {
     })
   }
 
-  function secondsToTime(e) {
+  const secondsToTime = (e) => {
     var h = Math.floor(e / 3600)
         .toString()
         .padStart(1, '0'),
@@ -111,6 +110,25 @@ function GamesStats() {
     return h + ' h ' + m + ' m'
     // return h + ':' + m + ':' + s;
     //return `${h}:${m}:${s}`;
+  }
+
+  const getDayOfWeek = (dayOfWeekNumber) => {
+    switch (dayOfWeekNumber) {
+      case 0:
+        return 'Sunday '
+      case 1:
+        return 'Monday '
+      case 2:
+        return 'Tuesday '
+      case 3:
+        return 'Wednesday '
+      case 4:
+        return 'Thursday '
+      case 5:
+        return 'Friday '
+      case 6:
+        return 'Saturday '
+    }
   }
 
   useEffect(() => {
@@ -133,12 +151,19 @@ function GamesStats() {
         className="bla bla bla"
         style={{ background: 'rgba(0, 0, 0, 0.5)', width: '20%' }}
       >
-        <h4 style={{ color: 'white', marginTop: '30px', fontStyle: 'bold' }}>
-          CRONOS
+        <h4 style={{ color: 'white', marginTop: '20px', fontStyle: 'bold' }}>
+          CR
+          <Clock
+            size={24}
+            strokeWidth={1}
+            color={'white'}
+            style={{ marginTop: '-5px' }}
+          />
+          NOS
         </h4>
 
         <br></br>
-        <hr style={{ color: 'white', height: '1px' }}></hr>
+        <hr style={{ color: 'white', height: '1px', marginTop: '-10px' }}></hr>
         {/* <div style={{ color: 'white', float: 'left', marginLeft: '40px' }}>
 					GAMES
 				</div> */}
@@ -162,7 +187,13 @@ function GamesStats() {
           }}
           onClick={() => history.push('/main')}
         >
-          <DeviceDesktop size={30} strokeWidth={1} color={'white'} /> All Games{' '}
+          <DeviceDesktop
+            size={30}
+            strokeWidth={1}
+            color={'white'}
+            style={{ marginTop: '-6px' }}
+          />{' '}
+          All Games{' '}
           <Badge pill bg="primary" style={{ background: 'green' }}>
             {apps.length}
           </Badge>
@@ -188,7 +219,13 @@ function GamesStats() {
             borderColor: 'transparent',
           }}
         >
-          <DeviceAnalytics size={30} strokeWidth={1} color={'white'} /> Stats{' '}
+          <DeviceAnalytics
+            size={30}
+            strokeWidth={1}
+            color={'white'}
+            style={{ marginTop: '-6px' }}
+          />{' '}
+          Stats{' '}
         </Button>
 
         <hr
@@ -306,7 +343,6 @@ function GamesStats() {
           <h5 style={{ color: 'white' }}>GAMES PLAYED THIS WEEK</h5>
           <br></br>
           <Table
-            striped
             bordered
             hover
             style={{
@@ -318,7 +354,8 @@ function GamesStats() {
             <thead>
               <tr>
                 <th style={{ color: 'white' }}>GAME</th>
-                <th style={{ color: 'white' }}>LAST TIME PLAYED</th>
+                <th style={{ color: 'white' }}>DAY</th>
+                <th style={{ color: 'white' }}>DATE & TIME</th>
               </tr>
             </thead>
             <tbody>
@@ -326,6 +363,9 @@ function GamesStats() {
                 return (
                   <tr key={index}>
                     <td style={{ color: 'white' }}>{game.Name}</td>
+                    <td style={{ color: 'white' }}>
+                      {getDayOfWeek(new Date(game.UpdatedAt).getDay())}
+                    </td>
                     <td style={{ color: 'white' }}>
                       {format(new Date(game.UpdatedAt), 'yyyy/MM/dd hh:mm aaa')}
                     </td>

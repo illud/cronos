@@ -22,3 +22,7 @@
 .Content {
   margin-left: 300px;
 }
+
+.SearchInput::placeholder {
+  color: white;
+}
