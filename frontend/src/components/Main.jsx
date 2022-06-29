@@ -27,7 +27,6 @@ import {
 // import { ToastContainer, toast } from 'react-toastify';
 import toast, { Toaster } from 'react-hot-toast'
 import { useHistory } from 'react-router-dom'
-import testedGamesJson from './testedgames.json'
 import { format } from 'date-fns'
 
 import {
@@ -170,21 +169,25 @@ function Main() {
   }
 
   const handleSearch = (search) => {
-    setSearchInput(search.toLowerCase())
-    const matchedGames = apps.filter((value) => {
-      return value.Name.toLowerCase().match(
-        new RegExp(search.toLowerCase(), 'g'),
-      )
-    })
-
-    setApps([])
-    setApps(matchedGames)
+    if (search === '' || search.length <= 0) {
+      setSearchInput('')
+      handleFindAll()
+    } else {
+      setSearchInput(search.toLowerCase())
+      const matchedGames = apps.filter((value) => {
+        return value.Name.toLowerCase().match(
+          new RegExp(search.toLowerCase(), 'g'),
+        )
+      })
+      setApps([])
+      setApps(matchedGames)
+    }
   }
 
   const secondsToTime = (e) => {
     var h = Math.floor(e / 3600)
-        .toString()
-        .padStart(1, '0'),
+      .toString()
+      .padStart(1, '0'),
       m = Math.floor((e % 3600) / 60)
         .toString()
         .padStart(1, '0'),
@@ -714,7 +717,7 @@ function Main() {
           size="lg"
           aria-labelledby="contained-modal-title-vcenter"
           centered
-          // style={{ opacity: 0.9, borderColor: 'transparent' }}
+        // style={{ opacity: 0.9, borderColor: 'transparent' }}
         >
           <Modal.Header
             closeButton
