@@ -11,6 +11,7 @@ import re from './public/re.jpg'
 import re2 from './public/re2.jpg'
 import dishonored from './public/dishonored.jpg'
 import dishonored_2 from './public/dishonored_2.jpg'
+import katalyzt from './public/katalyzt.png'
 import { MemoryRouter, Switch, Route } from 'react-router-dom'
 
 import { Greet } from '../wailsjs/go/main/App'
@@ -26,6 +27,7 @@ function App() {
       re2,
       dishonored,
       dishonored_2,
+      katalyzt,
     ]
 
     return imgArray[Math.floor(Math.random() * imgArray.length)]
