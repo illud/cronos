@@ -1,1 +1,1 @@
-start /d "G:\Games\DOOM Eternal\" DOOMEternalx64vk.exe
+start /d "G:\Games\Deathloop (2021)\EMPRESS\" Deathloop.exe

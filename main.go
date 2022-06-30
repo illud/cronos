@@ -168,7 +168,7 @@ func (a *App) CheckRunningProcess(name string, id int64) {
 func (a *App) FindAll() []AppData {
 	// Read
 	var appData []AppData
-	db.Order("id desc").Find(&appData)
+	db.Order("updated_at desc").Find(&appData)
 	return appData
 }
 

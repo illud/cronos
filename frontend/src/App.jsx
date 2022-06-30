@@ -13,7 +13,7 @@ import dishonored from './public/dishonored.jpg'
 import dishonored_2 from './public/dishonored_2.jpg'
 import katalyzt from './public/katalyzt.png'
 import { MemoryRouter, Switch, Route } from 'react-router-dom'
-
+import './i18n';
 import { Greet } from '../wailsjs/go/main/App'
 
 function App() {

@@ -21,9 +21,12 @@ import {
   FindTotalGamesPlayedLastWeek,
 } from '../../wailsjs/go/main/App'
 import { format } from 'date-fns'
+import { useTranslation } from 'react-i18next';
 
 function GamesStats() {
   let history = useHistory()
+  const { t, i18n } = useTranslation();
+
   const [apps, setApps] = useState([])
   const [totalTimePlayed, setTotalTimePlayed] = useState(0)
   const [totalTimePlayedLastWeek, setTotalTimePlayedLastWeek] = useState(0)
@@ -98,8 +101,8 @@ function GamesStats() {
 
   const secondsToTime = (e) => {
     var h = Math.floor(e / 3600)
-        .toString()
-        .padStart(1, '0'),
+      .toString()
+      .padStart(1, '0'),
       m = Math.floor((e % 3600) / 60)
         .toString()
         .padStart(1, '0'),
@@ -115,19 +118,19 @@ function GamesStats() {
   const getDayOfWeek = (dayOfWeekNumber) => {
     switch (dayOfWeekNumber) {
       case 0:
-        return 'Sunday '
+        return ('sunday')
       case 1:
-        return 'Monday '
+        return t('monday')
       case 2:
-        return 'Tuesday '
+        return t('tuesday')
       case 3:
-        return 'Wednesday '
+        return t('wednesday')
       case 4:
-        return 'Thursday '
+        return t('thursday')
       case 5:
-        return 'Friday '
+        return t('friday')
       case 6:
-        return 'Saturday '
+        return t('saturday')
     }
   }
 
@@ -193,7 +196,7 @@ function GamesStats() {
             color={'white'}
             style={{ marginTop: '-6px' }}
           />{' '}
-          All Games{' '}
+          {t('allGames')}{' '}
           <Badge pill bg="primary" style={{ background: 'green' }}>
             {apps.length}
           </Badge>
@@ -225,7 +228,7 @@ function GamesStats() {
             color={'white'}
             style={{ marginTop: '-6px' }}
           />{' '}
-          Stats{' '}
+          {t('stats')}{' '}
         </Button>
 
         <hr
@@ -249,7 +252,7 @@ function GamesStats() {
             marginLeft: '40%',
           }}
         >
-          V1.0.0
+          V1.1.0
         </div>
       </Drawer>
       <div style={{ marginLeft: '320px' }}>
@@ -269,7 +272,7 @@ function GamesStats() {
                 // 	description: 'Compared to last week',
                 // 	value: '0.5%'
                 // }}
-                title="TOTAL TIME PLAYED"
+                title={t('totalTimePlayed')}
                 fetching={false}
                 error={null}
                 icon={<Clock size={30} strokeWidth={1} color={'white'} />}
@@ -289,7 +292,7 @@ function GamesStats() {
                 // 	description: {mostPlayedGameName},
                 // 	value: '0.5%'
                 // }}
-                title={'MOST PLAYED GAME' + '(' + mostPlayedGameName + ')'}
+                title={t('mostPlayedGame') + '(' + mostPlayedGameName + ')'}
                 fetching={false}
                 error={null}
                 icon={<Clock size={30} strokeWidth={1} color={'white'} />}
@@ -340,7 +343,7 @@ function GamesStats() {
           </Row>
           <br></br>
           <br></br>
-          <h5 style={{ color: 'white' }}>GAMES PLAYED THIS WEEK</h5>
+          <h5 style={{ color: 'white' }}>{t('gamesPlayedThisWeek')}</h5>
           <br></br>
           <Table
             bordered
@@ -353,9 +356,9 @@ function GamesStats() {
           >
             <thead>
               <tr>
-                <th style={{ color: 'white' }}>GAME</th>
-                <th style={{ color: 'white' }}>DAY</th>
-                <th style={{ color: 'white' }}>DATE & TIME</th>
+                <th style={{ color: 'white' }}>{t('game')}</th>
+                <th style={{ color: 'white' }}>{t('day')}</th>
+                <th style={{ color: 'white' }}>{t('dateAndTime')}</th>
               </tr>
             </thead>
             <tbody>

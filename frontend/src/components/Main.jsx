@@ -28,7 +28,7 @@ import {
 import toast, { Toaster } from 'react-hot-toast'
 import { useHistory } from 'react-router-dom'
 import { format } from 'date-fns'
-
+import { useTranslation } from 'react-i18next';
 import {
   Play,
   CheckRunningProcess,
@@ -41,6 +41,8 @@ import {
 
 function Main() {
   let history = useHistory()
+  const { t, i18n } = useTranslation();
+
   const [result, setResult] = useState(null)
   const [modalShow, setModalShow] = useState(false)
   const [modalEditShow, setModalEditShow] = useState(false)
@@ -78,12 +80,12 @@ function Main() {
 
     CheckRunningProcess(name, parseInt(id))
 
-    toast.success('Running')
+    toast.success(t('toastRunning'))
   }
 
   const handleCreate = async () => {
     if (name === '' || path === '' || file === '') {
-      toast.error('Please fill all fields')
+      toast.error(t('toastPleaseFillAllFields'))
     } else {
       Create(name, path, file, 0)
       setTimeout(async () => {
@@ -95,7 +97,7 @@ function Main() {
       }, 500)
 
       setModalShow(false)
-      toast.success('Successful creation')
+      toast.success(t('toastSuccessfulCreation'))
     }
   }
 
@@ -134,7 +136,7 @@ function Main() {
 
   const handleUpdate = async () => {
     if (name === '' || path === '' || file === '') {
-      toast.error('Please fill all fields')
+      toast.error(t('toastPleaseFillAllFields'))
     } else {
       Update(parseInt(gameId), name, path, file)
       setTimeout(async () => {
@@ -146,7 +148,7 @@ function Main() {
       }, 500)
 
       setModalEditShow(false)
-      toast.success('Successful update')
+      toast.success(t('toastSuccessfulUpdate'))
     }
   }
 
@@ -157,7 +159,7 @@ function Main() {
     }, 500)
 
     setModalDeleteShow(false)
-    toast.success('Removed!')
+    toast.success(t('toastRemoved'))
   }
 
   const handleModalCreate = () => {
@@ -264,7 +266,7 @@ function Main() {
             color={'white'}
             style={{ marginTop: '-6px' }}
           />{' '}
-          All Games{' '}
+          {t('allGames')}{' '}
           <Badge pill bg="primary" style={{ background: 'green' }}>
             {apps.length}
           </Badge>
@@ -297,7 +299,7 @@ function Main() {
             color={'white'}
             style={{ marginTop: '-6px' }}
           />{' '}
-          Stats{' '}
+          {t('stats')}{' '}
         </Button>
 
         <hr
@@ -321,7 +323,7 @@ function Main() {
             marginLeft: '40%',
           }}
         >
-          V1.0.0
+          V1.1.0
         </div>
       </Drawer>
       <Container className="Container">
@@ -339,7 +341,7 @@ function Main() {
             }}
             onClick={() => handleModalCreate()}
           >
-            <CirclePlus size={30} strokeWidth={1} color={'white'} /> Add
+            <CirclePlus size={30} strokeWidth={1} color={'white'} /> {t('add')}
           </Button>
           <Button
             variant="outline-primary"
@@ -352,7 +354,7 @@ function Main() {
             }}
             onClick={() => handleFindAll()}
           >
-            <CircleDashed size={30} strokeWidth={1} color={'white'} /> Reload
+            <CircleDashed size={30} strokeWidth={1} color={'white'} /> {t('reload')}
           </Button>
 
           <Form.Control
@@ -368,7 +370,7 @@ function Main() {
               width: '40%',
               height: '43px',
             }}
-            placeholder="Search Game"
+            placeholder={t('searchGame')}
             onChange={(e) => handleSearch(e.target.value)}
             value={searchInput}
           />
@@ -446,7 +448,7 @@ function Main() {
                       {app.Name}
                     </Card.Title>
                     <Card.Text style={{ color: 'white' }}>
-                      TOTAL PLAY TIME <br></br>
+                      {t('totalPlayTime')} <br></br>
                       <p style={{ fontSize: '20px' }}>
                         <Clock
                           size={30}
@@ -458,7 +460,7 @@ function Main() {
                       </p>
                     </Card.Text>
                     <Card.Text style={{ color: 'white' }}>
-                      LAST TIME PLAYED
+                      {t('lastTimePlayed')}
                       <br></br>
                       {format(new Date(app.UpdatedAt), 'yyyy/MM/dd hh:mm aaa')}
                     </Card.Text>
@@ -480,7 +482,7 @@ function Main() {
                         color={'white'}
                         style={{ marginTop: '-5px' }}
                       />{' '}
-                      Play
+                      {t('play')}
                     </Button>
                   </Card.Body>
                 </Card>
@@ -501,7 +503,7 @@ function Main() {
             style={{ background: '#212121', color: 'white' }}
           >
             <Modal.Title id="contained-modal-title-vcenter">
-              Adding new game
+              {t('addingNewGame')}
             </Modal.Title>
           </Modal.Header>
           <Modal.Body
@@ -520,7 +522,7 @@ function Main() {
                   borderColor: 'grey',
                   color: 'white',
                 }}
-                placeholder="Enter game name"
+                placeholder={t('enterGameName')}
                 onChange={(value) => setName(value.target.value)}
                 value={name}
               />
@@ -548,7 +550,7 @@ function Main() {
                 }}
                 onClick={() => handleFindFile()}
               >
-                <Upload size={30} strokeWidth={1} color={'white'} /> GAME EXE{' '}
+                <Upload size={30} strokeWidth={1} color={'white'} /> {t('gameExe')}{' '}
                 <CircleCheck size={30} strokeWidth={1} color={circleCheck} />
               </Button>
             </Form.Group>
@@ -585,7 +587,7 @@ function Main() {
               }}
               onClick={() => setModalShow(false)}
             >
-              Close
+              {t('closeBtn')}
             </Button>
             <Button
               style={{
@@ -595,7 +597,7 @@ function Main() {
               }}
               onClick={() => handleCreate()}
             >
-              Add
+              {t('addBtn')}
             </Button>
           </Modal.Footer>
         </Modal>
@@ -612,7 +614,7 @@ function Main() {
             style={{ background: '#212121', color: 'white' }}
           >
             <Modal.Title id="contained-modal-title-vcenter">
-              Editing
+              {t('editing')}
             </Modal.Title>
           </Modal.Header>
           <Modal.Body
@@ -631,7 +633,7 @@ function Main() {
                   borderColor: 'grey',
                   color: 'white',
                 }}
-                placeholder="Enter game name"
+                placeholder={t('enterGameName')}
                 onChange={(value) => setName(value.target.value)}
                 value={name}
               />
@@ -659,7 +661,7 @@ function Main() {
                 }}
                 onClick={() => handleFindFile()}
               >
-                <Upload size={30} strokeWidth={1} color={'white'} /> GAME EXE{' '}
+                <Upload size={30} strokeWidth={1} color={'white'} /> {t('gameExe')}{' '}
                 <CircleCheck size={30} strokeWidth={1} color={circleCheck} />
               </Button>
             </Form.Group>
@@ -696,7 +698,7 @@ function Main() {
               }}
               onClick={() => setModalEditShow(false)}
             >
-              Close
+              {t('closeBtn')}
             </Button>
             <Button
               style={{
@@ -706,7 +708,7 @@ function Main() {
               }}
               onClick={() => handleUpdate()}
             >
-              Update
+              {t('updateBtn')}
             </Button>
           </Modal.Footer>
         </Modal>
@@ -724,7 +726,7 @@ function Main() {
             style={{ background: '#212121', color: 'white' }}
           >
             <Modal.Title id="contained-modal-title-vcenter">
-              Removing {gameName}
+              {t('removing')} {gameName}
             </Modal.Title>
           </Modal.Header>
           <Modal.Body
@@ -734,7 +736,7 @@ function Main() {
               marginTop: '-1px',
             }}
           >
-            <h5>¿Are you shure you want to remove the game?</h5>
+            <h5>{t('areYouDhureYouWantToRemoveTheGame')}</h5>
           </Modal.Body>
           <Modal.Footer
             style={{
@@ -751,7 +753,7 @@ function Main() {
               }}
               onClick={() => setModalDeleteShow(false)}
             >
-              Close
+              {t('closeBtn')}
             </Button>
             <Button
               style={{
@@ -761,7 +763,7 @@ function Main() {
               }}
               onClick={() => handleDelete()}
             >
-              Remove
+              {t('removeBtn')}
             </Button>
           </Modal.Footer>
         </Modal>
