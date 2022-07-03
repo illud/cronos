@@ -118,7 +118,7 @@ function GamesStats() {
   const getDayOfWeek = (dayOfWeekNumber) => {
     switch (dayOfWeekNumber) {
       case 0:
-        return 'sunday'
+        return t('sunday')
       case 1:
         return t('monday')
       case 2:
