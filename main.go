@@ -50,6 +50,7 @@ type AppData struct {
 	Path       string
 	Executable string
 	Time       int64
+	Running    bool
 }
 
 var (
@@ -71,11 +72,14 @@ func Setup() {
 	// defer dbCon.Close()
 	db = dbCon
 	fmt.Println("CONNECTED")
+
+	//Sets all collumn running to false
+	dbCon.Model(&AppData{}).Where("id > 0 AND running = ?", true).Update("running", false)
 }
 
 func (a *App) Create(name string, path string, executable string, time int64) {
 	// Create
-	db.Create(&AppData{Name: name, Path: path, Executable: executable, Time: time})
+	db.Create(&AppData{Name: name, Path: path, Executable: executable, Time: time, Running: false})
 }
 
 func (a *App) Update(id int64, name string, path string, executable string) {
@@ -109,6 +113,7 @@ func createBatFile(executable string, path string) {
 
 func (a *App) Play(name string, path string) {
 	fmt.Println(path, name)
+
 	createBatFile(name, path)
 
 	appToRun := exec.Command("cmd", "/c", "cronos.bat")
@@ -120,43 +125,59 @@ func (a *App) Play(name string, path string) {
 	fmt.Println(string(appToRunOut))
 }
 
+func contains(s []string, str string) bool {
+	for _, v := range s {
+		if v == str {
+			return true
+		}
+	}
+
+	return false
+}
+
 func (a *App) CheckRunningProcess(name string, id int64) {
 	fmt.Println(name)
+
+	// Sets running to true
+	db.Model(&AppData{}).Where("id = ?", id).Update("running", true)
+
 	c := cron.New(cron.WithParser(cron.NewParser(cron.SecondOptional | cron.Minute | cron.Hour | cron.Dom | cron.Month | cron.Dow)))
 	c.AddFunc("*/5 * * * * *", func() {
+		var processRunning []string
+
 		processes, err := process.Processes()
+
 		if err != nil {
 			// return err
-			// fmt.Println(err)
+			fmt.Println(err)
 		}
-		// fmt.Println(processes)
+
 		for _, p := range processes {
 			n, err := p.Name()
 
 			if err != nil {
 				// return
-				// fmt.Println(err)
+				fmt.Println(err)
 			}
+			processRunning = append(processRunning, n)
+		}
 
-			if n == name {
-				// Read
-				var appData AppData
-				db.Find(&appData, id)
-				timing := appData.Time
-				db.Model(&AppData{}).Where("id = ?", id).Update("time", timing+5)
-				timing = 0
-				// fmt.Println(p.Name())
-				// fmt.Println("FOUND")
-				// fmt.Println(secondsToMinutes(time))
-				// fmt.Println(time)
+		if contains(processRunning, name) {
+			// Read
+			var appData AppData
+			db.Find(&appData, id)
+			timing := appData.Time
+			db.Model(&AppData{}).Where("id = ?", id).Update("time", timing+5)
+			db.Model(&AppData{}).Where("id = ?", id).Update("running", true)
+			timing = 0
+			// fmt.Println(p.Name())
+			// fmt.Println("FOUND")
+			// fmt.Println(secondsToMinutes(time))
+			// fmt.Println(time)
 
-				break
-				// return p.Kill()
-			} else {
-				// fmt.Println("Not running")
-				// break
-				// time += 0
-			}
+			// return p.Kill()
+		} else {
+			db.Model(&AppData{}).Where("id = ?", id).Update("running", false)
 		}
 
 	})

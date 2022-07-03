@@ -21,11 +21,11 @@ import {
   FindTotalGamesPlayedLastWeek,
 } from '../../wailsjs/go/main/App'
 import { format } from 'date-fns'
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next'
 
 function GamesStats() {
   let history = useHistory()
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation()
 
   const [apps, setApps] = useState([])
   const [totalTimePlayed, setTotalTimePlayed] = useState(0)
@@ -101,8 +101,8 @@ function GamesStats() {
 
   const secondsToTime = (e) => {
     var h = Math.floor(e / 3600)
-      .toString()
-      .padStart(1, '0'),
+        .toString()
+        .padStart(1, '0'),
       m = Math.floor((e % 3600) / 60)
         .toString()
         .padStart(1, '0'),
@@ -118,7 +118,7 @@ function GamesStats() {
   const getDayOfWeek = (dayOfWeekNumber) => {
     switch (dayOfWeekNumber) {
       case 0:
-        return ('sunday')
+        return 'sunday'
       case 1:
         return t('monday')
       case 2:

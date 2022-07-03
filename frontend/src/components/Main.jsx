@@ -23,12 +23,13 @@ import {
   Upload,
   CircleCheck,
   Pencil,
+  DeviceGamepad,
 } from 'tabler-icons-react'
 // import { ToastContainer, toast } from 'react-toastify';
 import toast, { Toaster } from 'react-hot-toast'
 import { useHistory } from 'react-router-dom'
 import { format } from 'date-fns'
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next'
 import {
   Play,
   CheckRunningProcess,
@@ -41,7 +42,7 @@ import {
 
 function Main() {
   let history = useHistory()
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation()
 
   const [result, setResult] = useState(null)
   const [modalShow, setModalShow] = useState(false)
@@ -75,12 +76,16 @@ function Main() {
     setFile(event.files[0].name)
   }
 
-  const handlePlay = (name, path, id) => {
+  const handlePlay = async (name, path, id) => {
     Play(name, path)
 
     CheckRunningProcess(name, parseInt(id))
 
     toast.success(t('toastRunning'))
+
+    setTimeout(async () => {
+      await handleFindAll()
+    }, 5000)
   }
 
   const handleCreate = async () => {
@@ -188,8 +193,8 @@ function Main() {
 
   const secondsToTime = (e) => {
     var h = Math.floor(e / 3600)
-      .toString()
-      .padStart(1, '0'),
+        .toString()
+        .padStart(1, '0'),
       m = Math.floor((e % 3600) / 60)
         .toString()
         .padStart(1, '0'),
@@ -202,7 +207,7 @@ function Main() {
     //return `${h}:${m}:${s}`;
   }
 
-  const MINUTE_MS = 100000
+  const MINUTE_MS = 20000
   useEffect(() => {
     window.scrollTo(0, 0)
     handleFindAll()
@@ -354,7 +359,8 @@ function Main() {
             }}
             onClick={() => handleFindAll()}
           >
-            <CircleDashed size={30} strokeWidth={1} color={'white'} /> {t('reload')}
+            <CircleDashed size={30} strokeWidth={1} color={'white'} />{' '}
+            {t('reload')}
           </Button>
 
           <Form.Control
@@ -464,26 +470,50 @@ function Main() {
                       <br></br>
                       {format(new Date(app.UpdatedAt), 'yyyy/MM/dd hh:mm aaa')}
                     </Card.Text>
-                    <Button
-                      variant="outline-success"
-                      size="lg"
-                      style={{
-                        color: 'white',
-                        borderColor: 'white',
-                        width: '100%',
-                      }}
-                      onClick={() =>
-                        handlePlay(app.Executable, app.Path, app.Id)
-                      }
-                    >
-                      <PlayerPlay
-                        size={30}
-                        strokeWidth={1}
-                        color={'white'}
-                        style={{ marginTop: '-5px' }}
-                      />{' '}
-                      {t('play')}
-                    </Button>
+
+                    {app.Running ? (
+                      <Button
+                        variant="outline-success"
+                        size="lg"
+                        style={{
+                          color: 'white',
+                          borderColor: 'white',
+                          width: '100%',
+                        }}
+                        // onClick={() =>
+                        //   handlePlay(app.Executable, app.Path, app.Id)
+                        // }
+                      >
+                        <DeviceGamepad
+                          size={30}
+                          strokeWidth={1}
+                          color={'white'}
+                          style={{ marginTop: '-5px' }}
+                        />{' '}
+                        {t('running')}
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="outline-success"
+                        size="lg"
+                        style={{
+                          color: 'white',
+                          borderColor: 'white',
+                          width: '100%',
+                        }}
+                        onClick={() =>
+                          handlePlay(app.Executable, app.Path, app.Id)
+                        }
+                      >
+                        <PlayerPlay
+                          size={30}
+                          strokeWidth={1}
+                          color={'white'}
+                          style={{ marginTop: '-5px' }}
+                        />{' '}
+                        {t('play')}
+                      </Button>
+                    )}
                   </Card.Body>
                 </Card>
                 <br></br>
@@ -550,7 +580,8 @@ function Main() {
                 }}
                 onClick={() => handleFindFile()}
               >
-                <Upload size={30} strokeWidth={1} color={'white'} /> {t('gameExe')}{' '}
+                <Upload size={30} strokeWidth={1} color={'white'} />{' '}
+                {t('gameExe')}{' '}
                 <CircleCheck size={30} strokeWidth={1} color={circleCheck} />
               </Button>
             </Form.Group>
@@ -661,7 +692,8 @@ function Main() {
                 }}
                 onClick={() => handleFindFile()}
               >
-                <Upload size={30} strokeWidth={1} color={'white'} /> {t('gameExe')}{' '}
+                <Upload size={30} strokeWidth={1} color={'white'} />{' '}
+                {t('gameExe')}{' '}
                 <CircleCheck size={30} strokeWidth={1} color={circleCheck} />
               </Button>
             </Form.Group>
@@ -719,7 +751,7 @@ function Main() {
           size="lg"
           aria-labelledby="contained-modal-title-vcenter"
           centered
-        // style={{ opacity: 0.9, borderColor: 'transparent' }}
+          // style={{ opacity: 0.9, borderColor: 'transparent' }}
         >
           <Modal.Header
             closeButton
