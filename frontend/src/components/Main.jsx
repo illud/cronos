@@ -76,16 +76,14 @@ function Main() {
     setFile(event.files[0].name)
   }
 
-  const handlePlay = async (name, path, id) => {
+  const handlePlay = async (gameName, name, path, id) => {
     Play(name, path)
 
     CheckRunningProcess(name, parseInt(id))
 
-    toast.success(t('toastRunning'))
+    toast.success(t('toastRunning') + ' ' + gameName)
 
-    setTimeout(async () => {
-      await handleFindAll()
-    }, 5000)
+    await handleFindAll()
   }
 
   const handleCreate = async () => {
@@ -502,7 +500,7 @@ function Main() {
                           width: '100%',
                         }}
                         onClick={() =>
-                          handlePlay(app.Executable, app.Path, app.Id)
+                          handlePlay(app.Name, app.Executable, app.Path, app.Id)
                         }
                       >
                         <PlayerPlay
