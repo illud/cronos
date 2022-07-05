@@ -326,7 +326,7 @@ function Main() {
             marginLeft: '40%',
           }}
         >
-          V1.1.0
+          V1.1.1
         </div>
       </Drawer>
       <Container className="Container">

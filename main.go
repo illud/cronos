@@ -84,7 +84,7 @@ func (a *App) Create(name string, path string, executable string, time int64) {
 
 func (a *App) Update(id int64, name string, path string, executable string) {
 	// Update
-	db.Model(&AppData{}).Omit("update_at").Where("id = ?", id).UpdateColumns(AppData{Name: name, Path: path, Executable: executable})
+	db.Model(&AppData{}).Omit("updated_at").Where("id = ?", id).UpdateColumns(AppData{Name: name, Path: path, Executable: executable})
 }
 
 func (a *App) DeleteApp(id int64) {
@@ -158,11 +158,14 @@ func (a *App) CheckRunningProcess(name string, id int64) {
 			if err != nil {
 				// return
 				fmt.Println(err)
+				// processRunning = processRunning[:0]
+				// fmt.Println(processRunning)
 			}
 			processRunning = append(processRunning, n)
 		}
 
 		if contains(processRunning, name) {
+			// fmt.Println("ok")
 			// Read
 			var appData AppData
 			db.Find(&appData, id)
@@ -177,7 +180,8 @@ func (a *App) CheckRunningProcess(name string, id int64) {
 
 			// return p.Kill()
 		} else {
-			db.Model(&AppData{}).Where("id = ?", id).Update("running", false)
+			// fmt.Println("false")
+			db.Model(&AppData{}).Omit("updated_at").Where("id = ?", id).Update("running", false)
 		}
 
 	})
