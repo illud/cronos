@@ -252,7 +252,7 @@ function GamesStats() {
             marginLeft: '40%',
           }}
         >
-          V1.1.1
+          V1.1.2
         </div>
       </Drawer>
       <div style={{ marginLeft: '320px' }}>

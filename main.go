@@ -210,7 +210,7 @@ type MosPlayedGame struct {
 
 func (a *App) FindMostPlayedGame() MosPlayedGame {
 	var mostPlayedGame MosPlayedGame
-	db.Table("app_data").Select("name, MAX(time) AS total").Find(&mostPlayedGame)
+	db.Table("app_data").Select("name, MAX(time) AS total").Where("deleted_at IS NULL").Find(&mostPlayedGame)
 	return mostPlayedGame
 }
 
