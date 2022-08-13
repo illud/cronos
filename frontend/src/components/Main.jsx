@@ -471,7 +471,7 @@ function Main() {
 
                     {app.Running ? (
                       <Button
-                        variant="outline-success"
+                        variant="success"
                         size="lg"
                         style={{
                           color: 'white',
