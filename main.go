@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/exec"
 	"syscall"
+	"time"
 
 	"github.com/robfig/cron/v3"
 	"github.com/shirou/gopsutil/process"
@@ -143,7 +144,9 @@ func (a *App) CheckRunningProcess(name string, id int64) {
 
 	c := cron.New(cron.WithParser(cron.NewParser(cron.SecondOptional | cron.Minute | cron.Hour | cron.Dom | cron.Month | cron.Dow)))
 
-	c.AddFunc("*/60 * * * * *", func() {
+	time.Sleep(30 * time.Second)
+
+	c.AddFunc("*/30 * * * * *", func() {
 		var processRunning []string
 		fmt.Println("Running")
 		processes, err := process.Processes()
@@ -171,7 +174,7 @@ func (a *App) CheckRunningProcess(name string, id int64) {
 			var appData AppData
 			db.Find(&appData, id)
 			timing := appData.Time
-			db.Model(&AppData{}).Where("id = ?", id).Update("time", timing+60)
+			db.Model(&AppData{}).Where("id = ?", id).Update("time", timing+30)
 			db.Model(&AppData{}).Where("id = ?", id).Update("running", true)
 			timing = 0
 			// fmt.Println(p.Name())

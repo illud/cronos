@@ -1,1 +1,1 @@
-start /d "G:\Games\Marvel's Spider-Man Remastered\" Spider-Man.exe
+start /d "G:\SteamLibrary\steamapps\common\Hunt Showdown\bin\win_x64\" HuntGame.exe
