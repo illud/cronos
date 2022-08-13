@@ -136,15 +136,16 @@ func contains(s []string, str string) bool {
 }
 
 func (a *App) CheckRunningProcess(name string, id int64) {
-	fmt.Println(name)
+	// fmt.Println(name)
 
 	// Sets running to true
 	db.Model(&AppData{}).Where("id = ?", id).Update("running", true)
 
 	c := cron.New(cron.WithParser(cron.NewParser(cron.SecondOptional | cron.Minute | cron.Hour | cron.Dom | cron.Month | cron.Dow)))
-	c.AddFunc("*/5 * * * * *", func() {
-		var processRunning []string
 
+	c.AddFunc("*/20 * * * * *", func() {
+		var processRunning []string
+		fmt.Println("Running")
 		processes, err := process.Processes()
 
 		if err != nil {
@@ -170,7 +171,7 @@ func (a *App) CheckRunningProcess(name string, id int64) {
 			var appData AppData
 			db.Find(&appData, id)
 			timing := appData.Time
-			db.Model(&AppData{}).Where("id = ?", id).Update("time", timing+5)
+			db.Model(&AppData{}).Where("id = ?", id).Update("time", timing+20)
 			db.Model(&AppData{}).Where("id = ?", id).Update("running", true)
 			timing = 0
 			// fmt.Println(p.Name())
@@ -182,6 +183,9 @@ func (a *App) CheckRunningProcess(name string, id int64) {
 		} else {
 			// fmt.Println("false")
 			db.Model(&AppData{}).Omit("updated_at").Where("id = ?", id).Update("running", false)
+
+			// Stop the cron job when playing again
+			c.Stop()
 		}
 
 	})

@@ -1,1 +1,1 @@
-start /d "G:\Games\DOOM Eternal\" DOOMEternalx64vk.exe
+start /d "G:\Games\Marvel's Spider-Man Remastered\" Spider-Man.exe
