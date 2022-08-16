@@ -24,6 +24,7 @@ import {
   CircleCheck,
   Pencil,
   DeviceGamepad,
+  LetterH,
 } from 'tabler-icons-react'
 // import { ToastContainer, toast } from 'react-toastify';
 import toast, { Toaster } from 'react-hot-toast'
@@ -191,8 +192,8 @@ function Main() {
 
   const secondsToTime = (e) => {
     var h = Math.floor(e / 3600)
-        .toString()
-        .padStart(1, '0'),
+      .toString()
+      .padStart(1, '0'),
       m = Math.floor((e % 3600) / 60)
         .toString()
         .padStart(1, '0'),
@@ -305,6 +306,27 @@ function Main() {
           {t('stats')}{' '}
         </Button>
 
+        <br></br>
+        <br></br>
+        <Button
+          style={{
+            color: 'white',
+            float: 'left',
+            marginLeft: '46px',
+            background: 'transparent',
+            borderColor: 'transparent',
+          }}
+          onClick={() => history.push('/howlongtobeat')}
+        >
+          <LetterH
+            size={30}
+            strokeWidth={2}
+            color={'white'}
+            style={{ marginTop: '-6px' }}
+          />{' '}
+          HowLongToBeat
+        </Button>
+
         <hr
           style={{
             color: 'white',
@@ -326,7 +348,7 @@ function Main() {
             marginLeft: '40%',
           }}
         >
-          V1.1.4
+          V1.2.0
         </div>
       </Drawer>
       <Container className="Container">
@@ -478,9 +500,9 @@ function Main() {
                           borderColor: 'white',
                           width: '100%',
                         }}
-                        // onClick={() =>
-                        //   handlePlay(app.Executable, app.Path, app.Id)
-                        // }
+                      // onClick={() =>
+                      //   handlePlay(app.Executable, app.Path, app.Id)
+                      // }
                       >
                         <DeviceGamepad
                           size={30}
@@ -749,7 +771,7 @@ function Main() {
           size="lg"
           aria-labelledby="contained-modal-title-vcenter"
           centered
-          // style={{ opacity: 0.9, borderColor: 'transparent' }}
+        // style={{ opacity: 0.9, borderColor: 'transparent' }}
         >
           <Modal.Header
             closeButton

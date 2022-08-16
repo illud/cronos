@@ -3,6 +3,7 @@ import logo from './assets/images/logo-universal.png'
 import './App.css'
 import Main from './components/Main'
 import GamesStats from './components/GamesStats'
+import Howlongtobeat from './components/Howlongtobeat'
 import deathloop from './public/deathloop.jpg'
 import deathloop_2 from './public/deathloop_2.jpg'
 import mh from './public/mh.jpg'
@@ -60,6 +61,9 @@ function App() {
             </Route>
             <Route path="/gamesstats">
               <GamesStats />
+            </Route>
+            <Route path="/howlongtobeat">
+              <Howlongtobeat />
             </Route>
             <Route path="/">
               <Main />

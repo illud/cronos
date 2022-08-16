@@ -64,6 +64,9 @@ const resources = {
       thursday: 'Thursday',
       friday: 'Friday',
       saturday: 'Saturday',
+      gameplayMain: 'MAIN',
+      gameplayMainExtra: '+EXTRAS',
+      gameplayCompletionist: 'COMPLETE',
     },
   },
   es: {
@@ -106,6 +109,9 @@ const resources = {
       thursday: 'Jueves',
       friday: 'Viernes',
       saturday: 'Sábado',
+      gameplayMain: 'HISTORIA',
+      gameplayMainExtra: '+EXTRAS',
+      gameplayCompletionist: 'COMPLETISTAS',
     },
   },
 }

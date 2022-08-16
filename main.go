@@ -3,7 +3,9 @@ package main
 import (
 	"embed"
 	"fmt"
+	"io/ioutil"
 	"log"
+	"net/http"
 	"os"
 	"os/exec"
 	"syscall"
@@ -254,5 +256,152 @@ func (a *App) GameExePath() string {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	return selection
+}
+
+func (a *App) HowlongtobeatRequest(search string) string {
+
+	resp, err := http.Get("https://node-hltb-api.herokuapp.com/?search=" + search)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	//We Read the response body on the line below.
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	//Convert the body to type string
+	return string(body)
+
+	// form := url.Values{}
+	// form.Add("queryString", "doom")
+	// form.Add("t", "games")
+	// form.Add("sorthead", "popular")
+	// form.Add("sortd", "Normal Order")
+	// form.Add("plat", "")
+	// form.Add("length_type", "main")
+	// form.Add("length_min", "")
+	// form.Add("length_max", "")
+	// form.Add("detail", "0")
+	// form.Add("v", "")
+	// form.Add("f", "")
+	// form.Add("g", "")
+	// form.Add("randomize", "0")
+
+	// req, err := http.NewRequest("POST", "https://howlongtobeat.com/search_results.php?page=1", strings.NewReader(form.Encode()))
+
+	// req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+	// req.Header.Add("Referer", "https://howlongtobeat.com/")
+	// //okay, moving on...
+	// if err != nil {
+	// 	//handle postform error
+	// }
+
+	// defer req.Body.Close()
+	// body, err := ioutil.ReadAll(req.Response.Request.Body)
+
+	// if err != nil {
+	// 	//handle read response error
+	// }
+
+	// fmt.Println(string(body))
+
+	// c := colly.NewCollector(
+	// 	colly.AllowedDomains("howlongtobeat.com"),
+	// )
+
+	// c.OnHTML(".search_list_details", func(e *colly.HTMLElement) {
+	// 	title := e.ChildAttr(".shadow_text a", "title")
+	// 	fmt.Println(title)
+
+	// 	dat := e.ChildText(".search_list_details_block(1)")
+	// 	fmt.Println(dat)
+	// })
+
+	// c.OnResponse(func(r *colly.Response) {
+	// 	log.Println("resp", string(r.Body))
+	// })
+
+	// fmt.Println(c.Post(
+	// 	"https://howlongtobeat.com/search_results?page=1",
+	// 	map[string]string{
+	// 		"queryString": "doom",
+	// 		"t":           "games",
+	// 		"sorthead":    "popular",
+	// 		"sortd":       "Normal Order",
+	// 		"plat":        "",
+	// 		"length_type": "main",
+	// 		"length_min":  "",
+	// 		"length_max":  "",
+	// 		"detail":      "0",
+	// 		"v":           "",
+	// 		"f":           "",
+	// 		"g":           "",
+	// 		"randomize":   "0",
+	// 		"Referer":     "https://howlongtobeat.com/",
+	// 	},
+	// ))
+
+	// c.OnResponse(func(r *colly.Response) {
+	// 	fmt.Println(r.StatusCode)
+	// })
+
+	// c.OnRequest(func(r *colly.Request) {
+	// 	fmt.Println("Visiting", r.URL)
+	// })
+
+	// err := c.Post("https://howlongtobeat.com/search_results?page=1", map[string]string{
+	// 	"queryString": "doom",
+	// 	"t":           "games",
+	// 	"sorthead":    "popular",
+	// 	"sortd":       "Normal Order",
+	// 	"plat":        "",
+	// 	"length_type": "main",
+	// 	"length_min":  "",
+	// 	"length_max":  "",
+	// 	"detail":      "0",
+	// 	"v":           "",
+	// 	"f":           "",
+	// 	"g":           "",
+	// 	"randomize":   "0"})
+
+	// 	c.Headers.Set("Content-Type", "application/x-www-form-urlencoded")
+	// if err != nil {
+	// 	fmt.Println(err)
+	// }
+
+	// form := url.Values{}
+	// form.Add("queryString", "doom")
+	// form.Add("t", "games")
+	// form.Add("sorthead", "popular")
+	// form.Add("sortd", "Normal Order")
+	// form.Add("plat", "")
+	// form.Add("length_type", "main")
+	// form.Add("length_min", "")
+	// form.Add("length_max", "")
+	// form.Add("detail", "0")
+	// form.Add("v", "")
+	// form.Add("f", "")
+	// form.Add("g", "")
+	// form.Add("randomize", "0")
+
+	// fmt.Println(c.Request("POST",
+	// 	"https://howlongtobeat.com/search_results?page=1",
+	// 	strings.NewReader(form.Encode()),
+	// 	nil,
+	// 	http.Header{"Content-Type": []string{"application/x-www-form-urlencoded"},
+	// 		"Referer":                          []string{"https://howlongtobeat.com/"},
+	// 		"Access-Control-Allow-Origin":      []string{"*/*"},
+	// 		"Access-Control-Allow-Credentials": []string{"true"},
+	// 		"Access-Control-Allow-Methods":     []string{"POST, OPTIONS, GET, PUT, DELETE"},
+	// 		"Access-Control-Allow-Headers":     []string{"Accept, Authorization, Content-Type, Content-Length, X-CSRF-Token, Token, session, Origin, Host, Connection, Accept-Encoding, Accept-Language, X-Requested-With"},
+	// 	},
+	// ))
+	// // attach callbacks after login
+	// c.OnResponse(func(r *colly.Response) {
+	// 	log.Println("response received", string(r.Body))
+	// })
+
+	// c.Visit("https://howlongtobeat.com/search_results?page=1")
 }

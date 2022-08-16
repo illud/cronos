@@ -5,7 +5,12 @@ import Badge from 'react-bootstrap/Badge'
 import Table from 'react-bootstrap/Table'
 import './Main.css'
 import Drawer from 'react-modern-drawer'
-import { DeviceAnalytics, DeviceDesktop, Clock } from 'tabler-icons-react'
+import {
+  DeviceAnalytics,
+  DeviceDesktop,
+  Clock,
+  LetterH,
+} from 'tabler-icons-react'
 import { useHistory } from 'react-router-dom'
 // import testedGamesJson from './testedgames.json'
 import MetricCard from 'react-metric-card'
@@ -231,6 +236,27 @@ function GamesStats() {
           {t('stats')}{' '}
         </Button>
 
+        <br></br>
+        <br></br>
+        <Button
+          style={{
+            color: 'white',
+            float: 'left',
+            marginLeft: '46px',
+            background: 'transparent',
+            borderColor: 'transparent',
+          }}
+          onClick={() => history.push('/howlongtobeat')}
+        >
+          <LetterH
+            size={30}
+            strokeWidth={2}
+            color={'white'}
+            style={{ marginTop: '-6px' }}
+          />{' '}
+          HowLongToBeat
+        </Button>
+
         <hr
           style={{
             color: 'white',
@@ -252,7 +278,7 @@ function GamesStats() {
             marginLeft: '40%',
           }}
         >
-          V1.1.4
+          V1.2.0
         </div>
       </Drawer>
       <div style={{ marginLeft: '320px' }}>
