@@ -13,13 +13,11 @@ import './Main.css'
 import Drawer from 'react-modern-drawer'
 import {
   DeviceAnalytics,
-  PlayerPlay,
   DeviceDesktop,
   Clock,
-  X,
-  Pencil,
-  DeviceGamepad,
+  Search,
   LetterH,
+  CirclePlus
 } from 'tabler-icons-react'
 // import { ToastContainer, toast } from 'react-toastify';
 import toast, { Toaster } from 'react-hot-toast'
@@ -54,9 +52,16 @@ function Howlongtobeat() {
 
   const handleSearch = async (search) => {
     setSearchInput(search)
+  }
 
-    await HowlongtobeatRequest(search).then((result) => {
-      setHowlongtobeat(JSON.parse(result))
+  const handleSearchBtn = async () => {
+    await HowlongtobeatRequest(searchInput).then((result) => {
+      if (JSON.parse(result).length > 0) {
+        setHowlongtobeat(JSON.parse(result))
+      } else {
+        toast.error(t('noResultsFound'))
+        setHowlongtobeat([])
+      }
     })
     // console.log(JSON.parse(result).results)
 
@@ -100,7 +105,7 @@ function Howlongtobeat() {
   useEffect(() => {
     window.scrollTo(0, 0)
     handleFindAll()
-    handleSearch('')
+    handleSearchBtn()
   }, [])
 
   return (
@@ -265,7 +270,18 @@ function Howlongtobeat() {
             onChange={(e) => handleSearch(e.target.value)}
             value={searchInput}
           />
-
+          <Button
+            variant="outline-primary"
+            style={{
+              float: 'left',
+              color: 'white',
+              marginLeft: '0px',
+              background: 'rgba(0, 0, 0, 0.5)',
+              borderColor: 'white',
+            }}
+            onClick={() => handleSearchBtn()}
+          >
+            <Search size={30} strokeWidth={1} color={'white'} /></Button>
           <br></br>
           <br></br>
           <a style={{ color: "#FFFFFF", float: 'left', marginLeft: '5px' }}>Hours data sourced from <a style={{ color: "#FFFFFF" }} href="https://howlongtobeat.com/" target="_blank">HowLongToBeat.</a></a>

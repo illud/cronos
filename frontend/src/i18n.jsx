@@ -67,6 +67,7 @@ const resources = {
       gameplayMain: 'MAIN',
       gameplayMainExtra: '+EXTRAS',
       gameplayCompletionist: 'COMPLETE',
+      noResultsFound: 'No results found',
     },
   },
   es: {
@@ -112,6 +113,7 @@ const resources = {
       gameplayMain: 'HISTORIA',
       gameplayMainExtra: '+EXTRAS',
       gameplayCompletionist: 'COMPLETISTAS',
+      noResultsFound: 'No se han encontrado resultados',
     },
   },
 }

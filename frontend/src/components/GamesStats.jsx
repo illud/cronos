@@ -92,7 +92,7 @@ function GamesStats() {
     let today = format(now.getTime() + 1 * 24 * 60 * 60 * 1000, 'yyyy-MM-dd')
 
     await FindTotalGamesPlayedLastWeek(today, lastWeek).then((result) => {
-      console.log(result)
+      // console.log(result)
       setTotalGamePlayedLastWeek(result)
     })
   }

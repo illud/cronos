@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"strings"
 	"syscall"
 	"time"
 
@@ -261,8 +262,9 @@ func (a *App) GameExePath() string {
 }
 
 func (a *App) HowlongtobeatRequest(search string) string {
+	spaceToPorcent := strings.ReplaceAll(search, " ", "%20")
 
-	resp, err := http.Get("https://node-hltb-api.herokuapp.com/?search=" + search)
+	resp, err := http.Get("https://node-hltb-api.herokuapp.com/?search=" + spaceToPorcent)
 	if err != nil {
 		log.Fatalln(err)
 	}
