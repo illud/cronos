@@ -4,6 +4,7 @@ go 1.17
 
 require (
 	github.com/robfig/cron/v3 v3.0.1
+	github.com/saturnavt/howlongtobeat v0.0.0-20220818164049-90ee9015640d
 	github.com/shirou/gopsutil v3.21.11+incompatible
 	github.com/wailsapp/wails/v2 v2.0.0-beta.37
 	gorm.io/driver/sqlite v1.3.4
@@ -11,6 +12,8 @@ require (
 )
 
 require (
+	github.com/PuerkitoBio/goquery v1.8.0 // indirect
+	github.com/andybalholm/cascadia v1.3.1 // indirect
 	github.com/go-ole/go-ole v1.2.6 // indirect
 	github.com/google/uuid v1.1.2 // indirect
 	github.com/imdario/mergo v0.3.12 // indirect
@@ -36,8 +39,8 @@ require (
 	github.com/wailsapp/mimetype v1.4.1 // indirect
 	github.com/yusufpapurcu/wmi v1.2.2 // indirect
 	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5 // indirect
-	golang.org/x/net v0.0.0-20220127200216-cd36cc0744dd // indirect
-	golang.org/x/sys v0.0.0-20220128215802-99c3d69c2c27 // indirect
+	golang.org/x/net v0.0.0-20220812174116-3211cb980234 // indirect
+	golang.org/x/sys v0.0.0-20220728004956-3c1f35247d10 // indirect
 	golang.org/x/text v0.3.7 // indirect
 )
 

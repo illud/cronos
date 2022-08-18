@@ -56,12 +56,18 @@ function Howlongtobeat() {
 
   const handleSearchBtn = async () => {
     await HowlongtobeatRequest(searchInput).then((result) => {
-      if (JSON.parse(result).length > 0) {
-        setHowlongtobeat(JSON.parse(result))
-      } else {
+      if (result === null) {
         toast.error(t('noResultsFound'))
         setHowlongtobeat([])
+      } else {
+        if (result.length > 0) {
+          setHowlongtobeat(result)
+        } else {
+          toast.error(t('noResultsFound'))
+          setHowlongtobeat([])
+        }
       }
+
     })
     // console.log(JSON.parse(result).results)
 
@@ -297,26 +303,26 @@ function Howlongtobeat() {
                   <Card.Img
                     variant="top"
                     style={{ width: '45%' }}
-                    src={howlongtobeat.imageUrl}
+                    src={howlongtobeat.image}
                   />
 
                   {/* <Card.Img variant="top" src="https://cdn.cloudflare.steamstatic.com/steam/apps/782330/header.jpg?t=1634172952" /> */}
                   <Card.Body style={{ marginTop: '-30px' }}>
                     <br></br>
                     <Card.Title style={{ color: 'white' }}>
-                      {howlongtobeat.name}
+                      {howlongtobeat.title}
                     </Card.Title>
                     <Card.Text style={{ color: 'white' }}>
                       {t('gameplayMain')} <br></br>
-                      <a style={{ fontSize: '20px' }}>{howlongtobeat.gameplayMain}h</a>
+                      <a style={{ fontSize: '20px' }}>{howlongtobeat.main}h</a>
                     </Card.Text>
                     <Card.Text style={{ color: 'white' }}>
                       {t('gameplayMainExtra')} <br></br>
-                      <a style={{ fontSize: '20px' }}>{howlongtobeat.gameplayExtended}h</a>
+                      <a style={{ fontSize: '20px' }}>{howlongtobeat.extra}h</a>
                     </Card.Text>
                     <Card.Text style={{ color: 'white' }}>
                       {t('gameplayCompletionist')} <br></br>
-                      <a style={{ fontSize: '20px' }}>{howlongtobeat.gameplayCompletionist}h</a>
+                      <a style={{ fontSize: '20px' }}>{howlongtobeat.completionist}h</a>
                     </Card.Text>
                   </Card.Body>
                 </Card>
