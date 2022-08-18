@@ -68,6 +68,7 @@ const resources = {
       gameplayMainExtra: '+EXTRAS',
       gameplayCompletionist: 'COMPLETE',
       noResultsFound: 'No results found',
+      internetCon: 'You are not connected to internet',
     },
   },
   es: {
@@ -114,6 +115,7 @@ const resources = {
       gameplayMainExtra: '+EXTRAS',
       gameplayCompletionist: 'COMPLETISTAS',
       noResultsFound: 'No se han encontrado resultados',
+      internetCon: 'No estás conectado a internet',
     },
   },
 }

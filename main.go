@@ -4,6 +4,7 @@ import (
 	"embed"
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 	"os/exec"
 	"syscall"
@@ -301,6 +302,18 @@ func (a *App) HowlongtobeatRequest(search string) interface{} {
 	// }
 	// //Convert the body to type string
 	// return string(body)
+	checkCoon := connected()
 
-	return howlongtobeat.Search(search)
+	if checkCoon {
+		return howlongtobeat.Search(search)
+	}
+	return false
+}
+
+func connected() (ok bool) {
+	_, err := http.Get("https://www.google.com/")
+	if err != nil {
+		return false
+	}
+	return true
 }

@@ -56,19 +56,23 @@ function Howlongtobeat() {
 
   const handleSearchBtn = async () => {
     await HowlongtobeatRequest(searchInput).then((result) => {
-      if (result === null) {
-        toast.error(t('noResultsFound'))
-        setHowlongtobeat([])
-      } else {
-        if (result.length > 0) {
-          setHowlongtobeat(result)
-        } else {
+      if (result) {
+        if (result === null) {
           toast.error(t('noResultsFound'))
           setHowlongtobeat([])
+        } else {
+          if (result.length > 0) {
+            setHowlongtobeat(result)
+          } else {
+            toast.error(t('noResultsFound'))
+            setHowlongtobeat([])
+          }
         }
+      } else {
+        toast.error(t('internetCon'))
       }
-
     })
+
     // console.log(JSON.parse(result).results)
 
     // axios.get('https://shouldiplay-api.herokuapp.com/hltb/doom?page=1')
@@ -86,22 +90,6 @@ function Howlongtobeat() {
     //   })
   }
 
-  const secondsToTime = (e) => {
-    var h = Math.floor(e / 3600)
-      .toString()
-      .padStart(1, '0'),
-      m = Math.floor((e % 3600) / 60)
-        .toString()
-        .padStart(1, '0'),
-      s = Math.floor(e % 60)
-        .toString()
-        .padStart(2, '0')
-
-    return h + ' h ' + m + ' m'
-    // return h + ':' + m + ':' + s;
-    //return `${h}:${m}:${s}`;
-  }
-
   const handleFindAll = async () => {
     await FindAll().then((result) => {
       setApps(result)
@@ -111,7 +99,9 @@ function Howlongtobeat() {
   useEffect(() => {
     window.scrollTo(0, 0)
     handleFindAll()
+
     handleSearchBtn()
+
   }, [])
 
   return (
