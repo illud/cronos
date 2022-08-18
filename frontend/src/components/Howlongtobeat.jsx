@@ -56,7 +56,8 @@ function Howlongtobeat() {
 
   const handleSearchBtn = async () => {
     await HowlongtobeatRequest(searchInput).then((result) => {
-      if (result) {
+
+      if (result || result === null) {
         if (result === null) {
           toast.error(t('noResultsFound'))
           setHowlongtobeat([])
