@@ -75,7 +75,7 @@ const resources = {
     translation: {
       add: 'Agregar',
       reload: 'Recargar',
-      searchGame: 'Buscar Juego',
+      searchGame: 'Buscar Juego...',
       allGames: 'Tus Juegos',
       stats: 'Estadísticas',
       totalPlayTime: 'TIEMPO TOTAL DE JUEGO',

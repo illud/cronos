@@ -196,7 +196,7 @@ function Howlongtobeat() {
         <br></br>
         <div
           style={{
-            background: 'white',
+            background: '#006FE8',
             color: 'white',
             height: '38px',
             width: '5px',

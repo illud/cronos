@@ -248,7 +248,7 @@ function Main() {
         <br></br>
         <div
           style={{
-            background: 'white',
+            background: '#007bff',
             color: 'white',
             height: '38px',
             width: '5px',

@@ -147,7 +147,7 @@ func (a *App) CheckRunningProcess(name string, id int64) {
 
 	c := cron.New(cron.WithParser(cron.NewParser(cron.SecondOptional | cron.Minute | cron.Hour | cron.Dom | cron.Month | cron.Dow)))
 
-	time.Sleep(30 * time.Second)
+	time.Sleep(60 * time.Second)
 
 	c.AddFunc("*/30 * * * * *", func() {
 		var processRunning []string
