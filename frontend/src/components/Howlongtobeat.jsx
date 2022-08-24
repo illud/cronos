@@ -17,7 +17,7 @@ import {
   Clock,
   Search,
   LetterH,
-  CirclePlus
+  CirclePlus,
 } from 'tabler-icons-react'
 // import { ToastContainer, toast } from 'react-toastify';
 import toast, { Toaster } from 'react-hot-toast'
@@ -56,7 +56,6 @@ function Howlongtobeat() {
 
   const handleSearchBtn = async () => {
     await HowlongtobeatRequest(searchInput).then((result) => {
-
       if (result || result === null) {
         if (result === null) {
           toast.error(t('noResultsFound'))
@@ -73,22 +72,6 @@ function Howlongtobeat() {
         toast.error(t('internetCon'))
       }
     })
-
-    // console.log(JSON.parse(result).results)
-
-    // axios.get('https://shouldiplay-api.herokuapp.com/hltb/doom?page=1')
-    //   .then(response => console.log(response));
-
-    // hltbService.search(search).then(result => console.log(result));
-    // Find games
-    // howlongtobeat
-    //   .find({ search: 'bayonetta' })
-    //   .then(results => {
-    //     console.log(results)
-    //   })
-    //   .catch(err => {
-    //     // Request failed
-    //   })
   }
 
   const handleFindAll = async () => {
@@ -102,7 +85,6 @@ function Howlongtobeat() {
     handleFindAll()
 
     handleSearchBtn()
-
   }, [])
 
   return (
@@ -243,7 +225,7 @@ function Howlongtobeat() {
             marginLeft: '40%',
           }}
         >
-          V1.2.0
+          V1.3.0
         </div>
       </Drawer>
       <Container className="Container">
@@ -278,10 +260,20 @@ function Howlongtobeat() {
             }}
             onClick={() => handleSearchBtn()}
           >
-            <Search size={30} strokeWidth={1} color={'white'} /></Button>
+            <Search size={30} strokeWidth={1} color={'white'} />
+          </Button>
           <br></br>
           <br></br>
-          <a style={{ color: "#FFFFFF", float: 'left', marginLeft: '5px' }}>Hours data sourced from <a style={{ color: "#FFFFFF" }} href="https://howlongtobeat.com/" target="_blank">HowLongToBeat.</a></a>
+          <a style={{ color: '#FFFFFF', float: 'left', marginLeft: '5px' }}>
+            Hours data sourced from{' '}
+            <a
+              style={{ color: '#FFFFFF' }}
+              href="https://howlongtobeat.com/"
+              target="_blank"
+            >
+              HowLongToBeat.
+            </a>
+          </a>
           {/* <Button variant="outline-primary" ariant="primary" onClick={() => handleFindAll()}>Asd</Button> */}
 
           <br></br>
@@ -313,7 +305,9 @@ function Howlongtobeat() {
                     </Card.Text>
                     <Card.Text style={{ color: 'white' }}>
                       {t('gameplayCompletionist')} <br></br>
-                      <a style={{ fontSize: '20px' }}>{howlongtobeat.completionist}h</a>
+                      <a style={{ fontSize: '20px' }}>
+                        {howlongtobeat.completionist}h
+                      </a>
                     </Card.Text>
                   </Card.Body>
                 </Card>

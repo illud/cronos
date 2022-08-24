@@ -50,6 +50,7 @@ func main() {
 type AppData struct {
 	gorm.Model
 	Id         int64
+	Image      string
 	Name       string
 	Path       string
 	Executable string
@@ -81,9 +82,9 @@ func Setup() {
 	dbCon.Model(&AppData{}).Where("id > 0 AND running = ?", true).Update("running", false)
 }
 
-func (a *App) Create(name string, path string, executable string, time int64) {
+func (a *App) Create(image string, name string, path string, executable string, time int64) {
 	// Create
-	db.Create(&AppData{Name: name, Path: path, Executable: executable, Time: time, Running: false})
+	db.Create(&AppData{Image: image, Name: name, Path: path, Executable: executable, Time: time, Running: false})
 }
 
 func (a *App) Update(id int64, name string, path string, executable string) {
@@ -261,13 +262,13 @@ func (a *App) GameExePath() string {
 	return selection
 }
 
-type GamesTitles struct {
-	Title string `json:"title"`
-}
+// type GamesTitles struct {
+// 	Title string `json:"title"`
+// }
 
-type Gamesimages struct {
-	Image string `json:"image"`
-}
+// type Gamesimages struct {
+// 	Image string `json:"image"`
+// }
 
 // type GamesTime struct {
 // 	Main string `json:"main"`

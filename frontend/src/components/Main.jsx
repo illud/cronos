@@ -39,6 +39,7 @@ import {
   FindAll,
   GameExePath,
   Update,
+  HowlongtobeatRequest,
 } from '../../wailsjs/go/main/App'
 
 function Main() {
@@ -87,11 +88,37 @@ function Main() {
     await handleFindAll()
   }
 
+  const handleSearchBtn = async (gameName) => {
+    return await HowlongtobeatRequest(gameName).then((result) => {
+      if (result || result === null) {
+        if (result === null) {
+          return 'No games found'
+        } else {
+          if (result.length > 0) {
+            return result
+          } else {
+            return 'No games found'
+          }
+        }
+      } else {
+        return 'No games found'
+      }
+    })
+  }
+
   const handleCreate = async () => {
+    let image
+    let findGame = await handleSearchBtn(name)
+    if (findGame === 'No games found') {
+      image = ''
+    } else {
+      image = findGame[0].image
+    }
+
     if (name === '' || path === '' || file === '') {
       toast.error(t('toastPleaseFillAllFields'))
     } else {
-      Create(name, path, file, 0)
+      Create(image, name, path, file, 0)
       setTimeout(async () => {
         setFile('')
         setName('')
@@ -192,8 +219,8 @@ function Main() {
 
   const secondsToTime = (e) => {
     var h = Math.floor(e / 3600)
-      .toString()
-      .padStart(1, '0'),
+        .toString()
+        .padStart(1, '0'),
       m = Math.floor((e % 3600) / 60)
         .toString()
         .padStart(1, '0'),
@@ -204,6 +231,22 @@ function Main() {
     return h + ' h ' + m + ' m'
     // return h + ':' + m + ':' + s;
     //return `${h}:${m}:${s}`;
+  }
+
+  const ifImgExists = (image, gameName) => {
+    if (image === '' || image === undefined || image === null) {
+      return (
+        <div>
+          {/* <Card.Img
+          variant="top"
+          style={{ width: '45%' }}
+          src={"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="}
+        /> */}
+        </div>
+      )
+    } else {
+      return <Card.Img variant="top" style={{ width: '45%' }} src={image} />
+    }
   }
 
   const MINUTE_MS = 20000
@@ -348,7 +391,7 @@ function Main() {
             marginLeft: '40%',
           }}
         >
-          V1.2.0
+          V1.3.0
         </div>
       </Drawer>
       <Container className="Container">
@@ -406,35 +449,37 @@ function Main() {
           <br></br>
           <br></br>
 
-          <Row xs={2} md={3} className="g-4">
+          <Row xs={2} md={2} className="g-4">
             {apps.map((app, index) => (
               <Col key={index}>
-                <Card className="Cards">
-                  <ButtonGroup size="sm">
-                    <Button
-                      variant="outline-primary"
+                <Card className="Cards" style={{ flexDirection: 'row' }}>
+                  {ifImgExists(app.Image, app.Name)}
+
+                  <Card.Body style={{ marginTop: '-30px' }}>
+                    <br></br>
+                    <ButtonGroup
+                      size="sm"
                       style={{
-                        // float: 'right',
+                        float: 'right',
                         // floatLeft: '-1200px',
                         // right: 0,
                         color: 'white',
                         borderColor: 'transparent',
-                        width: '20%',
+                        width: '100%',
                         // position: 'absolute',
                       }}
-                      onClick={() =>
-                        handleEditModal(
-                          app.Id,
-                          app.Name,
-                          app.Path,
-                          app.Executable,
-                        )
-                      }
                     >
-                      <Pencil
-                        size={30}
-                        strokeWidth={1}
-                        color={'white'}
+                      <Button
+                        variant="outline-primary"
+                        style={{
+                          float: 'right',
+                          // floatLeft: '-1200px',
+                          // right: 0,
+                          color: 'white',
+                          borderColor: 'transparent',
+                          width: '100%',
+                          // position: 'absolute',
+                        }}
                         onClick={() =>
                           handleEditModal(
                             app.Id,
@@ -443,32 +488,42 @@ function Main() {
                             app.Executable,
                           )
                         }
-                      />
-                    </Button>
-                    <Button
-                      variant="outline-danger"
-                      style={{
-                        // float: 'right',
-                        right: 0,
-                        color: 'white',
-                        borderColor: 'transparent',
-                        width: '20%',
-                        // position: 'absolute',
-                      }}
-                      onClick={() => handleRemoveModal(app.Id, app.Name)}
-                    >
-                      <X
-                        size={30}
-                        strokeWidth={1}
-                        color={'white'}
+                      >
+                        <Pencil
+                          size={30}
+                          strokeWidth={1}
+                          color={'white'}
+                          onClick={() =>
+                            handleEditModal(
+                              app.Id,
+                              app.Name,
+                              app.Path,
+                              app.Executable,
+                            )
+                          }
+                        />
+                      </Button>
+                      <Button
+                        variant="outline-danger"
+                        style={{
+                          // float: 'right',
+                          right: 0,
+                          color: 'white',
+                          borderColor: 'transparent',
+                          width: '100%',
+                          // position: 'absolute',
+                        }}
                         onClick={() => handleRemoveModal(app.Id, app.Name)}
-                      />
-                    </Button>
-                  </ButtonGroup>
-                  {/* <Card.Img variant="top" src="https://cdn.cloudflare.steamstatic.com/steam/apps/924970/header.jpg?t=1649358821" /> */}
-
-                  {/* <Card.Img variant="top" src="https://cdn.cloudflare.steamstatic.com/steam/apps/782330/header.jpg?t=1634172952" /> */}
-                  <Card.Body style={{ marginTop: '-30px' }}>
+                      >
+                        <X
+                          size={30}
+                          strokeWidth={1}
+                          color={'white'}
+                          onClick={() => handleRemoveModal(app.Id, app.Name)}
+                        />
+                      </Button>
+                    </ButtonGroup>
+                    <br></br>
                     <br></br>
                     <Card.Title style={{ color: 'white' }}>
                       {app.Name}
@@ -500,9 +555,9 @@ function Main() {
                           borderColor: 'white',
                           width: '100%',
                         }}
-                      // onClick={() =>
-                      //   handlePlay(app.Executable, app.Path, app.Id)
-                      // }
+                        // onClick={() =>
+                        //   handlePlay(app.Executable, app.Path, app.Id)
+                        // }
                       >
                         <DeviceGamepad
                           size={30}
@@ -771,7 +826,7 @@ function Main() {
           size="lg"
           aria-labelledby="contained-modal-title-vcenter"
           centered
-        // style={{ opacity: 0.9, borderColor: 'transparent' }}
+          // style={{ opacity: 0.9, borderColor: 'transparent' }}
         >
           <Modal.Header
             closeButton
