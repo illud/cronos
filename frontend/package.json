@@ -28,6 +28,8 @@
     "react-dom": "^18.0.0",
     "react-hot-toast": "^2.2.0",
     "react-i18next": "^11.17.4",
+    "react-loader-spinner": "^5.3.3",
+    "react-loading": "^2.0.3",
     "react-metric-card": "^1.0.5",
     "react-modal": "3.11.2",
     "react-modern-drawer": "^1.1.1",

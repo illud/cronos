@@ -17,7 +17,6 @@ import {
   Clock,
   Search,
   LetterH,
-  CirclePlus,
 } from 'tabler-icons-react'
 // import { ToastContainer, toast } from 'react-toastify';
 import toast, { Toaster } from 'react-hot-toast'
@@ -26,6 +25,7 @@ import { format } from 'date-fns'
 import { useTranslation } from 'react-i18next'
 import axios from 'axios'
 import { FindAll, HowlongtobeatRequest } from '../../wailsjs/go/main/App'
+import ReactLoading from 'react-loading';
 
 // import { HowLongToBeatService } from "howlongtobeat";
 // const hltbService = new HowLongToBeatService();
@@ -46,6 +46,9 @@ function Howlongtobeat() {
 
   const [isOpen, setIsOpen] = useState(true)
 
+
+  const [isLoading, setIsLoading] = useState(true)
+
   const toggleDrawer = () => {
     setIsOpen((prevState) => !prevState)
   }
@@ -55,17 +58,21 @@ function Howlongtobeat() {
   }
 
   const handleSearchBtn = async () => {
+    setIsLoading(true)
     await HowlongtobeatRequest(searchInput).then((result) => {
       if (result || result === null) {
         if (result === null) {
           toast.error(t('noResultsFound'))
           setHowlongtobeat([])
+          setIsLoading(true)
         } else {
           if (result.length > 0) {
             setHowlongtobeat(result)
+            setIsLoading(false)
           } else {
             toast.error(t('noResultsFound'))
             setHowlongtobeat([])
+            setIsLoading(true)
           }
         }
       } else {
@@ -88,7 +95,7 @@ function Howlongtobeat() {
   }, [])
 
   return (
-    <div>
+    <div style={{ overflow: 'scroll', overflowX: 'hidden' }}>
       <Drawer
         open={isOpen}
         onClose={toggleDrawer}
@@ -225,7 +232,7 @@ function Howlongtobeat() {
             marginLeft: '40%',
           }}
         >
-          V1.3.0
+          V1.3.1
         </div>
       </Drawer>
       <Container className="Container">
@@ -279,42 +286,44 @@ function Howlongtobeat() {
           <br></br>
           <br></br>
 
-          <Row xs={2} md={2} className="g-4">
-            {howlongtobeatData.map((howlongtobeat, index) => (
-              <Col key={index}>
-                <Card className="Cards" style={{ flexDirection: 'row' }}>
-                  <Card.Img
-                    variant="top"
-                    style={{ width: '45%' }}
-                    src={howlongtobeat.image}
-                  />
+          {
+            isLoading ? <div style={{ marginLeft: '40%', marginTop: '50px' }}> <ReactLoading type={"spin"} color={"white"} height={80} width={80} /> </div> : <Row xs={2} md={2} className="g-4">
+              {howlongtobeatData.map((howlongtobeat, index) => (
+                <Col key={index}>
+                  <Card className="Cards" style={{ flexDirection: 'row' }}>
+                    <Card.Img
+                      variant="top"
+                      style={{ width: '45%' }}
+                      src={howlongtobeat.image}
+                    />
 
-                  {/* <Card.Img variant="top" src="https://cdn.cloudflare.steamstatic.com/steam/apps/782330/header.jpg?t=1634172952" /> */}
-                  <Card.Body style={{ marginTop: '-30px' }}>
-                    <br></br>
-                    <Card.Title style={{ color: 'white' }}>
-                      {howlongtobeat.title}
-                    </Card.Title>
-                    <Card.Text style={{ color: 'white' }}>
-                      {t('gameplayMain')} <br></br>
-                      <a style={{ fontSize: '20px' }}>{howlongtobeat.main}h</a>
-                    </Card.Text>
-                    <Card.Text style={{ color: 'white' }}>
-                      {t('gameplayMainExtra')} <br></br>
-                      <a style={{ fontSize: '20px' }}>{howlongtobeat.extra}h</a>
-                    </Card.Text>
-                    <Card.Text style={{ color: 'white' }}>
-                      {t('gameplayCompletionist')} <br></br>
-                      <a style={{ fontSize: '20px' }}>
-                        {howlongtobeat.completionist}h
-                      </a>
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
-                <br></br>
-              </Col>
-            ))}
-          </Row>
+                    {/* <Card.Img variant="top" src="https://cdn.cloudflare.steamstatic.com/steam/apps/782330/header.jpg?t=1634172952" /> */}
+                    <Card.Body style={{ marginTop: '-30px' }}>
+                      <br></br>
+                      <Card.Title style={{ color: 'white' }}>
+                        {howlongtobeat.title}
+                      </Card.Title>
+                      <Card.Text style={{ color: 'white' }}>
+                        {t('gameplayMain')} <br></br>
+                        <a style={{ fontSize: '20px' }}>{howlongtobeat.main}h</a>
+                      </Card.Text>
+                      <Card.Text style={{ color: 'white' }}>
+                        {t('gameplayMainExtra')} <br></br>
+                        <a style={{ fontSize: '20px' }}>{howlongtobeat.extra}h</a>
+                      </Card.Text>
+                      <Card.Text style={{ color: 'white' }}>
+                        {t('gameplayCompletionist')} <br></br>
+                        <a style={{ fontSize: '20px' }}>
+                          {howlongtobeat.completionist}h
+                        </a>
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+                  <br></br>
+                </Col>
+              ))}
+            </Row>
+          }
         </div>
       </Container>
       {/* <ToastContainer /> */}

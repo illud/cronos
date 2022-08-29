@@ -264,7 +264,7 @@ function Main() {
   }, [])
 
   return (
-    <div>
+    <div style={{ overflow: 'scroll', overflowX: 'hidden'}}>
       <Drawer
         open={isOpen}
         onClose={toggleDrawer}
@@ -391,7 +391,7 @@ function Main() {
             marginLeft: '40%',
           }}
         >
-          V1.3.0
+          V1.3.1
         </div>
       </Drawer>
       <Container className="Container">
