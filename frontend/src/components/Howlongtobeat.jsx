@@ -25,7 +25,7 @@ import { format } from 'date-fns'
 import { useTranslation } from 'react-i18next'
 import axios from 'axios'
 import { FindAll, HowlongtobeatRequest } from '../../wailsjs/go/main/App'
-import ReactLoading from 'react-loading';
+import ReactLoading from 'react-loading'
 
 // import { HowLongToBeatService } from "howlongtobeat";
 // const hltbService = new HowLongToBeatService();
@@ -45,7 +45,6 @@ function Howlongtobeat() {
   const inputRef = useRef()
 
   const [isOpen, setIsOpen] = useState(true)
-
 
   const [isLoading, setIsLoading] = useState(true)
 
@@ -67,6 +66,7 @@ function Howlongtobeat() {
           setIsLoading(true)
         } else {
           if (result.length > 0) {
+            // console.log(result)
             setHowlongtobeat(result)
             setIsLoading(false)
           } else {
@@ -85,6 +85,76 @@ function Howlongtobeat() {
     await FindAll().then((result) => {
       setApps(result)
     })
+  }
+
+  const handleTimeTiles = (title) => {
+    if (title.includes('Main Story')) {
+      return t('gameplayMain')
+    }
+
+    if (title.includes('Main + Extra')) {
+      return t('gameplayMainExtra')
+    }
+
+    if (title.includes('Completionist')) {
+      return t('gameplayCompletionist')
+    }
+
+    if (title.includes('Solo')) {
+      return 'SOLO'
+    }
+
+    if (title.includes('Co-Op')) {
+      return 'CO-OP'
+    }
+
+    if (title.includes('Vs.')) {
+      return 'VS'
+    }
+  }
+
+  const removeTitlesFromStrings = (title) => {
+    if (title.includes('Main Story')) {
+      let removeTitle = title.replace('Main Story', '')
+      let replaceHours = removeTitle.replace(' Hours', 'h')
+      let replaceMinutes = replaceHours.replace(' Mins', 'm')
+      return replaceMinutes
+    }
+
+    if (title.includes('Main + Extra')) {
+      let removeTitle = title.replace('Main + Extra', '')
+      let replaceHours = removeTitle.replace(' Hours', 'h')
+      let replaceMinutes = replaceHours.replace(' Mins', 'm')
+      return replaceMinutes
+    }
+
+    if (title.includes('Completionist')) {
+      let removeTitle = title.replace('Completionist', '')
+      let replaceHours = removeTitle.replace(' Hours', 'h')
+      let replaceMinutes = replaceHours.replace(' Mins', 'm')
+      return replaceMinutes
+    }
+
+    if (title.includes('Solo')) {
+      let removeTitle = title.replace('Solo', '')
+      let replaceHours = removeTitle.replace(' Hours', 'h')
+      let replaceMinutes = replaceHours.replace(' Mins', 'm')
+      return replaceMinutes
+    }
+
+    if (title.includes('Co-Op')) {
+      let removeTitle = title.replace('Co-Op', '')
+      let replaceHours = removeTitle.replace(' Hours', 'h')
+      let replaceMinutes = replaceHours.replace(' Mins', 'm')
+      return replaceMinutes
+    }
+
+    if (title.includes('Vs.')) {
+      let removeTitle = title.replace('Vs.', '')
+      let replaceHours = removeTitle.replace(' Hours', 'h')
+      let replaceMinutes = replaceHours.replace(' Mins', 'm')
+      return replaceMinutes
+    }
   }
 
   useEffect(() => {
@@ -232,7 +302,7 @@ function Howlongtobeat() {
             marginLeft: '40%',
           }}
         >
-          V1.3.1
+          V1.4.0
         </div>
       </Drawer>
       <Container className="Container">
@@ -286,8 +356,18 @@ function Howlongtobeat() {
           <br></br>
           <br></br>
 
-          {
-            isLoading ? <div style={{ marginLeft: '40%', marginTop: '50px' }}> <ReactLoading type={"spin"} color={"white"} height={80} width={80} /> </div> : <Row xs={2} md={2} className="g-4">
+          {isLoading ? (
+            <div style={{ marginLeft: '40%', marginTop: '50px' }}>
+              {' '}
+              <ReactLoading
+                type={'spin'}
+                color={'white'}
+                height={80}
+                width={80}
+              />{' '}
+            </div>
+          ) : (
+            <Row xs={2} md={2} className="g-4">
               {howlongtobeatData.map((howlongtobeat, index) => (
                 <Col key={index}>
                   <Card className="Cards" style={{ flexDirection: 'row' }}>
@@ -304,17 +384,21 @@ function Howlongtobeat() {
                         {howlongtobeat.title}
                       </Card.Title>
                       <Card.Text style={{ color: 'white' }}>
-                        {t('gameplayMain')} <br></br>
-                        <a style={{ fontSize: '20px' }}>{howlongtobeat.main}h</a>
-                      </Card.Text>
-                      <Card.Text style={{ color: 'white' }}>
-                        {t('gameplayMainExtra')} <br></br>
-                        <a style={{ fontSize: '20px' }}>{howlongtobeat.extra}h</a>
-                      </Card.Text>
-                      <Card.Text style={{ color: 'white' }}>
-                        {t('gameplayCompletionist')} <br></br>
+                        {handleTimeTiles(howlongtobeat.main)} <br></br>
                         <a style={{ fontSize: '20px' }}>
-                          {howlongtobeat.completionist}h
+                          {removeTitlesFromStrings(howlongtobeat.main)}
+                        </a>
+                      </Card.Text>
+                      <Card.Text style={{ color: 'white' }}>
+                        {handleTimeTiles(howlongtobeat.extra)} <br></br>
+                        <a style={{ fontSize: '20px' }}>
+                          {removeTitlesFromStrings(howlongtobeat.extra)}
+                        </a>
+                      </Card.Text>
+                      <Card.Text style={{ color: 'white' }}>
+                        {handleTimeTiles(howlongtobeat.completionist)} <br></br>
+                        <a style={{ fontSize: '20px' }}>
+                          {removeTitlesFromStrings(howlongtobeat.completionist)}
                         </a>
                       </Card.Text>
                     </Card.Body>
@@ -323,7 +407,7 @@ function Howlongtobeat() {
                 </Col>
               ))}
             </Row>
-          }
+          )}
         </div>
       </Container>
       {/* <ToastContainer /> */}

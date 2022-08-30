@@ -150,7 +150,7 @@ function GamesStats() {
   }, [])
 
   return (
-    <div style={{ overflow: 'scroll', overflowX: 'hidden'}}>
+    <div style={{ overflow: 'scroll', overflowX: 'hidden' }}>
       <Drawer
         open={isOpen}
         onClose={toggleDrawer}
@@ -278,7 +278,7 @@ function GamesStats() {
             marginLeft: '40%',
           }}
         >
-          V1.3.1
+          V1.4.0
         </div>
       </Drawer>
       <div style={{ marginLeft: '320px' }}>
