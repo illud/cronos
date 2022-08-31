@@ -20,10 +20,14 @@ import Col from 'react-bootstrap/Col'
 import {
   FindAll,
   FindTotalTimePlayed,
+  FindTotalTimePlayedGameToday,
+  FindTotalTimePlayedGameThisWeek,
+  FindTotalTimePlayedToday,
   FindTotalTimePlayedLastWeek,
   FindTotalTimePlayedLastMonth,
   FindMostPlayedGame,
   FindTotalGamesPlayedLastWeek,
+  FindTotalTimePlayedLastYear,
 } from '../../wailsjs/go/main/App'
 import { format } from 'date-fns'
 import { useTranslation } from 'react-i18next'
@@ -34,12 +38,18 @@ function GamesStats() {
 
   const [apps, setApps] = useState([])
   const [totalTimePlayed, setTotalTimePlayed] = useState(0)
+  const [totalTimePlayedGameToday, setTotalTimePlayedGameToday] = useState([])
+  const [totalTimePlayedGameThisWeek, setTotalTimePlayedGameThisWeek] =
+    useState([])
+  const [totalTimePlayedToday, setTotalTimePlayedToday] = useState(0)
   const [totalTimePlayedLastWeek, setTotalTimePlayedLastWeek] = useState(0)
   const [totalTimePlayedLastMonth, setTotalTimePlayedLastMonth] = useState(0)
+  const [totalTimePlayedLastYear, setTotalTimePlayedLastYear] = useState(0)
   const [totalGamePlayedLastWeek, setTotalGamePlayedLastWeek] = useState([])
   const [mostPlayedGameName, setMostPlayedGameName] = useState('')
   const [mostPlayedGameTotal, setMostPlayedGameTotal] = useState(0)
   const [isOpen, setIsOpen] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
 
   const toggleDrawer = () => {
     setIsOpen((prevState) => !prevState)
@@ -54,6 +64,17 @@ function GamesStats() {
   const handleFindTotalTimePlayed = async () => {
     await FindTotalTimePlayed().then((result) => {
       setTotalTimePlayed(result)
+    })
+  }
+
+  const handleFindTotalTimePlayedToday = async () => {
+    const now = new Date()
+
+    let today = format(now.getTime() + 0 * 24 * 60 * 60 * 1000, 'yyyy-MM-dd')
+    let tomorrow = format(now.getTime() + 1 * 24 * 60 * 60 * 1000, 'yyyy-MM-dd')
+
+    await FindTotalTimePlayedToday(today, tomorrow).then((result) => {
+      setTotalTimePlayedToday(result)
     })
   }
 
@@ -84,17 +105,92 @@ function GamesStats() {
     })
   }
 
+  const handleFindTotalTimePlayedLastYear = async () => {
+    const now = new Date()
+
+    let lastYear = format(
+      now.getTime() - 365 * 24 * 60 * 60 * 1000,
+      'yyyy-MM-dd',
+    )
+
+    let today = format(now.getTime() + 1 * 24 * 60 * 60 * 1000, 'yyyy-MM-dd')
+
+    await FindTotalTimePlayedLastYear(today, lastYear).then((result) => {
+      setTotalTimePlayedLastYear(result)
+    })
+  }
+
   const handleFindTotalGamesPlayedLastWeek = async () => {
     const now = new Date()
 
     let lastWeek = format(now.getTime() - 7 * 24 * 60 * 60 * 1000, 'yyyy-MM-dd')
 
-    let today = format(now.getTime() + 1 * 24 * 60 * 60 * 1000, 'yyyy-MM-dd')
+    let todayLastWeek = format(
+      now.getTime() + 1 * 24 * 60 * 60 * 1000,
+      'yyyy-MM-dd',
+    )
 
-    await FindTotalGamesPlayedLastWeek(today, lastWeek).then((result) => {
-      // console.log(result)
-      setTotalGamePlayedLastWeek(result)
-    })
+    await FindTotalGamesPlayedLastWeek(todayLastWeek, lastWeek).then(
+      (result) => {
+        // console.log(result)
+        setTotalGamePlayedLastWeek(result)
+
+        //__TIME PLAYED TODAY__
+
+        let totalTimePlayedGameTodayArrays = []
+        for (let index = 0; index < result.length; index++) {
+          totalTimePlayedGameTodayArrays.push(result[index].Id)
+        }
+
+        const now = new Date()
+
+        let today = format(
+          now.getTime() + 0 * 24 * 60 * 60 * 1000,
+          'yyyy-MM-dd',
+        )
+        let tomorrow = format(
+          now.getTime() + 1 * 24 * 60 * 60 * 1000,
+          'yyyy-MM-dd',
+        )
+
+        FindTotalTimePlayedGameToday(
+          today,
+          tomorrow,
+          totalTimePlayedGameTodayArrays,
+        ).then((result) => {
+          setTotalTimePlayedGameToday(result)
+        })
+
+        //__TIME PLAYED THIS WEEK__
+
+        let lastWeek = format(
+          now.getTime() - 7 * 24 * 60 * 60 * 1000,
+          'yyyy-MM-dd',
+        )
+
+        let toDay = format(
+          now.getTime() + 1 * 24 * 60 * 60 * 1000,
+          'yyyy-MM-dd',
+        )
+
+        let totalTimePlayedGameThisWeekArray = []
+
+        for (let index = 0; index < result.length; index++) {
+          totalTimePlayedGameThisWeekArray.push(result[index].Id)
+        }
+
+        FindTotalTimePlayedGameThisWeek(
+          toDay,
+          lastWeek,
+          totalTimePlayedGameThisWeekArray,
+        ).then((result) => {
+          // arrayOfGameTimesWeek.push(result)
+          setTotalTimePlayedGameThisWeek(result)
+        })
+
+        setIsLoading(false)
+      },
+    )
   }
 
   const handleMostPlayedGame = async () => {
@@ -141,12 +237,21 @@ function GamesStats() {
 
   useEffect(() => {
     window.scrollTo(0, 0)
-    handleFindAll()
-    handleFindTotalTimePlayed()
-    handleFindTotalTimePlayedLastWeek()
-    handleFindTotalTimePlayedLastMonth()
-    handleMostPlayedGame()
-    handleFindTotalGamesPlayedLastWeek()
+
+    async function getInitialData() {
+      await handleFindAll()
+
+      await handleFindTotalGamesPlayedLastWeek()
+
+      await handleFindTotalTimePlayed()
+      await handleFindTotalTimePlayedToday()
+      await handleFindTotalTimePlayedLastWeek()
+      await handleFindTotalTimePlayedLastMonth()
+      await handleMostPlayedGame()
+      await handleFindTotalTimePlayedLastYear()
+    }
+
+    getInitialData()
   }, [])
 
   return (
@@ -278,7 +383,7 @@ function GamesStats() {
             marginLeft: '40%',
           }}
         >
-          V1.4.0
+          V1.5.0
         </div>
       </Drawer>
       <div style={{ marginLeft: '320px' }}>
@@ -318,7 +423,7 @@ function GamesStats() {
                 // 	description: {mostPlayedGameName},
                 // 	value: '0.5%'
                 // }}
-                title={t('mostPlayedGame') + '(' + mostPlayedGameName + ')'}
+                title={t('mostPlayedGame') + ' (' + mostPlayedGameName + ')'}
                 fetching={false}
                 error={null}
                 icon={<Clock size={30} strokeWidth={1} color={'white'} />}
@@ -327,48 +432,88 @@ function GamesStats() {
               />
             </Col>
 
-            {/* <Col style={{ height: '100px' }}>
-							<MetricCard
-								cardBgColor="rgba(0, 0, 0, 0.5)"
-								titleColor="white"
-								valueColor="white"
-								value={secondsToTime(totalTimePlayedLastWeek)}
-								// trend={{
-								// 	slope: 1,
-								// 	description: 'Compared to last week',
-								// 	value: '0.5%'
-								// }}
-								title='TOTAL TIME PLAYED THE LAST WEEK'
-								fetching={false}
-								error={null}
-								icon={<Clock size={30} strokeWidth={1} color={'white'} />}
-								iconBgColor="transparent"
-								iconColor="transparent"
-							/>
-						</Col> */}
+            <Col style={{ height: '100px' }}>
+              <MetricCard
+                cardBgColor="rgba(0, 0, 0, 0.5)"
+                titleColor="white"
+                valueColor="white"
+                value={secondsToTime(totalTimePlayedToday)}
+                // trend={{
+                // 	slope: 1,
+                // 	description: 'Compared to last week',
+                // 	value: '0.5%'
+                // }}
+                title={t('playedTimeToday')}
+                fetching={false}
+                error={null}
+                icon={<Clock size={30} strokeWidth={1} color={'white'} />}
+                iconBgColor="transparent"
+                iconColor="transparent"
+              />
+            </Col>
 
-            {/* <Col style={{ height: '100px' }}>
-							<MetricCard
-								cardBgColor="rgba(0, 0, 0, 0.5)"
-								titleColor="white"
-								valueColor="white"
-								value={secondsToTime(totalTimePlayedLastMonth)}
-								// trend={{
-								// 	slope: 1,
-								// 	description: 'Compared to last week',
-								// 	value: '0.5%'
-								// }}
-								title='TOTAL TIME PLAYED THE LAST MONTH'
-								fetching={false}
-								error={null}
-								icon={<Clock size={30} strokeWidth={1} color={'white'} />}
-								iconBgColor="transparent"
-								iconColor="transparent"
-							/>
-						</Col> */}
+            <Col style={{ height: '100px' }}>
+              <MetricCard
+                cardBgColor="rgba(0, 0, 0, 0.5)"
+                titleColor="white"
+                valueColor="white"
+                value={secondsToTime(totalTimePlayedLastWeek)}
+                // trend={{
+                // 	slope: 1,
+                // 	description: 'Compared to last week',
+                // 	value: '0.5%'
+                // }}
+                title={t('playedTimeThisWeek')}
+                fetching={false}
+                error={null}
+                icon={<Clock size={30} strokeWidth={1} color={'white'} />}
+                iconBgColor="transparent"
+                iconColor="transparent"
+              />
+            </Col>
+
+            <Col style={{ height: '100px' }}>
+              <MetricCard
+                cardBgColor="rgba(0, 0, 0, 0.5)"
+                titleColor="white"
+                valueColor="white"
+                value={secondsToTime(totalTimePlayedLastMonth)}
+                // trend={{
+                // 	slope: 1,
+                // 	description: 'Compared to last week',
+                // 	value: '0.5%'
+                // }}
+                title={t('playedTimeThisMonth')}
+                fetching={false}
+                error={null}
+                icon={<Clock size={30} strokeWidth={1} color={'white'} />}
+                iconBgColor="transparent"
+                iconColor="transparent"
+              />
+            </Col>
+
+            <Col style={{ height: '100px' }}>
+              <MetricCard
+                cardBgColor="rgba(0, 0, 0, 0.5)"
+                titleColor="white"
+                valueColor="white"
+                value={secondsToTime(totalTimePlayedLastYear)}
+                // trend={{
+                // 	slope: 1,
+                // 	description: 'Compared to last week',
+                // 	value: '0.5%'
+                // }}
+                title={t('playedTimeThisYear')}
+                fetching={false}
+                error={null}
+                icon={<Clock size={30} strokeWidth={1} color={'white'} />}
+                iconBgColor="transparent"
+                iconColor="transparent"
+              />
+            </Col>
           </Row>
           <br></br>
-          <br></br>
+
           <h5 style={{ color: 'white' }}>{t('gamesPlayedThisWeek')}</h5>
           <br></br>
           <Table
@@ -384,25 +529,44 @@ function GamesStats() {
               <tr>
                 <th style={{ color: 'white' }}>{t('game')}</th>
                 <th style={{ color: 'white' }}>{t('day')}</th>
+                <th style={{ color: 'white' }}>{t('playedToday')}</th>
+                <th style={{ color: 'white' }}>{t('playedLastWeek')}</th>
                 <th style={{ color: 'white' }}>{t('dateAndTime')}</th>
               </tr>
             </thead>
             <tbody>
-              {totalGamePlayedLastWeek.map((game, index) => {
-                return (
-                  <tr key={index}>
-                    <td style={{ color: 'white' }}>{game.Name}</td>
-                    <td style={{ color: 'white' }}>
-                      {getDayOfWeek(new Date(game.UpdatedAt).getDay())}
-                    </td>
-                    <td style={{ color: 'white' }}>
-                      {format(new Date(game.UpdatedAt), 'yyyy/MM/dd hh:mm aaa')}
-                    </td>
-                  </tr>
-                )
-              })}
+              {isLoading ? (
+                <p></p>
+              ) : (
+                totalGamePlayedLastWeek.map((game, index) => {
+                  return (
+                    <tr key={index}>
+                      <td style={{ color: 'white', fontSize: '18px' }}>
+                        {game.Name}
+                      </td>
+                      <td style={{ color: 'white', fontSize: '18px' }}>
+                        {getDayOfWeek(new Date(game.UpdatedAt).getDay())}
+                      </td>
+                      <td style={{ color: 'white', fontSize: '18px' }}>
+                        {secondsToTime(totalTimePlayedGameToday[index])}{' '}
+                      </td>
+                      <td style={{ color: 'white', fontSize: '18px' }}>
+                        {secondsToTime(totalTimePlayedGameThisWeek[index])}{' '}
+                      </td>
+                      <td style={{ color: 'white', fontSize: '18px' }}>
+                        {format(
+                          new Date(game.UpdatedAt),
+                          'yyyy/MM/dd hh:mm aaa',
+                        )}
+                      </td>
+                    </tr>
+                  )
+                })
+              )}
             </tbody>
           </Table>
+          <br></br>
+          <br></br>
         </Container>
       </div>
     </div>

@@ -58,6 +58,13 @@ type AppData struct {
 	Running    bool
 }
 
+type GameHistorical struct {
+	gorm.Model
+	Id     int64
+	GameId int64
+	Time   int64
+}
+
 var (
 	// DB The database connection
 	db *gorm.DB
@@ -72,7 +79,7 @@ func Setup() {
 	}
 
 	// Migrate the schema
-	dbCon.AutoMigrate(&AppData{})
+	dbCon.AutoMigrate(&AppData{}, &GameHistorical{})
 
 	// defer dbCon.Close()
 	db = dbCon
@@ -140,11 +147,19 @@ func contains(s []string, str string) bool {
 	return false
 }
 
-func (a *App) CheckRunningProcess(name string, id int64) {
+func (a *App) CheckRunningProcess(name string, id int64, today string, tomorrow string) {
 	// fmt.Println(name)
 
 	// Sets running to true
 	db.Model(&AppData{}).Where("id = ?", id).Update("running", true)
+
+	// Insert into historical if dosn't exist
+	var gameHistorical []GameHistorical
+	db.Where("game_id = ? AND created_at >= ? AND created_at < ?", id, today, tomorrow).Find(&gameHistorical)
+
+	if len(gameHistorical) <= 0 {
+		db.Create(&GameHistorical{GameId: id, Time: 0})
+	}
 
 	c := cron.New(cron.WithParser(cron.NewParser(cron.SecondOptional | cron.Minute | cron.Hour | cron.Dom | cron.Month | cron.Dow)))
 
@@ -181,6 +196,15 @@ func (a *App) CheckRunningProcess(name string, id int64) {
 			db.Model(&AppData{}).Where("id = ?", id).Update("time", timing+30)
 			db.Model(&AppData{}).Where("id = ?", id).Update("running", true)
 			timing = 0
+
+			// updates time historical by created_at
+			var gameHistorical GameHistorical
+			db.Where("game_id = ? AND created_at >= ? AND created_at < ?", id, today, tomorrow).Find(&gameHistorical)
+			gameTiming := gameHistorical.Time
+
+			db.Model(&GameHistorical{}).Where("id = ?", gameHistorical.Id).Update("time", gameTiming+30)
+			gameTiming = 0
+
 			// fmt.Println(p.Name())
 			// fmt.Println("FOUND")
 			// fmt.Println(secondsToMinutes(time))
@@ -225,15 +249,53 @@ func (a *App) FindMostPlayedGame() MosPlayedGame {
 	return mostPlayedGame
 }
 
+func (a *App) FindTotalTimePlayedGameToday(today string, tomorrow string, id []int64) []int64 {
+	var totalPlayedToday []int64
+
+	var total int64
+	for i := 0; i < len(id); i++ {
+		total = 0 // resets total for each loop
+		db.Table("game_historicals").Select("SUM(time)").Where("created_at >= ? AND created_at <= ? AND game_id = ?", today, tomorrow, id[i]).Row().Scan(&total)
+		totalPlayedToday = append(totalPlayedToday, total)
+	}
+
+	return totalPlayedToday
+}
+
+func (a *App) FindTotalTimePlayedGameThisWeek(today string, lastWeek string, id []int64) []int64 {
+	var totalPlayedThisWeek []int64
+
+	var total int64
+	for i := 0; i < len(id); i++ {
+		total = 0 // resets total for each loop
+		db.Table("game_historicals").Select("SUM(time)").Where("created_at >= ? AND created_at <= ? AND game_id = ?", lastWeek, today, id[i]).Row().Scan(&total)
+		totalPlayedThisWeek = append(totalPlayedThisWeek, total)
+	}
+
+	return totalPlayedThisWeek
+}
+
 func (a *App) FindTotalTimePlayedLastWeek(today string, lastWeek string) int64 {
 	var total int64
-	db.Table("app_data").Select("SUM(time)").Where("created_at >= ? AND created_at <= ?", lastWeek, today).Row().Scan(&total)
+	db.Table("game_historicals").Select("SUM(time)").Where("created_at >= ? AND created_at <= ?", lastWeek, today).Row().Scan(&total)
+	return total
+}
+
+func (a *App) FindTotalTimePlayedToday(today string, tomorrow string) int64 {
+	var total int64
+	db.Table("game_historicals").Select("SUM(time)").Where("created_at >= ? AND created_at <= ?", today, tomorrow).Row().Scan(&total)
 	return total
 }
 
 func (a *App) FindTotalTimePlayedLastMonth(today string, lastMonth string) int64 {
 	var total int64
-	db.Table("app_data").Select("SUM(time)").Where("created_at >= ? AND created_at <= ?", lastMonth, today).Row().Scan(&total)
+	db.Table("game_historicals").Select("SUM(time)").Where("created_at >= ? AND created_at <= ?", lastMonth, today).Row().Scan(&total)
+	return total
+}
+
+func (a *App) FindTotalTimePlayedLastYear(today string, lastYear string) int64 {
+	var total int64
+	db.Table("game_historicals").Select("SUM(time)").Where("created_at >= ? AND created_at <= ?", lastYear, today).Row().Scan(&total)
 	return total
 }
 
@@ -261,33 +323,6 @@ func (a *App) GameExePath() string {
 
 	return selection
 }
-
-// type GamesTitles struct {
-// 	Title string `json:"title"`
-// }
-
-// type Gamesimages struct {
-// 	Image string `json:"image"`
-// }
-
-// type GamesTime struct {
-// 	Main string `json:"main"`
-// }
-
-// type GamesExtra struct {
-// 	Extra string `json:"extra"`
-// }
-
-// type GamesCompletionist struct {
-// 	Completionist string `json:"completionist"`
-// }
-// type Games struct {
-// 	Image         string `json:"image"`
-// 	Title         string `json:"title"`
-// 	Main          string `json:"main"`
-// 	Extra         string `json:"extra"`
-// 	Completionist string `json:"completionist"`
-// }
 
 func (a *App) HowlongtobeatRequest(search string) interface{} {
 	// spaceToPorcent := strings.ReplaceAll(search, " ", "%20")

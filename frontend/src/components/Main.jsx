@@ -81,7 +81,12 @@ function Main() {
   const handlePlay = async (gameName, name, path, id) => {
     Play(name, path)
 
-    CheckRunningProcess(name, parseInt(id))
+    const now = new Date()
+
+    let today = format(now.getTime() + 0 * 24 * 60 * 60 * 1000, 'yyyy-MM-dd')
+    let tomorrow = format(now.getTime() + 1 * 24 * 60 * 60 * 1000, 'yyyy-MM-dd')
+
+    CheckRunningProcess(name, parseInt(id), today, tomorrow)
 
     toast.success(t('toastRunning') + ' ' + gameName)
 
@@ -391,7 +396,7 @@ function Main() {
             marginLeft: '40%',
           }}
         >
-          V1.4.0
+          V1.5.0
         </div>
       </Drawer>
       <Container className="Container">

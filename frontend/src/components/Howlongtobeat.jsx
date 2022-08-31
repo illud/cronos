@@ -302,7 +302,7 @@ function Howlongtobeat() {
             marginLeft: '40%',
           }}
         >
-          V1.4.0
+          V1.5.0
         </div>
       </Drawer>
       <Container className="Container">

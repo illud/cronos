@@ -1,1 +1,1 @@
-start /d "G:\Games\Deathloop (2021)\DEATHLOOP\" Deathloop.exe
+start /d "C:\Users\illud\Desktop\testdto\" main.exe
