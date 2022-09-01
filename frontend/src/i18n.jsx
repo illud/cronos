@@ -75,7 +75,7 @@ const resources = {
       gameplayCompletionist: 'COMPLETE',
       noResultsFound: 'No results found',
       internetCon: 'You are not connected to internet',
-      pcSpecs: 'PC SPECS',
+      pcSpecs: 'Pc Specs',
       Hostname: 'HOSTNAME',
       Platform: 'PLATFORM',
       OsNumber: 'OsNumber',
