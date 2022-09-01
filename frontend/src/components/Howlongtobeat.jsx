@@ -17,6 +17,7 @@ import {
   Clock,
   Search,
   LetterH,
+  Cpu2,
 } from 'tabler-icons-react'
 // import { ToastContainer, toast } from 'react-toastify';
 import toast, { Toaster } from 'react-hot-toast'
@@ -274,11 +275,32 @@ function Howlongtobeat() {
         >
           <LetterH
             size={30}
-            strokeWidth={2}
+            strokeWidth={1}
             color={'white'}
             style={{ marginTop: '-6px' }}
           />{' '}
           HowLongToBeat
+        </Button>
+
+        <br></br>
+        <br></br>
+        <Button
+          style={{
+            color: 'white',
+            float: 'left',
+            marginLeft: '46px',
+            background: 'transparent',
+            borderColor: 'transparent',
+          }}
+          onClick={() => history.push('/pcspecs')}
+        >
+          <Cpu2
+            size={30}
+            strokeWidth={1}
+            color={'white'}
+            style={{ marginTop: '-6px' }}
+          />{' '}
+          {t('pcSpecs')}
         </Button>
 
         <hr
@@ -302,7 +324,7 @@ function Howlongtobeat() {
             marginLeft: '40%',
           }}
         >
-          V1.5.0
+          V1.6.0
         </div>
       </Drawer>
       <Container className="Container">

@@ -14,10 +14,10 @@
     !define INFO_PRODUCTNAME "Cronos"
 !endif
 !ifndef INFO_PRODUCTVERSION
-    !define INFO_PRODUCTVERSION "1.5.0"
+    !define INFO_PRODUCTVERSION "1.6.0"
 !endif
 !ifndef INFO_COPYRIGHT
-    !define INFO_COPYRIGHT "Copyright@2022 Alejandro Castillo Valdes"
+    !define INFO_COPYRIGHT "Copyright@2022 Alejandro Castillo Valdés"
 !endif
 !ifndef PRODUCT_EXECUTABLE
     !define PRODUCT_EXECUTABLE "${INFO_PROJECTNAME}.exe"

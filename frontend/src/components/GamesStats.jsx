@@ -10,6 +10,7 @@ import {
   DeviceDesktop,
   Clock,
   LetterH,
+  Cpu2,
 } from 'tabler-icons-react'
 import { useHistory } from 'react-router-dom'
 // import testedGamesJson from './testedgames.json'
@@ -355,11 +356,32 @@ function GamesStats() {
         >
           <LetterH
             size={30}
-            strokeWidth={2}
+            strokeWidth={1}
             color={'white'}
             style={{ marginTop: '-6px' }}
           />{' '}
           HowLongToBeat
+        </Button>
+
+        <br></br>
+        <br></br>
+        <Button
+          style={{
+            color: 'white',
+            float: 'left',
+            marginLeft: '46px',
+            background: 'transparent',
+            borderColor: 'transparent',
+          }}
+          onClick={() => history.push('/pcspecs')}
+        >
+          <Cpu2
+            size={30}
+            strokeWidth={1}
+            color={'white'}
+            style={{ marginTop: '-6px' }}
+          />{' '}
+          {t('pcSpecs')}
         </Button>
 
         <hr
@@ -383,7 +405,7 @@ function GamesStats() {
             marginLeft: '40%',
           }}
         >
-          V1.5.0
+          V1.6.0
         </div>
       </Drawer>
       <div style={{ marginLeft: '320px' }}>

@@ -7,8 +7,12 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"regexp"
+	"strconv"
+	"strings"
 	"syscall"
 	"time"
+	"unsafe"
 
 	"github.com/robfig/cron/v3"
 
@@ -19,6 +23,11 @@ import (
 	"github.com/wailsapp/wails/v2/pkg/runtime"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
+
+	"github.com/shirou/gopsutil/mem"
+	"github.com/shirou/gopsutil/v3/cpu"
+	"github.com/shirou/gopsutil/v3/host"
+	"golang.org/x/sys/windows"
 )
 
 //go:embed frontend/dist
@@ -352,4 +361,69 @@ func connected() (ok bool) {
 		return false
 	}
 	return true
+}
+
+// SysInfo saves the system information
+type SysInfo struct {
+	Hostname  string `bson:hostname`
+	Platform  string `bson:platform`
+	OsNumber  string `bson:osNumber`
+	CPU       string `bson:cpu`
+	GPU       string `bson:gpu`
+	RAM       string `bson:ram`
+	Disk      int64  `bson:disk`
+	MAINBOARD string `bson:mainboard`
+}
+
+func (a *App) Pcspecs() SysInfo {
+	hostStat, _ := host.Info()
+	cpuStat, _ := cpu.Info()
+	vmStat, _ := mem.VirtualMemory()
+	// diskStat, _ := disk.Usage("\\") // If you're in Unix change this "\\" for "/"
+
+	info := new(SysInfo)
+
+	//Extract os number
+	str1 := hostStat.Platform
+	re := regexp.MustCompile(`[-]?\d[\d,]*[\.]?[\d{2}]*`)
+
+	submatchall := re.FindAllString(str1, -1)
+	info.Hostname = hostStat.Hostname
+	info.Platform = hostStat.Platform
+	info.OsNumber = submatchall[0]
+	info.CPU = cpuStat[0].ModelName
+	info.RAM = strconv.FormatUint(vmStat.Total/1024/1024, 10)[0:2]
+
+	// info.Disk = diskStat.Total / 1024 / 1024 / 1e+9
+
+	// fmt.Printf("%+v\n", info)
+
+	// gets GPU info
+	videoController := exec.Command("cmd", "/C", "wmic path win32_VideoController get name")
+	videoController.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+	videoControllerHistory, _ := videoController.Output()
+	pcGPU := strings.Replace(string(videoControllerHistory), "Name", "", -1)
+	pcGPUString := strings.Replace(pcGPU, "LuminonCore IDDCX Adapter", "", -1)
+	info.GPU = pcGPUString
+
+	// gets MAINBOARD info
+	mainBoard := exec.Command("cmd", "/C", "wmic path win32_BaseBoard get Product")
+	mainBoard.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+	mainBoardHistorys, _ := mainBoard.Output()
+	mainBoardString := strings.Replace(string(mainBoardHistorys), "Product", "", -1)
+	info.MAINBOARD = mainBoardString
+
+	h := windows.MustLoadDLL("kernel32.dll")
+	c := h.MustFindProc("GetDiskFreeSpaceExW")
+
+	var freeBytes int64
+
+	_, _, err := c.Call(uintptr(unsafe.Pointer(windows.StringToUTF16Ptr("C:"))),
+		uintptr(unsafe.Pointer(&freeBytes)))
+	if err != nil {
+		fmt.Println(err)
+	}
+	// fmt.Println(freeBytes / 1e+9)
+	info.Disk = freeBytes / 1e+9
+	return *info
 }
