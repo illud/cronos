@@ -243,7 +243,8 @@ func (a *App) FindAll() []AppData {
 
 func (a *App) FindTotalTimePlayed() int64 {
 	var total int64
-	db.Table("app_data").Select("SUM(time)").Where("deleted_at IS NULL").Row().Scan(&total)
+	// db.Table("game_historicals").Select("SUM(time)").Where("deleted_at IS NULL").Row().Scan(&total)
+	db.Table("game_historicals").Select("SUM(time)").Row().Scan(&total)
 	return total
 }
 
