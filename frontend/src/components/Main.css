@@ -26,3 +26,21 @@
 .SearchInput::placeholder {
   color: white;
 }
+
+.barHeight {
+  animation-name: barHeightAnimation;
+  animation-duration: 500ms;
+  animation-fill-mode: forwards;
+}
+
+@keyframes barHeightAnimation {
+  from {
+    /* height: 0px; */
+    transform: scale(0);
+  }
+
+  to {
+    /* height: 38px; */
+    transform: scale(1);
+  }
+}

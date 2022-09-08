@@ -26,6 +26,7 @@ import {
   DeviceGamepad,
   LetterH,
   Cpu2,
+  BrandPatreon,
 } from 'tabler-icons-react'
 // import { ToastContainer, toast } from 'react-toastify';
 import toast, { Toaster } from 'react-hot-toast'
@@ -255,6 +256,14 @@ function Main() {
     }
   }
 
+  const openPatreon = () => {
+    window.open(
+      'https://www.patreon.com/user?u=79481740&utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=creatorshare_creator',
+      '_blank',
+      'noopener,noreferrer',
+    )
+  }
+
   const MINUTE_MS = 20000
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -296,6 +305,7 @@ function Main() {
 				</div> */}
         <br></br>
         <div
+          className="barHeight"
           style={{
             background: '#007bff',
             color: 'white',
@@ -338,7 +348,7 @@ function Main() {
         ></div>
         <Button
           style={{
-            color: 'white',
+            color: '#D9D9D9',
             float: 'left',
             marginLeft: '40px',
             background: 'transparent',
@@ -349,7 +359,7 @@ function Main() {
           <DeviceAnalytics
             size={30}
             strokeWidth={1}
-            color={'white'}
+            color={'#D9D9D9'}
             style={{ marginTop: '-6px' }}
           />{' '}
           {t('stats')}{' '}
@@ -359,7 +369,7 @@ function Main() {
         <br></br>
         <Button
           style={{
-            color: 'white',
+            color: '#D9D9D9',
             float: 'left',
             marginLeft: '46px',
             background: 'transparent',
@@ -370,7 +380,7 @@ function Main() {
           <LetterH
             size={30}
             strokeWidth={1}
-            color={'white'}
+            color={'#D9D9D9'}
             style={{ marginTop: '-6px' }}
           />{' '}
           HowLongToBeat
@@ -380,7 +390,7 @@ function Main() {
         <br></br>
         <Button
           style={{
-            color: 'white',
+            color: '#D9D9D9',
             float: 'left',
             marginLeft: '46px',
             background: 'transparent',
@@ -391,10 +401,31 @@ function Main() {
           <Cpu2
             size={30}
             strokeWidth={1}
-            color={'white'}
+            color={'#D9D9D9'}
             style={{ marginTop: '-6px' }}
           />{' '}
           {t('pcSpecs')}
+        </Button>
+
+        <br></br>
+        <br></br>
+        <Button
+          style={{
+            color: 'white',
+            float: 'left',
+            marginLeft: '49px',
+            background: 'transparent',
+            borderColor: 'transparent',
+          }}
+          onClick={() => openPatreon()}
+        >
+          <BrandPatreon
+            size={28}
+            strokeWidth={1}
+            color={'white'}
+            style={{ marginTop: '-6px' }}
+          />{' '}
+          Patreon
         </Button>
 
         <hr

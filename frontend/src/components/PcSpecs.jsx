@@ -15,6 +15,7 @@ import {
   Rectangle,
   Disc,
   RectangleVertical,
+  BrandPatreon,
 } from 'tabler-icons-react'
 import { useHistory } from 'react-router-dom'
 // import testedGamesJson from './testedgames.json'
@@ -86,6 +87,14 @@ function PcSpecs() {
     }
   }
 
+  const openPatreon = () => {
+    window.open(
+      'https://www.patreon.com/user?u=79481740&utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=creatorshare_creator',
+      '_blank',
+      'noopener,noreferrer',
+    )
+  }
+
   useEffect(() => {
     window.scrollTo(0, 0)
 
@@ -135,7 +144,7 @@ function PcSpecs() {
         ></div>
         <Button
           style={{
-            color: 'white',
+            color: '#D9D9D9',
             float: 'left',
             marginLeft: '40px',
             background: 'transparent',
@@ -146,7 +155,7 @@ function PcSpecs() {
           <DeviceDesktop
             size={30}
             strokeWidth={1}
-            color={'white'}
+            color={'#D9D9D9'}
             style={{ marginTop: '-6px' }}
           />{' '}
           {t('allGames')}{' '}
@@ -168,7 +177,7 @@ function PcSpecs() {
         ></div>
         <Button
           style={{
-            color: 'white',
+            color: '#D9D9D9',
             float: 'left',
             marginLeft: '40px',
             background: 'transparent',
@@ -179,7 +188,7 @@ function PcSpecs() {
           <DeviceAnalytics
             size={30}
             strokeWidth={1}
-            color={'white'}
+            color={'#D9D9D9'}
             style={{ marginTop: '-6px' }}
           />{' '}
           {t('stats')}{' '}
@@ -189,7 +198,7 @@ function PcSpecs() {
         <br></br>
         <Button
           style={{
-            color: 'white',
+            color: '#D9D9D9',
             float: 'left',
             marginLeft: '46px',
             background: 'transparent',
@@ -200,7 +209,7 @@ function PcSpecs() {
           <LetterH
             size={30}
             strokeWidth={1}
-            color={'white'}
+            color={'#D9D9D9'}
             style={{ marginTop: '-6px' }}
           />{' '}
           HowLongToBeat
@@ -209,6 +218,7 @@ function PcSpecs() {
         <br></br>
         <br></br>
         <div
+          className="barHeight"
           style={{
             background: '#007bff',
             color: 'white',
@@ -234,6 +244,27 @@ function PcSpecs() {
             style={{ marginTop: '-6px' }}
           />{' '}
           {t('pcSpecs')}
+        </Button>
+
+        <br></br>
+        <br></br>
+        <Button
+          style={{
+            color: 'white',
+            float: 'left',
+            marginLeft: '49px',
+            background: 'transparent',
+            borderColor: 'transparent',
+          }}
+          onClick={() => openPatreon()}
+        >
+          <BrandPatreon
+            size={28}
+            strokeWidth={1}
+            color={'white'}
+            style={{ marginTop: '-6px' }}
+          />{' '}
+          Patreon
         </Button>
 
         <hr
