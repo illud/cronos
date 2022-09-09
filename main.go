@@ -123,7 +123,8 @@ func createBatFile(executable string, path string) {
 
 	defer f.Close()
 
-	_, err2 := f.WriteString(`start /d "` + path + `" ` + executable + ``)
+	_, err2 := f.WriteString(`start "" "` + path + executable + `"`)
+	// _, err2 := f.WriteString(`start /d "` + path + `" ` + executable + ``) //this causes and error becouse it dosnt recognizes de white spaces in exe
 
 	if err2 != nil {
 		log.Fatal(err2)
