@@ -288,7 +288,7 @@ function PcSpecs() {
             marginLeft: '40%',
           }}
         >
-          V1.6.2
+          v1.6.3
         </div>
       </Drawer>
       <div style={{ marginLeft: '320px' }}>
