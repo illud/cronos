@@ -44,3 +44,11 @@
     transform: scale(1);
   }
 }
+
+.iconHover {
+  color: #c4c4c4;
+}
+
+.btnIconHover:hover > .iconHover {
+  color: #ffffff;
+}

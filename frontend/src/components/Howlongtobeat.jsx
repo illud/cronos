@@ -58,7 +58,10 @@ function Howlongtobeat() {
     setSearchInput(search)
   }
 
-  const handleSearchBtn = async () => {
+  const handleSearchBtn = async (e) => {
+    // if param e prevent else do nothing
+    e ? e.preventDefault() : {}
+
     setIsLoading(true)
     await HowlongtobeatRequest(searchInput).then((result) => {
       if (result || result === null) {
@@ -210,6 +213,7 @@ function Howlongtobeat() {
           }}
         ></div>
         <Button
+          className="btnIconHover"
           style={{
             color: '#D9D9D9',
             float: 'left',
@@ -220,9 +224,10 @@ function Howlongtobeat() {
           onClick={() => history.push('/main')}
         >
           <DeviceDesktop
+            className="iconHover"
             size={30}
             strokeWidth={1}
-            color={'#D9D9D9'}
+            // color={'#D9D9D9'}
             style={{ marginTop: '-6px' }}
           />{' '}
           {t('allGames')}{' '}
@@ -243,6 +248,7 @@ function Howlongtobeat() {
           }}
         ></div>
         <Button
+          className="btnIconHover"
           style={{
             color: '#D9D9D9',
             float: 'left',
@@ -253,9 +259,10 @@ function Howlongtobeat() {
           onClick={() => history.push('/gamesstats')}
         >
           <DeviceAnalytics
+            className="iconHover"
             size={30}
             strokeWidth={1}
-            color={'#D9D9D9'}
+            // color={'#D9D9D9'}
             style={{ marginTop: '-6px' }}
           />{' '}
           {t('stats')}{' '}
@@ -295,6 +302,7 @@ function Howlongtobeat() {
         <br></br>
         <br></br>
         <Button
+          className="btnIconHover"
           style={{
             color: '#D9D9D9',
             float: 'left',
@@ -305,9 +313,10 @@ function Howlongtobeat() {
           onClick={() => history.push('/pcspecs')}
         >
           <Cpu2
+            className="iconHover"
             size={30}
             strokeWidth={1}
-            color={'#D9D9D9'}
+            // color={'#D9D9D9'}
             style={{ marginTop: '-6px' }}
           />{' '}
           {t('pcSpecs')}
@@ -316,8 +325,9 @@ function Howlongtobeat() {
         <br></br>
         <br></br>
         <Button
+          className="btnIconHover"
           style={{
-            color: 'white',
+            color: '#D9D9D9',
             float: 'left',
             marginLeft: '49px',
             background: 'transparent',
@@ -326,9 +336,10 @@ function Howlongtobeat() {
           onClick={() => openPatreon()}
         >
           <BrandPatreon
+            className="iconHover"
             size={28}
             strokeWidth={1}
-            color={'white'}
+            // color={'white'}
             style={{ marginTop: '-6px' }}
           />{' '}
           Patreon
@@ -355,47 +366,49 @@ function Howlongtobeat() {
             marginLeft: '40%',
           }}
         >
-          v1.6.3
+          v1.7.0
         </div>
       </Drawer>
       <Container className="Container">
         <br></br>
         <br></br>
         <div className="Content">
-          <Form.Control
-            aria-label="Small"
-            aria-describedby="inputGroup-sizing-sm"
-            className="SearchInput"
+          <Form onSubmit={(e) => handleSearchBtn(e)}>
+            <Form.Control
+              aria-label="Small"
+              aria-describedby="inputGroup-sizing-sm"
+              className="SearchInput"
+              style={{
+                float: 'left',
+                color: 'white',
+                marginLeft: '5px',
+                background: 'rgba(0, 0, 0, 0.5)',
+                borderColor: 'white',
+                width: '40%',
+                height: '43px',
+              }}
+              placeholder={t('searchGame')}
+              onChange={(e) => handleSearch(e.target.value)}
+              value={searchInput}
+            />
+          </Form>
+          <Button
+            variant="outline-primary"
             style={{
               float: 'left',
               color: 'white',
               marginLeft: '5px',
               background: 'rgba(0, 0, 0, 0.5)',
               borderColor: 'white',
-              width: '40%',
-              height: '43px',
             }}
-            placeholder={t('searchGame')}
-            onChange={(e) => handleSearch(e.target.value)}
-            value={searchInput}
-          />
-          <Button
-            variant="outline-primary"
-            style={{
-              float: 'left',
-              color: 'white',
-              marginLeft: '0px',
-              background: 'rgba(0, 0, 0, 0.5)',
-              borderColor: 'white',
-            }}
-            onClick={() => handleSearchBtn()}
+            onClick={(e) => handleSearchBtn(e)}
           >
             <Search size={30} strokeWidth={1} color={'white'} />
           </Button>
           <br></br>
           <br></br>
           <a style={{ color: '#FFFFFF', float: 'left', marginLeft: '5px' }}>
-            Hours data sourced from{' '}
+            {t('howLontTobeatSourced')}{' '}
             <a
               style={{ color: '#FFFFFF' }}
               href="https://howlongtobeat.com/"

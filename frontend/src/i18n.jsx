@@ -84,6 +84,7 @@ const resources = {
       RAM: 'RAM',
       Disk: 'Disk',
       MAINBOARD: 'MAINBOARD',
+      howLontTobeatSourced: 'Hours data sourced from',
     },
   },
   es: {
@@ -146,6 +147,7 @@ const resources = {
       RAM: 'RAM',
       Disk: 'DICO PRINCIPAL',
       MAINBOARD: 'PLACA BASE',
+      howLontTobeatSourced: 'Datos de horas obtenidos de',
     },
   },
 }

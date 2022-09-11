@@ -6,13 +6,13 @@
   "frontend:dev:watcher": "npm run dev",
   "frontend:dev:serverUrl": "http://localhost:3000",
   "author": {
-    "name": "saturnavt",
+    "name": "Alejandro Castillo Valdés",
     "email": "saturnavt@gmail.com"
   },
   "Info": {
     "companyName": "Saturnavt",
     "productName": "Cronos",
-    "productVersion": "1.6.3",
+    "productVersion": "1.7.0",
     "copyright": "Copyright@2022 Alejandro Castillo Valdés",
     "comments": "Built using Wails 2 (https://wails.io)"
   }

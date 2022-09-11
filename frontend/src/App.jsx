@@ -8,9 +8,6 @@ import PcSpecs from './components/PcSpecs'
 import deathloop from './public/deathloop.jpg'
 import deathloop_2 from './public/deathloop_2.jpg'
 import mh from './public/mh.jpg'
-import mh_3 from './public/mh_3.jpg'
-import re from './public/re.jpg'
-import re2 from './public/re2.jpg'
 import dishonored from './public/dishonored.jpg'
 import dishonored_2 from './public/dishonored_2.jpg'
 import katalyzt from './public/katalyzt.png'
@@ -24,9 +21,9 @@ function App() {
       deathloop,
       deathloop_2,
       mh,
-      mh_3,
-      re,
-      re2,
+      // mh_3,
+      // re,
+      // re2,
       dishonored,
       dishonored_2,
       katalyzt,

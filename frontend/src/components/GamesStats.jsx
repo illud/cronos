@@ -19,6 +19,7 @@ import MetricCard from 'react-metric-card'
 import 'react-metric-card/dist/index.css'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import Image from 'react-bootstrap/Image'
 import {
   FindAll,
   FindTotalTimePlayed,
@@ -237,6 +238,30 @@ function GamesStats() {
     }
   }
 
+  const ifImgExists = (image) => {
+    if (image === '' || image === undefined || image === null) {
+      return (
+        <Image
+          // src={''}
+          roundedCircle
+          width={24}
+          height={24}
+          style={{ color: 'white', borderWidth: '23px' }}
+        />
+      )
+    } else {
+      return (
+        <Image
+          src={image}
+          roundedCircle
+          width={24}
+          height={24}
+          style={{ color: 'white', borderWidth: '23px' }}
+        />
+      )
+    }
+  }
+
   const openPatreon = () => {
     window.open(
       'https://www.patreon.com/user?u=79481740&utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=creatorshare_creator',
@@ -301,6 +326,7 @@ function GamesStats() {
           }}
         ></div>
         <Button
+          className="btnIconHover"
           style={{
             color: '#D9D9D9',
             float: 'left',
@@ -311,9 +337,10 @@ function GamesStats() {
           onClick={() => history.push('/main')}
         >
           <DeviceDesktop
+            className="iconHover"
             size={30}
             strokeWidth={1}
-            color={'#D9D9D9'}
+            // color={'#D9D9D9'}
             style={{ marginTop: '-6px' }}
           />{' '}
           {t('allGames')}{' '}
@@ -355,6 +382,7 @@ function GamesStats() {
         <br></br>
         <br></br>
         <Button
+          className="btnIconHover"
           style={{
             color: '#D9D9D9',
             float: 'left',
@@ -365,9 +393,10 @@ function GamesStats() {
           onClick={() => history.push('/howlongtobeat')}
         >
           <LetterH
+            className="iconHover"
             size={30}
             strokeWidth={1}
-            color={'#D9D9D9'}
+            // color={'#D9D9D9'}
             style={{ marginTop: '-6px' }}
           />{' '}
           HowLongToBeat
@@ -376,6 +405,7 @@ function GamesStats() {
         <br></br>
         <br></br>
         <Button
+          className="btnIconHover"
           style={{
             color: '#D9D9D9',
             float: 'left',
@@ -386,9 +416,10 @@ function GamesStats() {
           onClick={() => history.push('/pcspecs')}
         >
           <Cpu2
+            className="iconHover"
             size={30}
             strokeWidth={1}
-            color={'#D9D9D9'}
+            // color={'#D9D9D9'}
             style={{ marginTop: '-6px' }}
           />{' '}
           {t('pcSpecs')}
@@ -397,8 +428,9 @@ function GamesStats() {
         <br></br>
         <br></br>
         <Button
+          className="btnIconHover"
           style={{
-            color: 'white',
+            color: '#D9D9D9',
             float: 'left',
             marginLeft: '49px',
             background: 'transparent',
@@ -407,9 +439,10 @@ function GamesStats() {
           onClick={() => openPatreon()}
         >
           <BrandPatreon
+            className="iconHover"
             size={28}
             strokeWidth={1}
-            color={'white'}
+            // color={'#D9D9D9'}
             style={{ marginTop: '-6px' }}
           />{' '}
           Patreon
@@ -436,7 +469,7 @@ function GamesStats() {
             marginLeft: '40%',
           }}
         >
-          v1.6.3
+          v1.7.0
         </div>
       </Drawer>
       <div style={{ marginLeft: '320px' }}>
@@ -580,11 +613,21 @@ function GamesStats() {
           >
             <thead>
               <tr>
-                <th style={{ color: 'white' }}>{t('game')}</th>
-                <th style={{ color: 'white' }}>{t('day')}</th>
-                <th style={{ color: 'white' }}>{t('playedToday')}</th>
-                <th style={{ color: 'white' }}>{t('playedLastWeek')}</th>
-                <th style={{ color: 'white' }}>{t('dateAndTime')}</th>
+                <th style={{ color: 'white', textAlign: 'left' }}>
+                  {t('game')}
+                </th>
+                <th style={{ color: 'white', textAlign: 'left' }}>
+                  {t('day')}
+                </th>
+                <th style={{ color: 'white', textAlign: 'left' }}>
+                  {t('playedToday')}
+                </th>
+                <th style={{ color: 'white', textAlign: 'left' }}>
+                  {t('playedLastWeek')}
+                </th>
+                <th style={{ color: 'white', textAlign: 'left' }}>
+                  {t('dateAndTime')}
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -594,19 +637,49 @@ function GamesStats() {
                 totalGamePlayedLastWeek.map((game, index) => {
                   return (
                     <tr key={index}>
-                      <td style={{ color: 'white', fontSize: '18px' }}>
-                        {game.Name}
+                      <td
+                        style={{
+                          color: 'white',
+                          fontSize: '18px',
+                          textAlign: 'left',
+                        }}
+                      >
+                        {ifImgExists(game.Image)} {''} {game.Name}
                       </td>
-                      <td style={{ color: 'white', fontSize: '18px' }}>
+                      <td
+                        style={{
+                          color: 'white',
+                          fontSize: '18px',
+                          textAlign: 'left',
+                        }}
+                      >
                         {getDayOfWeek(new Date(game.UpdatedAt).getDay())}
                       </td>
-                      <td style={{ color: 'white', fontSize: '18px' }}>
+                      <td
+                        style={{
+                          color: 'white',
+                          fontSize: '18px',
+                          textAlign: 'left',
+                        }}
+                      >
                         {secondsToTime(totalTimePlayedGameToday[index])}{' '}
                       </td>
-                      <td style={{ color: 'white', fontSize: '18px' }}>
+                      <td
+                        style={{
+                          color: 'white',
+                          fontSize: '18px',
+                          textAlign: 'left',
+                        }}
+                      >
                         {secondsToTime(totalTimePlayedGameThisWeek[index])}{' '}
                       </td>
-                      <td style={{ color: 'white', fontSize: '18px' }}>
+                      <td
+                        style={{
+                          color: 'white',
+                          fontSize: '18px',
+                          textAlign: 'left',
+                        }}
+                      >
                         {format(
                           new Date(game.UpdatedAt),
                           'yyyy/MM/dd hh:mm aaa',

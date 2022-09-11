@@ -143,6 +143,7 @@ function PcSpecs() {
           }}
         ></div>
         <Button
+          className="btnIconHover"
           style={{
             color: '#D9D9D9',
             float: 'left',
@@ -153,9 +154,10 @@ function PcSpecs() {
           onClick={() => history.push('/main')}
         >
           <DeviceDesktop
+            className="iconHover"
             size={30}
             strokeWidth={1}
-            color={'#D9D9D9'}
+            // color={'#D9D9D9'}
             style={{ marginTop: '-6px' }}
           />{' '}
           {t('allGames')}{' '}
@@ -176,6 +178,7 @@ function PcSpecs() {
           }}
         ></div>
         <Button
+          className="btnIconHover"
           style={{
             color: '#D9D9D9',
             float: 'left',
@@ -186,9 +189,10 @@ function PcSpecs() {
           onClick={() => history.push('/gamesstats')}
         >
           <DeviceAnalytics
+            className="iconHover"
             size={30}
             strokeWidth={1}
-            color={'#D9D9D9'}
+            // color={'#D9D9D9'}
             style={{ marginTop: '-6px' }}
           />{' '}
           {t('stats')}{' '}
@@ -197,6 +201,7 @@ function PcSpecs() {
         <br></br>
         <br></br>
         <Button
+          className="btnIconHover"
           style={{
             color: '#D9D9D9',
             float: 'left',
@@ -207,9 +212,10 @@ function PcSpecs() {
           onClick={() => history.push('/howlongtobeat')}
         >
           <LetterH
+            className="iconHover"
             size={30}
             strokeWidth={1}
-            color={'#D9D9D9'}
+            // color={'#D9D9D9'}
             style={{ marginTop: '-6px' }}
           />{' '}
           HowLongToBeat
@@ -249,8 +255,9 @@ function PcSpecs() {
         <br></br>
         <br></br>
         <Button
+          className="btnIconHover"
           style={{
-            color: 'white',
+            color: '#D9D9D9',
             float: 'left',
             marginLeft: '49px',
             background: 'transparent',
@@ -259,9 +266,10 @@ function PcSpecs() {
           onClick={() => openPatreon()}
         >
           <BrandPatreon
+            className="iconHover"
             size={28}
             strokeWidth={1}
-            color={'white'}
+            // color={'white'}
             style={{ marginTop: '-6px' }}
           />{' '}
           Patreon
@@ -288,7 +296,7 @@ function PcSpecs() {
             marginLeft: '40%',
           }}
         >
-          v1.6.3
+          v1.7.0
         </div>
       </Drawer>
       <div style={{ marginLeft: '320px' }}>

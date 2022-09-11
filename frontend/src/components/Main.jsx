@@ -43,6 +43,7 @@ import {
   Update,
   HowlongtobeatRequest,
 } from '../../wailsjs/go/main/App'
+import ReactLoading from 'react-loading'
 
 function Main() {
   let history = useHistory()
@@ -60,6 +61,8 @@ function Main() {
   const [apps, setApps] = useState([])
   const [gameId, setGameId] = useState()
   const [gameName, setGameName] = useState()
+
+  const [isLoading, setIsLoading] = useState(false)
 
   const [circleCheck, setCircleCheck] = useState('white')
 
@@ -114,6 +117,8 @@ function Main() {
   }
 
   const handleCreate = async () => {
+    setIsLoading(true)
+
     let image
     let findGame = await handleSearchBtn(name)
     if (findGame === 'No games found') {
@@ -133,7 +138,7 @@ function Main() {
         setCircleCheck('white')
         await handleFindAll()
       }, 500)
-
+      setIsLoading(false)
       setModalShow(false)
       toast.success(t('toastSuccessfulCreation'))
     }
@@ -201,6 +206,7 @@ function Main() {
   }
 
   const handleModalCreate = () => {
+    setIsLoading(false)
     setFile('')
     setName('')
     setPath('')
@@ -347,6 +353,7 @@ function Main() {
           }}
         ></div>
         <Button
+          className="btnIconHover"
           style={{
             color: '#D9D9D9',
             float: 'left',
@@ -357,9 +364,10 @@ function Main() {
           onClick={() => history.push('/gamesstats')}
         >
           <DeviceAnalytics
+            className="iconHover"
             size={30}
             strokeWidth={1}
-            color={'#D9D9D9'}
+            // color={'#D9D9D9'}
             style={{ marginTop: '-6px' }}
           />{' '}
           {t('stats')}{' '}
@@ -368,6 +376,7 @@ function Main() {
         <br></br>
         <br></br>
         <Button
+          className="btnIconHover"
           style={{
             color: '#D9D9D9',
             float: 'left',
@@ -378,9 +387,10 @@ function Main() {
           onClick={() => history.push('/howlongtobeat')}
         >
           <LetterH
+            className="iconHover"
             size={30}
             strokeWidth={1}
-            color={'#D9D9D9'}
+            // color={'#D9D9D9'}
             style={{ marginTop: '-6px' }}
           />{' '}
           HowLongToBeat
@@ -389,6 +399,7 @@ function Main() {
         <br></br>
         <br></br>
         <Button
+          className="btnIconHover"
           style={{
             color: '#D9D9D9',
             float: 'left',
@@ -399,9 +410,10 @@ function Main() {
           onClick={() => history.push('/pcspecs')}
         >
           <Cpu2
+            className="iconHover"
             size={30}
             strokeWidth={1}
-            color={'#D9D9D9'}
+            // color={'#D9D9D9'}
             style={{ marginTop: '-6px' }}
           />{' '}
           {t('pcSpecs')}
@@ -410,8 +422,9 @@ function Main() {
         <br></br>
         <br></br>
         <Button
+          className="btnIconHover"
           style={{
-            color: 'white',
+            color: '#D9D9D9',
             float: 'left',
             marginLeft: '49px',
             background: 'transparent',
@@ -420,9 +433,10 @@ function Main() {
           onClick={() => openPatreon()}
         >
           <BrandPatreon
+            className="iconHover"
             size={28}
             strokeWidth={1}
-            color={'white'}
+            // color={'white'}
             style={{ marginTop: '-6px' }}
           />{' '}
           Patreon
@@ -449,7 +463,7 @@ function Main() {
             marginLeft: '40%',
           }}
         >
-          v1.6.3
+          v1.7.0
         </div>
       </Drawer>
       <Container className="Container">
@@ -753,16 +767,26 @@ function Main() {
             >
               {t('closeBtn')}
             </Button>
-            <Button
-              style={{
-                background: 'transparent',
-                color: 'white',
-                borderColor: 'white',
-              }}
-              onClick={() => handleCreate()}
-            >
-              {t('addBtn')}
-            </Button>
+
+            {isLoading ? (
+              <ReactLoading
+                type={'spin'}
+                color={'white'}
+                height={24}
+                width={24}
+              />
+            ) : (
+              <Button
+                style={{
+                  background: 'transparent',
+                  color: 'white',
+                  borderColor: 'white',
+                }}
+                onClick={() => handleCreate()}
+              >
+                {t('addBtn')}
+              </Button>
+            )}
           </Modal.Footer>
         </Modal>
 

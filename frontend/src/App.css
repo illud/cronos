@@ -74,3 +74,6 @@
 }
 
 /*End of the scrollbar*/
+button:focus {
+  box-shadow: none !important;
+}

@@ -1,1 +1,1 @@
-start "" "G:\SteamLibrary\steamapps\common\Hunt Showdown\bin\win_x64\HuntGame.exe"
+start /d "C:\Users\illud\Desktop\testdto\" main.exe
