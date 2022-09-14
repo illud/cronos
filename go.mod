@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/robfig/cron/v3 v3.0.1
-	github.com/saturnavt/howlongtobeat v0.0.0-20220830203918-094434ce9566
+	github.com/saturnavt/howlongtobeat v0.0.0-20220914224910-02744dbb178b
 	github.com/shirou/gopsutil v3.21.11+incompatible
 	github.com/shirou/gopsutil/v3 v3.22.8
 	github.com/wailsapp/wails/v2 v2.0.0-beta.44.2
@@ -14,8 +14,6 @@ require (
 )
 
 require (
-	github.com/PuerkitoBio/goquery v1.8.0 // indirect
-	github.com/andybalholm/cascadia v1.3.1 // indirect
 	github.com/bep/debounce v1.2.1 // indirect
 	github.com/go-ole/go-ole v1.2.6 // indirect
 	github.com/google/uuid v1.1.2 // indirect

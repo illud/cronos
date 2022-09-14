@@ -450,21 +450,21 @@ function Howlongtobeat() {
                         {howlongtobeat.title}
                       </Card.Title>
                       <Card.Text style={{ color: 'white' }}>
-                        {handleTimeTiles(howlongtobeat.main)} <br></br>
+                        {t('gameplayMain')} <br></br>
                         <a style={{ fontSize: '20px' }}>
-                          {removeTitlesFromStrings(howlongtobeat.main)}
+                          {howlongtobeat.main}
                         </a>
                       </Card.Text>
                       <Card.Text style={{ color: 'white' }}>
-                        {handleTimeTiles(howlongtobeat.extra)} <br></br>
+                        {t('gameplayMainExtra')} <br></br>
                         <a style={{ fontSize: '20px' }}>
-                          {removeTitlesFromStrings(howlongtobeat.extra)}
+                          {howlongtobeat.extra}
                         </a>
                       </Card.Text>
                       <Card.Text style={{ color: 'white' }}>
-                        {handleTimeTiles(howlongtobeat.completionist)} <br></br>
+                        {t('gameplayCompletionist')} <br></br>
                         <a style={{ fontSize: '20px' }}>
-                          {removeTitlesFromStrings(howlongtobeat.completionist)}
+                          {howlongtobeat.completionist}
                         </a>
                       </Card.Text>
                     </Card.Body>
