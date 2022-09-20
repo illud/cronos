@@ -451,9 +451,7 @@ function Howlongtobeat() {
                       </Card.Title>
                       <Card.Text style={{ color: 'white' }}>
                         {t('gameplayMain')} <br></br>
-                        <a style={{ fontSize: '20px' }}>
-                          {howlongtobeat.main}
-                        </a>
+                        <a style={{ fontSize: '20px' }}>{howlongtobeat.main}</a>
                       </Card.Text>
                       <Card.Text style={{ color: 'white' }}>
                         {t('gameplayMainExtra')} <br></br>

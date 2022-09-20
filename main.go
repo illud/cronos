@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"embed"
 	"fmt"
 	"log"
@@ -242,6 +243,13 @@ func (a *App) FindAll() []AppData {
 	return appData
 }
 
+func (a *App) FindOne(gameId int64) AppData {
+	// Read
+	var appData AppData
+	db.Where("id = ?", gameId).Find(&appData)
+	return appData
+}
+
 func (a *App) FindTotalTimePlayed() int64 {
 	var total int64
 	// db.Table("game_historicals").Select("SUM(time)").Where("deleted_at IS NULL").Row().Scan(&total)
@@ -365,6 +373,84 @@ func connected() (ok bool) {
 		return false
 	}
 	return true
+}
+
+type WeekDay struct {
+	Yesterday string `json:"yesterday"`
+	Today     string `json:"today"`
+}
+
+type Datas struct {
+	CountOne   int64 `json:"countOne"`
+	CountTwo   int64 `json:"countTwo"`
+	CountThree int64 `json:"countThree"`
+	CountFour  int64 `json:"countFour"`
+	CountFive  int64 `json:"countFive"`
+	CountSix   int64 `json:"countSix"`
+	CountSeven int64 `json:"countSeven"`
+}
+
+func (a *App) TimePlayedByDayThisWeek(one WeekDay, two WeekDay, three WeekDay, four WeekDay, five WeekDay, six WeekDay, seven WeekDay, gameId int) Datas {
+
+	var countOne sql.NullInt64
+	var countTwo sql.NullInt64
+	var countThree sql.NullInt64
+	var countFour sql.NullInt64
+	var countFive sql.NullInt64
+	var countSix sql.NullInt64
+	var countSeven sql.NullInt64
+
+	oneDay := db.Raw("SELECT SUM(time) FROM game_historicals WHERE created_at >= ? AND created_at <= ? AND game_id = ?", one.Yesterday, one.Today, gameId).Scan(&countOne)
+
+	if oneDay != nil {
+		fmt.Println(oneDay)
+	}
+
+	twoDay := db.Raw("SELECT SUM(time) FROM game_historicals WHERE created_at >= ? AND created_at <= ? AND game_id = ?", two.Yesterday, two.Today, gameId).Scan(&countTwo)
+
+	if twoDay != nil {
+		fmt.Println(twoDay)
+	}
+
+	threDay := db.Raw("SELECT SUM(time) FROM game_historicals WHERE created_at >= ? AND created_at <= ? AND game_id = ?", three.Yesterday, three.Today, gameId).Scan(&countThree)
+
+	if threDay != nil {
+		fmt.Println(threDay)
+	}
+
+	fourDay := db.Raw("SELECT SUM(time) FROM game_historicals WHERE created_at >= ? AND created_at <= ? AND game_id = ?", four.Yesterday, four.Today, gameId).Scan(&countFour)
+
+	if fourDay != nil {
+		fmt.Println(fourDay)
+	}
+
+	fiveDay := db.Raw("SELECT SUM(time) FROM game_historicals WHERE created_at >= ? AND created_at <= ? AND game_id = ?", five.Yesterday, five.Today, gameId).Scan(&countFive)
+
+	if fiveDay != nil {
+		fmt.Println(fiveDay)
+	}
+
+	sixDay := db.Raw("SELECT SUM(time) FROM game_historicals WHERE created_at >= ? AND created_at <= ? AND game_id = ?", six.Yesterday, six.Today, gameId).Scan(&countSix)
+
+	if sixDay != nil {
+		fmt.Println(sixDay)
+	}
+
+	sevenDay := db.Raw("SELECT SUM(time) FROM game_historicals WHERE created_at >= ? AND created_at <= ? AND game_id = ?", seven.Yesterday, seven.Today, gameId).Scan(&countSeven)
+
+	if sevenDay != nil {
+		fmt.Println(sevenDay)
+	}
+
+	return Datas{
+		countOne.Int64, countTwo.Int64,
+		countThree.Int64,
+		countFour.Int64,
+		countFive.Int64,
+		countSix.Int64,
+		countSeven.Int64,
+	}
+
 }
 
 // SysInfo saves the system information

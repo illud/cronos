@@ -27,6 +27,7 @@ import {
   LetterH,
   Cpu2,
   BrandPatreon,
+  ChartBar,
 } from 'tabler-icons-react'
 // import { ToastContainer, toast } from 'react-toastify';
 import toast, { Toaster } from 'react-hot-toast'
@@ -44,6 +45,7 @@ import {
   HowlongtobeatRequest,
 } from '../../wailsjs/go/main/App'
 import ReactLoading from 'react-loading'
+import Image from 'react-bootstrap/Image'
 
 function Main() {
   let history = useHistory()
@@ -246,19 +248,43 @@ function Main() {
     //return `${h}:${m}:${s}`;
   }
 
-  const ifImgExists = (image, gameName) => {
+  const goToGameDetails = (gameExecutable, gamePath, gameName, gameId) => {
+    localStorage.setItem('gameExecutable', gameExecutable)
+    localStorage.setItem('gamePath', gamePath)
+    localStorage.setItem('gameName', gameName)
+    localStorage.setItem('gameId', gameId)
+    history.push('/GameDetails')
+  }
+
+  const ifImgExists = (image, gameExecutable, gamePath, gameName, gameId) => {
     if (image === '' || image === undefined || image === null) {
       return (
-        <div>
-          {/* <Card.Img
+        <Image
+          className="gameImage"
           variant="top"
-          style={{ width: '45%' }}
-          src={"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="}
-        /> */}
-        </div>
+          width={'45%'}
+          // height={'100%'}
+          src={
+            'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAHCCAQAAAD/OjwMAAADI0lEQVR42u3SQREAAAjDsM2/B7Righ+JhF6bCZyrsTAWxsJYYCyMhbHAWBgLY4GxMBbGAmNhLIwFxsJYGAuMhbEwFhgLY2EsMBbGwlhgLIyFscBYGAtjgbEwFsYCY2EsjAXGwlgYC4yFsTAWGAtjYSwwFsbCWGAsjIWxwFgYC2OBsTAWxgJjYSyMBcbCWBgLjIWxMBYYC2NhLDAWxsJYYCyMhbHAWBgLY4GxMBbGAmNhLIyFsUTAWBgLY4GxMBbGAmNhLIwFxsJYGAuMhbEwFhgLY2EsMBbGwlhgLIyFscBYGAtjgbEwFsYCY2EsjAXGwlgYC4yFsTAWGAtjYSwwFsbCWGAsjIWxwFgYC2OBsTAWxgJjYSyMBcbCWBgLjIWxMBYYC2NhLDAWxsJYYCyMhbHAWBgLY4GxMBbGAmNhLIwFxsJYGAtjGQtjYSyMBcbCWBgLjIWxMBYYC2NhLDAWxsJYYCyMhbHAWBgLY4GxMBbGAmNhLIwFxsJYGAuMhbEwFhgLY2EsMBbGwlhgLIyFscBYGAtjgbEwFsYCY2EsjAXGwlgYC4yFsTAWGAtjYSwwFsbCWGAsjIWxwFgYC2OBsTAWxgJjYSyMBcbCWBgLjIWxMBYYC2NhLIxlLIyFsTAWGAtjYSwwFsbCWGAsjIWxwFgYC2OBsTAWxgJjYSyMBcbCWBgLjIWxMBYYC2NhLDAWxsJYYCyMhbHAWBgLY4GxMBbGAmNhLIwFxsJYGAuMhbEwFhgLY2EsMBbGwlhgLIyFscBYGAtjgbEwFsYCY2EsjAXGwlgYC4yFsTAWGAtjYSwwFsbCWGAsjIWxwFgYC2NhLBEwFsbCWGAsjIWxwFgYC2OBsTAWxgJjYSyMBcbCWBgLjIWxMBYYC2NhLDAWxsJYYCyMhbHAWBgLY4GxMBbGAmNhLIwFxsJYGAuMhbEwFhgLY2EsMBbGwlhgLIyFscBYGAtjgbEwFsYCY2EsjAXGwlgYC4yFsTAWGAtjYSwwFsbCWGAsjIWxwFgYC2OBsTAWxsJYxsJYGAtjgbEwFsYCY2EsjAXGwlgYC4yFsTAWGAtj8csCAzEXjttcMXQAAAAASUVORK5CYII='
+          }
+          onClick={() =>
+            goToGameDetails(gameExecutable, gamePath, gameName, gameId)
+          }
+        />
       )
     } else {
-      return <Card.Img variant="top" style={{ width: '45%' }} src={image} />
+      return (
+        <Image
+          className="gameImage"
+          variant="top"
+          width={'45%'}
+          // height={'100%'}
+          src={image}
+          onClick={() =>
+            goToGameDetails(gameExecutable, gamePath, gameName, gameId)
+          }
+        />
+      )
     }
   }
 
@@ -525,8 +551,38 @@ function Main() {
             {apps.map((app, index) => (
               <Col key={index}>
                 <Card className="Cards" style={{ flexDirection: 'row' }}>
-                  {ifImgExists(app.Image, app.Name)}
-
+                  {ifImgExists(
+                    app.Image,
+                    app.Executable,
+                    app.Path,
+                    app.Name,
+                    app.Id,
+                  )}
+                  <Button
+                    className="btnMore"
+                    variant="outline-primary"
+                    style={{
+                      width: '45%',
+                      float: 'left',
+                      color: 'white',
+                      marginLeft: '0px',
+                      background: '#007bff',
+                      borderColor: '#007bff',
+                      position: 'absolute',
+                      top: '45%',
+                    }}
+                    onClick={() =>
+                      goToGameDetails(
+                        app.Executable,
+                        app.Path,
+                        app.Name,
+                        app.Id,
+                      )
+                    }
+                  >
+                    <ChartBar size={30} strokeWidth={1} color={'white'} />{' '}
+                    {t('stats')}
+                  </Button>
                   <Card.Body style={{ marginTop: '-30px' }}>
                     <br></br>
                     <ButtonGroup
@@ -600,6 +656,7 @@ function Main() {
                     <Card.Title style={{ color: 'white' }}>
                       {app.Name}
                     </Card.Title>
+
                     <Card.Text style={{ color: 'white' }}>
                       {t('totalPlayTime')} <br></br>
                       <p style={{ fontSize: '20px' }}>

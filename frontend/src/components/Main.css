@@ -16,7 +16,19 @@
   /* border-color: "white" !important;
   border: 1px !important; */
   /* border-color: white !important; */
-  width: '80%';
+  width: '100%';
+}
+
+.gameImage {
+  cursor: pointer;
+}
+
+.btnMore {
+  display: none;
+}
+
+.Cards:hover .btnMore {
+  display: block;
 }
 
 .Content {

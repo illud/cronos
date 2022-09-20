@@ -5,6 +5,7 @@ import Main from './components/Main'
 import GamesStats from './components/GamesStats'
 import Howlongtobeat from './components/Howlongtobeat'
 import PcSpecs from './components/PcSpecs'
+import GameDetails from './components/GameDetails'
 import deathloop from './public/deathloop.jpg'
 import deathloop_2 from './public/deathloop_2.jpg'
 import mh from './public/mh.jpg'
@@ -65,6 +66,9 @@ function App() {
             </Route>
             <Route path="/pcspecs">
               <PcSpecs />
+            </Route>
+            <Route path="/GameDetails">
+              <GameDetails />
             </Route>
             <Route path="/">
               <Main />
