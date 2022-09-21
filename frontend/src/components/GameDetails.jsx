@@ -79,6 +79,8 @@ function GameDetails() {
 
   const [tableData, setTableData] = useState([])
 
+  const [playedHoursWeek, setPlayedHoursWeek] = useState()
+
   const [gameData, setGameData] = useState([])
 
   const [gameInfo, setGameInfo] = useState([])
@@ -161,6 +163,18 @@ function GameDetails() {
           secondsToHours(result.countSix),
           secondsToHours(result.countSeven),
         ].reverse(),
+      )
+
+      setPlayedHoursWeek(
+        secondsToHours(
+          result.countOne +
+            result.countTwo +
+            result.countThree +
+            result.countFour +
+            result.countFive +
+            result.countSix +
+            result.countSeven,
+        ),
       )
     })
   }
@@ -398,7 +412,6 @@ function GameDetails() {
           <br></br>
           <br></br>
           <br></br>
-          <br></br>
           <h3 className="title" style={{ color: '#ffffff', fontSize: '35px' }}>
             {gameData[0]}
           </h3>
@@ -459,8 +472,6 @@ function GameDetails() {
                     )} */}
 
           <br></br>
-          <br></br>
-          <br></br>
 
           <Row xs={2} md={2} className="g-4">
             <Col style={{ height: '100px' }}>
@@ -488,10 +499,53 @@ function GameDetails() {
                 cardBgColor="rgba(0, 0, 0, 0.5)"
                 titleColor="white"
                 valueColor="white"
-                value={format(
-                  now.getTime(gameInfo.UpdatedAt),
-                  'yyyy/MM/dd hh:mm aaa',
-                )}
+                value={tableData[6]}
+                // trend={{
+                // 	slope: 1,
+                // 	description: 'Compared to last week',
+                // 	value: '0.5%'
+                // }}
+                title={t('playedTimeToday')}
+                fetching={false}
+                error={null}
+                icon={<Clock size={30} strokeWidth={1} color={'white'} />}
+                iconBgColor="transparent"
+                iconColor="transparent"
+              />
+            </Col>
+
+            <Col style={{ height: '100px' }}>
+              <MetricCard
+                cardBgColor="rgba(0, 0, 0, 0.5)"
+                titleColor="white"
+                valueColor="white"
+                value={playedHoursWeek}
+                // trend={{
+                // 	slope: 1,
+                // 	description: 'Compared to last week',
+                // 	value: '0.5%'
+                // }}
+                title={t('playedLastWeek')}
+                fetching={false}
+                error={null}
+                icon={<Clock size={30} strokeWidth={1} color={'white'} />}
+                iconBgColor="transparent"
+                iconColor="transparent"
+              />
+            </Col>
+
+            <Col style={{ height: '100px' }}>
+              <MetricCard
+                cardBgColor="rgba(0, 0, 0, 0.5)"
+                titleColor="white"
+                valueColor="white"
+                value={new Date(gameInfo.UpdatedAt).toLocaleString(`en-US`, {
+                  year: 'numeric',
+                  month: 'numeric',
+                  day: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit',
+                })}
                 // trend={{
                 // 	slope: 1,
                 // 	description: 'Compared to last week',

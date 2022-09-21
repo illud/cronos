@@ -244,8 +244,8 @@ function GamesStats() {
         <Image
           // src={''}
           roundedCircle
-          width={24}
-          height={24}
+          width={28}
+          height={28}
           style={{ color: 'white', borderWidth: '23px' }}
         />
       )
@@ -254,8 +254,8 @@ function GamesStats() {
         <Image
           src={image}
           roundedCircle
-          width={24}
-          height={24}
+          width={28}
+          height={28}
           style={{ color: 'white', borderWidth: '23px' }}
         />
       )

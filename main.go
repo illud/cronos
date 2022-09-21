@@ -443,7 +443,8 @@ func (a *App) TimePlayedByDayThisWeek(one WeekDay, two WeekDay, three WeekDay, f
 	}
 
 	return Datas{
-		countOne.Int64, countTwo.Int64,
+		countOne.Int64,
+		countTwo.Int64,
 		countThree.Int64,
 		countFour.Int64,
 		countFive.Int64,

@@ -243,7 +243,7 @@ function Main() {
         .toString()
         .padStart(2, '0')
 
-    return h + ' h ' + m + ' m'
+    return h + 'h ' + m + 'm'
     // return h + ':' + m + ':' + s;
     //return `${h}:${m}:${s}`;
   }

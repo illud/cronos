@@ -146,7 +146,7 @@ function Tabler({ tableDatas }) {
             <td
               style={{
                 color: 'white',
-                fontSize: '18px',
+                fontSize: '20px',
                 textAlign: 'left',
               }}
             >
@@ -155,7 +155,7 @@ function Tabler({ tableDatas }) {
             <td
               style={{
                 color: 'white',
-                fontSize: '18px',
+                fontSize: '20px',
                 textAlign: 'left',
               }}
             >
@@ -164,7 +164,7 @@ function Tabler({ tableDatas }) {
             <td
               style={{
                 color: 'white',
-                fontSize: '18px',
+                fontSize: '20px',
                 textAlign: 'left',
               }}
             >
@@ -173,7 +173,7 @@ function Tabler({ tableDatas }) {
             <td
               style={{
                 color: 'white',
-                fontSize: '18px',
+                fontSize: '20px',
                 textAlign: 'left',
               }}
             >
@@ -182,7 +182,7 @@ function Tabler({ tableDatas }) {
             <td
               style={{
                 color: 'white',
-                fontSize: '18px',
+                fontSize: '20px',
                 textAlign: 'left',
               }}
             >
@@ -191,7 +191,7 @@ function Tabler({ tableDatas }) {
             <td
               style={{
                 color: 'white',
-                fontSize: '18px',
+                fontSize: '20px',
                 textAlign: 'left',
               }}
             >
@@ -200,7 +200,7 @@ function Tabler({ tableDatas }) {
             <td
               style={{
                 color: 'white',
-                fontSize: '18px',
+                fontSize: '20px',
                 textAlign: 'left',
               }}
             >
