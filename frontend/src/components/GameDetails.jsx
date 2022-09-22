@@ -18,6 +18,7 @@ import {
   BrandPatreon,
   PlayerPlay,
   DeviceGamepad,
+  Circle,
 } from 'tabler-icons-react'
 
 import toast, { Toaster } from 'react-hot-toast'
@@ -415,6 +416,36 @@ function GameDetails() {
           <h3 className="title" style={{ color: '#ffffff', fontSize: '35px' }}>
             {gameData[0]}
           </h3>
+
+          <br></br>
+
+          <div style={{ marginTop: '-15px' }}>
+            {running ? (
+              <>
+                <Circle
+                  size={30}
+                  strokeWidth={2}
+                  color={'#00CD0C'}
+                  style={{ marginTop: '-6px' }}
+                />
+                <a style={{ color: '#FFFFFF', fontSize: '18px' }}>
+                  {t('running')}
+                </a>
+              </>
+            ) : (
+              <>
+                <Circle
+                  size={30}
+                  strokeWidth={2}
+                  color={'#FFFFFF'}
+                  style={{ marginTop: '-6px' }}
+                />
+                <a style={{ color: '#FFFFFF', fontSize: '18px' }}>
+                  {t('notRunning')}
+                </a>
+              </>
+            )}
+          </div>
           {/* <h5 className="title" style={{ color: '#ffffff', fontSize: '16px' }}>
                         {t('totalPlayTime')}
                     </h5>
@@ -562,12 +593,11 @@ function GameDetails() {
           </Row>
 
           <br></br>
-          <br></br>
 
           <h5 className="title" style={{ color: '#ffffff', fontSize: '20px' }}>
             {t('timeByDayForTheLastWeek')}
           </h5>
-          <br></br>
+
           <Row xs={2} md={1} className="g-4">
             <Col>
               <Tabler tableDatas={tableData} />

@@ -96,6 +96,7 @@ const resources = {
       saturday: 'Saturday',
       stats: 'Stats',
       timeByDayForTheLastWeek: 'HOURS PLAYED PER DAY IN THE LAST WEEK',
+      notRunning: 'Not Running',
     },
   },
   es: {
@@ -170,6 +171,7 @@ const resources = {
       saturday: 'Sabado',
       stats: 'Estadísticas',
       timeByDayForTheLastWeek: 'HORAS JUGADAS POR DÍA DE LA ÚLTIMA SEMANA',
+      notRunning: 'Durmiendo',
     },
   },
 }
