@@ -598,6 +598,7 @@ function GameDetails() {
             {t('timeByDayForTheLastWeek')}
           </h5>
 
+          {/* <br></br> */}
           <Row xs={2} md={1} className="g-4">
             <Col>
               <Tabler tableDatas={tableData} />

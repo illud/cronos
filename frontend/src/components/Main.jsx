@@ -98,6 +98,13 @@ function Main() {
     toast.success(t('toastRunning') + ' ' + gameName)
 
     await handleFindAll()
+
+    setTimeout(
+      await function () {
+        history.push('/GameDetails')
+      },
+      1000,
+    )
   }
 
   const handleSearchBtn = async (gameName) => {
