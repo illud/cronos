@@ -99,8 +99,13 @@ function Main() {
 
     await handleFindAll()
 
+    localStorage.setItem('gameExecutable', name)
+    localStorage.setItem('gamePath', path)
+    localStorage.setItem('gameName', gameName)
+    localStorage.setItem('gameId', id)
+
     setTimeout(
-      await function () {
+      function () {
         history.push('/GameDetails')
       },
       1000,
@@ -241,8 +246,8 @@ function Main() {
 
   const secondsToTime = (e) => {
     var h = Math.floor(e / 3600)
-        .toString()
-        .padStart(1, '0'),
+      .toString()
+      .padStart(1, '0'),
       m = Math.floor((e % 3600) / 60)
         .toString()
         .padStart(1, '0'),
@@ -255,7 +260,7 @@ function Main() {
     //return `${h}:${m}:${s}`;
   }
 
-  const goToGameDetails = (gameExecutable, gamePath, gameName, gameId) => {
+  const goToGameDetails = async (gameExecutable, gamePath, gameName, gameId) => {
     localStorage.setItem('gameExecutable', gameExecutable)
     localStorage.setItem('gamePath', gamePath)
     localStorage.setItem('gameName', gameName)
@@ -691,9 +696,9 @@ function Main() {
                           borderColor: 'white',
                           width: '100%',
                         }}
-                        // onClick={() =>
-                        //   handlePlay(app.Executable, app.Path, app.Id)
-                        // }
+                      // onClick={() =>
+                      //   handlePlay(app.Executable, app.Path, app.Id)
+                      // }
                       >
                         <DeviceGamepad
                           size={30}
@@ -972,7 +977,7 @@ function Main() {
           size="lg"
           aria-labelledby="contained-modal-title-vcenter"
           centered
-          // style={{ opacity: 0.9, borderColor: 'transparent' }}
+        // style={{ opacity: 0.9, borderColor: 'transparent' }}
         >
           <Modal.Header
             closeButton
