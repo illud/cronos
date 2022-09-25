@@ -129,7 +129,7 @@ const resources = {
       playedTimeThisMonth: 'TIEMPO TOTAL JUGADO EL ÚLTIMO MES',
       playedTimeThisYear: 'TIEMPO TOTAL JUGADO EL ÚLTIMO AÑO',
       playedToday: 'JUGADO HOY',
-      playedLastWeek: 'JUGADO ESTA SENANA',
+      playedLastWeek: 'JUGADO ESTA SEMANA',
       game: 'JUEGO',
       day: 'DÍA',
       dateAndTime: 'FECHA Y HORA',
