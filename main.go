@@ -5,7 +5,6 @@ import (
 	"embed"
 	"fmt"
 	"log"
-	"net/http"
 	"os"
 	"os/exec"
 	"regexp"
@@ -29,6 +28,9 @@ import (
 	"github.com/shirou/gopsutil/v3/cpu"
 	"github.com/shirou/gopsutil/v3/host"
 	"golang.org/x/sys/windows"
+
+	models "cronos/models"
+	utils "cronos/utils"
 )
 
 //go:embed frontend/dist
@@ -48,31 +50,13 @@ func main() {
 		OnStartup: app.startup,
 		Bind: []interface{}{
 			app,
-			&AppData{},
+			&models.AppData{},
 		},
 	})
 
 	if err != nil {
 		println("Error:", err)
 	}
-}
-
-type AppData struct {
-	gorm.Model
-	Id         int64
-	Image      string
-	Name       string
-	Path       string
-	Executable string
-	Time       int64
-	Running    bool
-}
-
-type GameHistorical struct {
-	gorm.Model
-	Id     int64
-	GameId int64
-	Time   int64
 }
 
 var (
@@ -89,29 +73,29 @@ func Setup() {
 	}
 
 	// Migrate the schema
-	dbCon.AutoMigrate(&AppData{}, &GameHistorical{})
+	dbCon.AutoMigrate(&models.AppData{}, &models.GameHistorical{})
 
 	// defer dbCon.Close()
 	db = dbCon
 	fmt.Println("CONNECTED")
 
 	//Sets all collumn running to false
-	dbCon.Model(&AppData{}).Where("id > 0 AND running = ?", true).Update("running", false)
+	dbCon.Model(&models.AppData{}).Where("id > 0 AND running = ?", true).Update("running", false)
 }
 
 func (a *App) Create(image string, name string, path string, executable string, time int64) {
 	// Create
-	db.Create(&AppData{Image: image, Name: name, Path: path, Executable: executable, Time: time, Running: false})
+	db.Create(&models.AppData{Image: image, Name: name, Path: path, Executable: executable, Time: time, Running: false})
 }
 
 func (a *App) Update(id int64, name string, path string, executable string) {
 	// Update
-	db.Model(&AppData{}).Omit("updated_at").Where("id = ?", id).UpdateColumns(AppData{Name: name, Path: path, Executable: executable})
+	db.Model(&models.AppData{}).Omit("updated_at").Where("id = ?", id).UpdateColumns(models.AppData{Name: name, Path: path, Executable: executable})
 }
 
 func (a *App) DeleteApp(id int64) {
 	// Delete
-	var appData AppData
+	var appData models.AppData
 	db.Delete(&appData, id)
 }
 
@@ -148,28 +132,18 @@ func (a *App) Play(name string, path string) {
 	fmt.Println(string(appToRunOut))
 }
 
-func contains(s []string, str string) bool {
-	for _, v := range s {
-		if v == str {
-			return true
-		}
-	}
-
-	return false
-}
-
 func (a *App) CheckRunningProcess(name string, id int64, today string, tomorrow string) {
 	// fmt.Println(name)
 
 	// Sets running to true
-	db.Model(&AppData{}).Where("id = ?", id).Update("running", true)
+	db.Model(&models.AppData{}).Where("id = ?", id).Update("running", true)
 
 	// Insert into historical if dosn't exist
-	var gameHistorical []GameHistorical
+	var gameHistorical []models.GameHistorical
 	db.Where("game_id = ? AND created_at >= ? AND created_at < ?", id, today, tomorrow).Find(&gameHistorical)
 
 	if len(gameHistorical) <= 0 {
-		db.Create(&GameHistorical{GameId: id, Time: 0})
+		db.Create(&models.GameHistorical{GameId: id, Time: 0})
 	}
 
 	c := cron.New(cron.WithParser(cron.NewParser(cron.SecondOptional | cron.Minute | cron.Hour | cron.Dom | cron.Month | cron.Dow)))
@@ -198,22 +172,22 @@ func (a *App) CheckRunningProcess(name string, id int64, today string, tomorrow 
 			processRunning = append(processRunning, n)
 		}
 
-		if contains(processRunning, name) {
+		if utils.Contains(processRunning, name) {
 			// fmt.Println("ok")
 			// Read
-			var appData AppData
+			var appData models.AppData
 			db.Find(&appData, id)
 			timing := appData.Time
-			db.Model(&AppData{}).Where("id = ?", id).Update("time", timing+30)
-			db.Model(&AppData{}).Where("id = ?", id).Update("running", true)
+			db.Model(&models.AppData{}).Where("id = ?", id).Update("time", timing+30)
+			db.Model(&models.AppData{}).Where("id = ?", id).Update("running", true)
 			timing = 0
 
 			// updates time historical by created_at
-			var gameHistorical GameHistorical
+			var gameHistorical models.GameHistorical
 			db.Where("game_id = ? AND created_at >= ? AND created_at < ?", id, today, tomorrow).Find(&gameHistorical)
 			gameTiming := gameHistorical.Time
 
-			db.Model(&GameHistorical{}).Where("id = ?", gameHistorical.Id).Update("time", gameTiming+30)
+			db.Model(&models.GameHistorical{}).Where("id = ?", gameHistorical.Id).Update("time", gameTiming+30)
 			gameTiming = 0
 
 			// fmt.Println(p.Name())
@@ -224,7 +198,7 @@ func (a *App) CheckRunningProcess(name string, id int64, today string, tomorrow 
 			// return p.Kill()
 		} else {
 			// fmt.Println("false")
-			db.Model(&AppData{}).Omit("updated_at").Where("id = ?", id).Update("running", false)
+			db.Model(&models.AppData{}).Omit("updated_at").Where("id = ?", id).Update("running", false)
 
 			// Stop the cron job when playing again
 			c.Stop()
@@ -236,16 +210,16 @@ func (a *App) CheckRunningProcess(name string, id int64, today string, tomorrow 
 	select {}
 }
 
-func (a *App) FindAll() []AppData {
+func (a *App) FindAll() []models.AppData {
 	// Read
-	var appData []AppData
+	var appData []models.AppData
 	db.Order("updated_at desc").Find(&appData)
 	return appData
 }
 
-func (a *App) FindOne(gameId int64) AppData {
+func (a *App) FindOne(gameId int64) models.AppData {
 	// Read
-	var appData AppData
+	var appData models.AppData
 	db.Where("id = ?", gameId).Find(&appData)
 	return appData
 }
@@ -257,13 +231,8 @@ func (a *App) FindTotalTimePlayed() int64 {
 	return total
 }
 
-type MosPlayedGame struct {
-	Name  string
-	Total int64
-}
-
-func (a *App) FindMostPlayedGame() MosPlayedGame {
-	var mostPlayedGame MosPlayedGame
+func (a *App) FindMostPlayedGame() models.MosPlayedGame {
+	var mostPlayedGame models.MosPlayedGame
 	db.Table("app_data").Select("name, MAX(time) AS total").Where("deleted_at IS NULL").Find(&mostPlayedGame)
 	return mostPlayedGame
 }
@@ -318,8 +287,8 @@ func (a *App) FindTotalTimePlayedLastYear(today string, lastYear string) int64 {
 	return total
 }
 
-func (a *App) FindTotalGamesPlayedLastWeek(today string, lastWeek string) []AppData {
-	var appData []AppData
+func (a *App) FindTotalGamesPlayedLastWeek(today string, lastWeek string) []models.AppData {
+	var appData []models.AppData
 	// db.Order("updated_at desc").Where("updated_at >= ? AND updated_at <= ?", lastWeek, today).Find(&appData)
 
 	db.Raw("SELECT * from app_data WHERE updated_at >= ? AND updated_at <= ? ORDER BY updated_at desc", lastWeek, today).Scan(&appData)
@@ -359,7 +328,7 @@ func (a *App) HowlongtobeatRequest(search string) interface{} {
 	// }
 	// //Convert the body to type string
 	// return string(body)
-	checkCoon := connected()
+	checkCoon := utils.Connected()
 
 	if checkCoon {
 		return howlongtobeat.Search(search)
@@ -367,30 +336,8 @@ func (a *App) HowlongtobeatRequest(search string) interface{} {
 	return false
 }
 
-func connected() (ok bool) {
-	_, err := http.Get("https://www.google.com/")
-	if err != nil {
-		return false
-	}
-	return true
-}
-
-type WeekDay struct {
-	Yesterday string `json:"yesterday"`
-	Today     string `json:"today"`
-}
-
-type Datas struct {
-	CountOne   int64 `json:"countOne"`
-	CountTwo   int64 `json:"countTwo"`
-	CountThree int64 `json:"countThree"`
-	CountFour  int64 `json:"countFour"`
-	CountFive  int64 `json:"countFive"`
-	CountSix   int64 `json:"countSix"`
-	CountSeven int64 `json:"countSeven"`
-}
-
-func (a *App) TimePlayedByDayThisWeek(one WeekDay, two WeekDay, three WeekDay, four WeekDay, five WeekDay, six WeekDay, seven WeekDay, gameId int) Datas {
+func (a *App) TimePlayedByDayThisWeek(one models.WeekDay, two models.WeekDay, three models.WeekDay, four models.WeekDay,
+	five models.WeekDay, six models.WeekDay, seven models.WeekDay, gameId int) models.Datas {
 
 	var countOne sql.NullInt64
 	var countTwo sql.NullInt64
@@ -442,37 +389,26 @@ func (a *App) TimePlayedByDayThisWeek(one WeekDay, two WeekDay, three WeekDay, f
 		fmt.Println(sevenDay)
 	}
 
-	return Datas{
-		countOne.Int64,
-		countTwo.Int64,
-		countThree.Int64,
-		countFour.Int64,
-		countFive.Int64,
-		countSix.Int64,
-		countSeven.Int64,
+	return models.Datas{
+		CountOne:   countOne.Int64,
+		CountTwo:   countTwo.Int64,
+		CountThree: countThree.Int64,
+		CountFour:  countFour.Int64,
+		CountFive:  countFive.Int64,
+		CountSix:   countSix.Int64,
+		CountSeven: countSeven.Int64,
 	}
 
 }
 
 // SysInfo saves the system information
-type SysInfo struct {
-	Hostname  string `bson:hostname`
-	Platform  string `bson:platform`
-	OsNumber  string `bson:osNumber`
-	CPU       string `bson:cpu`
-	GPU       string `bson:gpu`
-	RAM       string `bson:ram`
-	Disk      int64  `bson:disk`
-	MAINBOARD string `bson:mainboard`
-}
-
-func (a *App) Pcspecs() SysInfo {
+func (a *App) Pcspecs() models.SysInfo {
 	hostStat, _ := host.Info()
 	cpuStat, _ := cpu.Info()
 	vmStat, _ := mem.VirtualMemory()
 	// diskStat, _ := disk.Usage("\\") // If you're in Unix change this "\\" for "/"
 
-	info := new(SysInfo)
+	info := new(models.SysInfo)
 
 	//Extract os number
 	str1 := hostStat.Platform
