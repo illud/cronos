@@ -52,41 +52,6 @@ function PcSpecs() {
     })
   }
 
-  const secondsToTime = (e) => {
-    var h = Math.floor(e / 3600)
-        .toString()
-        .padStart(1, '0'),
-      m = Math.floor((e % 3600) / 60)
-        .toString()
-        .padStart(1, '0'),
-      s = Math.floor(e % 60)
-        .toString()
-        .padStart(2, '0')
-
-    return h + ' h ' + m + ' m'
-    // return h + ':' + m + ':' + s;
-    //return `${h}:${m}:${s}`;
-  }
-
-  const getDayOfWeek = (dayOfWeekNumber) => {
-    switch (dayOfWeekNumber) {
-      case 0:
-        return t('sunday')
-      case 1:
-        return t('monday')
-      case 2:
-        return t('tuesday')
-      case 3:
-        return t('wednesday')
-      case 4:
-        return t('thursday')
-      case 5:
-        return t('friday')
-      case 6:
-        return t('saturday')
-    }
-  }
-
   const openPatreon = () => {
     window.open(
       'https://www.patreon.com/user?u=79481740&utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=creatorshare_creator',

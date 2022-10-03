@@ -34,6 +34,8 @@ import {
 } from '../../wailsjs/go/main/App'
 import { format } from 'date-fns'
 import { useTranslation } from 'react-i18next'
+//utils
+import secondsToTime from '../utils/secondsToTime'
 
 function GamesStats() {
   let history = useHistory()
@@ -201,22 +203,6 @@ function GamesStats() {
       setMostPlayedGameName(result.Name)
       setMostPlayedGameTotal(result.Total)
     })
-  }
-
-  const secondsToTime = (e) => {
-    var h = Math.floor(e / 3600)
-        .toString()
-        .padStart(1, '0'),
-      m = Math.floor((e % 3600) / 60)
-        .toString()
-        .padStart(1, '0'),
-      s = Math.floor(e % 60)
-        .toString()
-        .padStart(2, '0')
-
-    return h + ' h ' + m + ' m'
-    // return h + ':' + m + ':' + s;
-    //return `${h}:${m}:${s}`;
   }
 
   const getDayOfWeek = (dayOfWeekNumber) => {

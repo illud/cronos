@@ -46,6 +46,8 @@ import {
 } from '../../wailsjs/go/main/App'
 import ReactLoading from 'react-loading'
 import Image from 'react-bootstrap/Image'
+//utils
+import secondsToTime from '../utils/secondsToTime'
 
 function Main() {
   let history = useHistory()
@@ -242,22 +244,6 @@ function Main() {
       setApps([])
       setApps(matchedGames)
     }
-  }
-
-  const secondsToTime = (e) => {
-    var h = Math.floor(e / 3600)
-      .toString()
-      .padStart(1, '0'),
-      m = Math.floor((e % 3600) / 60)
-        .toString()
-        .padStart(1, '0'),
-      s = Math.floor(e % 60)
-        .toString()
-        .padStart(2, '0')
-
-    return h + 'h ' + m + 'm'
-    // return h + ':' + m + ':' + s;
-    //return `${h}:${m}:${s}`;
   }
 
   const goToGameDetails = async (gameExecutable, gamePath, gameName, gameId) => {
