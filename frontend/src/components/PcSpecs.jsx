@@ -47,7 +47,6 @@ function PcSpecs() {
 
   const handleGetPcSpecs = async () => {
     await Pcspecs().then((result) => {
-      console.log(result)
       setSpects(result)
     })
   }
@@ -275,7 +274,7 @@ function PcSpecs() {
                 cardBgColor="rgba(0, 0, 0, 0.5)"
                 titleColor="white"
                 valueColor="white"
-                value={specs.Hostname}
+                value={specs.hostname}
                 // trend={{
                 // 	slope: 1,
                 // 	description: 'Compared to last week',
@@ -295,7 +294,7 @@ function PcSpecs() {
                 cardBgColor="rgba(0, 0, 0, 0.5)"
                 titleColor="white"
                 valueColor="white"
-                value={specs.Platform}
+                value={specs.platform}
                 // trend={{
                 // 	slope: 1,
                 // 	description: 'Compared to last week',
@@ -317,7 +316,7 @@ function PcSpecs() {
                 cardBgColor="rgba(0, 0, 0, 0.5)"
                 titleColor="white"
                 valueColor="white"
-                value={specs.MAINBOARD}
+                value={specs.mainboard}
                 // trend={{
                 // 	slope: 1,
                 // 	description: 'Compared to last week',
@@ -343,7 +342,7 @@ function PcSpecs() {
                 cardBgColor="rgba(0, 0, 0, 0.5)"
                 titleColor="white"
                 valueColor="white"
-                value={specs.RAM + ' GB'}
+                value={specs.ram + ' GB'}
                 // trend={{
                 // 	slope: 1,
                 // 	description: 'Compared to last week',
@@ -363,7 +362,7 @@ function PcSpecs() {
                 cardBgColor="rgba(0, 0, 0, 0.5)"
                 titleColor="white"
                 valueColor="white"
-                value={specs.CPU}
+                value={specs.cpu}
                 // trend={{
                 // 	slope: 1,
                 // 	description: 'Compared to last week',
@@ -383,7 +382,7 @@ function PcSpecs() {
                 cardBgColor="rgba(0, 0, 0, 0.5)"
                 titleColor="white"
                 valueColor="white"
-                value={specs.GPU}
+                value={specs.gpu}
                 // trend={{
                 // 	slope: 1,
                 // 	description: 'Compared to last week',
@@ -403,7 +402,7 @@ function PcSpecs() {
                 cardBgColor="rgba(0, 0, 0, 0.5)"
                 titleColor="white"
                 valueColor="white"
-                value={specs.Disk + ' GB'}
+                value={specs.disk + ' GB'}
                 // trend={{
                 // 	slope: 1,
                 // 	description: 'Compared to last week',

@@ -7,12 +7,8 @@ import (
 	"log"
 	"os"
 	"os/exec"
-	"regexp"
-	"strconv"
-	"strings"
 	"syscall"
 	"time"
-	"unsafe"
 
 	"github.com/robfig/cron/v3"
 
@@ -24,13 +20,10 @@ import (
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 
-	"github.com/shirou/gopsutil/mem"
-	"github.com/shirou/gopsutil/v3/cpu"
-	"github.com/shirou/gopsutil/v3/host"
-	"golang.org/x/sys/windows"
-
 	models "cronos/models"
 	utils "cronos/utils"
+
+	pcs "github.com/saturnavt/pcspecs"
 )
 
 //go:embed frontend/dist
@@ -401,56 +394,17 @@ func (a *App) TimePlayedByDayThisWeek(one models.WeekDay, two models.WeekDay, th
 
 }
 
-// SysInfo saves the system information
+// SysInfo gets system information
 func (a *App) Pcspecs() models.SysInfo {
-	hostStat, _ := host.Info()
-	cpuStat, _ := cpu.Info()
-	vmStat, _ := mem.VirtualMemory()
-	// diskStat, _ := disk.Usage("\\") // If you're in Unix change this "\\" for "/"
-
-	info := new(models.SysInfo)
-
-	//Extract os number
-	str1 := hostStat.Platform
-	re := regexp.MustCompile(`[-]?\d[\d,]*[\.]?[\d{2}]*`)
-
-	submatchall := re.FindAllString(str1, -1)
-	info.Hostname = hostStat.Hostname
-	info.Platform = hostStat.Platform
-	info.OsNumber = submatchall[0]
-	info.CPU = cpuStat[0].ModelName
-	info.RAM = strconv.FormatUint(vmStat.Total/1024/1024, 10)[0:2]
-
-	// info.Disk = diskStat.Total / 1024 / 1024 / 1e+9
-
-	// fmt.Printf("%+v\n", info)
-
-	// gets GPU info
-	videoController := exec.Command("cmd", "/C", "wmic path win32_VideoController get name")
-	videoController.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
-	videoControllerHistory, _ := videoController.Output()
-	pcGPU := strings.Replace(string(videoControllerHistory), "Name", "", -1)
-	pcGPUString := strings.Replace(pcGPU, "LuminonCore IDDCX Adapter", "", -1)
-	info.GPU = pcGPUString
-
-	// gets MAINBOARD info
-	mainBoard := exec.Command("cmd", "/C", "wmic path win32_BaseBoard get Product")
-	mainBoard.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
-	mainBoardHistorys, _ := mainBoard.Output()
-	mainBoardString := strings.Replace(string(mainBoardHistorys), "Product", "", -1)
-	info.MAINBOARD = mainBoardString
-
-	h := windows.MustLoadDLL("kernel32.dll")
-	c := h.MustFindProc("GetDiskFreeSpaceExW")
-
-	var freeBytes int64
-
-	_, _, err := c.Call(uintptr(unsafe.Pointer(windows.StringToUTF16Ptr("C:"))),
-		uintptr(unsafe.Pointer(&freeBytes)))
-	if err != nil {
-		fmt.Println(err)
+	specs := models.SysInfo{
+		Hostname:  pcs.Spec().Hostname,
+		Platform:  pcs.Spec().Platform,
+		OsNumber:  pcs.Spec().OsNumber,
+		CPU:       pcs.Spec().CPU,
+		GPU:       pcs.Spec().GPU,
+		RAM:       pcs.Spec().RAM,
+		Disk:      pcs.Spec().Disk,
+		MAINBOARD: pcs.Spec().MAINBOARD,
 	}
-	// fmt.Println(freeBytes / 1e+9)
-	info.Disk = freeBytes / 1e+9
-	return *info
+	return specs
 }

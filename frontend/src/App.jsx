@@ -9,7 +9,6 @@ import GameDetails from './components/GameDetails'
 import deathloop from './public/deathloop.jpg'
 import deathloop_2 from './public/deathloop_2.jpg'
 import mh from './public/mh.jpg'
-import dishonored from './public/dishonored.jpg'
 import dishonored_2 from './public/dishonored_2.jpg'
 import katalyzt from './public/katalyzt.png'
 import { MemoryRouter, Switch, Route } from 'react-router-dom'
@@ -22,10 +21,6 @@ function App() {
       deathloop,
       deathloop_2,
       mh,
-      // mh_3,
-      // re,
-      // re2,
-      dishonored,
       dishonored_2,
       katalyzt,
     ]

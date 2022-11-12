@@ -2,7 +2,7 @@
 
 ## About
 
-Cronos is a app that allows you to track the time playing.
+Cronos is a app that allows you to track the time playing, howlongtobeat and pc specs.
 
 ## Live Development
 
