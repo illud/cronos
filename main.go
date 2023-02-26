@@ -391,20 +391,19 @@ func (a *App) TimePlayedByDayThisWeek(one models.WeekDay, two models.WeekDay, th
 		CountSix:   countSix.Int64,
 		CountSeven: countSeven.Int64,
 	}
-
 }
 
 // SysInfo gets system information
-func (a *App) Pcspecs() models.SysInfo {
-	specs := models.SysInfo{
-		Hostname:  pcs.Spec().Hostname,
-		Platform:  pcs.Spec().Platform,
-		OsNumber:  pcs.Spec().OsNumber,
-		CPU:       pcs.Spec().CPU,
-		GPU:       pcs.Spec().GPU,
-		RAM:       pcs.Spec().RAM,
-		Disk:      pcs.Spec().Disk,
-		MAINBOARD: pcs.Spec().MAINBOARD,
-	}
-	return specs
+func (a *App) Pcspecs() interface{} {
+	// specs := models.SysInfo{
+	// 	Hostname:  pcs.Spec().Hostname,
+	// 	Platform:  pcs.Spec().Platform,
+	// 	OsNumber:  pcs.Spec().OsNumber,
+	// 	CPU:       pcs.Spec().CPU,
+	// 	GPU:       pcs.Spec().GPU,
+	// 	RAM:       pcs.Spec().RAM,
+	// 	Disk:      pcs.Spec().Disk,
+	// 	MAINBOARD: pcs.Spec().MAINBOARD,
+	// }
+	return pcs.Spec()
 }

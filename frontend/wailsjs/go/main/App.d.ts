@@ -36,7 +36,7 @@ export function Greet(arg1:string):Promise<string>;
 
 export function HowlongtobeatRequest(arg1:string):Promise<any>;
 
-export function Pcspecs():Promise<models.SysInfo>;
+export function Pcspecs():Promise<any>;
 
 export function Play(arg1:string,arg2:string):void;
 
