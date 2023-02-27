@@ -12,6 +12,7 @@ import mh from './public/mh.jpg'
 import dishonored_2 from './public/dishonored_2.jpg'
 import katalyzt from './public/katalyzt.png'
 import { MemoryRouter, Switch, Route } from 'react-router-dom'
+// import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import './i18n'
 import { Greet } from '../wailsjs/go/main/App'
 
@@ -44,6 +45,7 @@ function App() {
       <MemoryRouter>
         <div
           style={{ backgroundImage: `url(${randomImage()})` }}
+          // style={{ backgroundColor: 'rgb(38, 50, 56)' }}
           id="app"
           className="App"
         >

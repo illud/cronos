@@ -257,10 +257,10 @@ function Main() {
   const ifImgExists = (image, gameExecutable, gamePath, gameName, gameId) => {
     if (image === '' || image === undefined || image === null) {
       return (
-        <Image
+        <Card.Img
           className="gameImage"
           variant="top"
-          width={'45%'}
+          style={{ width: '45%' }}
           // height={'100%'}
           src={
             'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAHCCAQAAAD/OjwMAAADI0lEQVR42u3SQREAAAjDsM2/B7Righ+JhF6bCZyrsTAWxsJYYCyMhbHAWBgLY4GxMBbGAmNhLIwFxsJYGAuMhbEwFhgLY2EsMBbGwlhgLIyFscBYGAtjgbEwFsYCY2EsjAXGwlgYC4yFsTAWGAtjYSwwFsbCWGAsjIWxwFgYC2OBsTAWxgJjYSyMBcbCWBgLjIWxMBYYC2NhLDAWxsJYYCyMhbHAWBgLY4GxMBbGAmNhLIyFsUTAWBgLY4GxMBbGAmNhLIwFxsJYGAuMhbEwFhgLY2EsMBbGwlhgLIyFscBYGAtjgbEwFsYCY2EsjAXGwlgYC4yFsTAWGAtjYSwwFsbCWGAsjIWxwFgYC2OBsTAWxgJjYSyMBcbCWBgLjIWxMBYYC2NhLDAWxsJYYCyMhbHAWBgLY4GxMBbGAmNhLIwFxsJYGAtjGQtjYSyMBcbCWBgLjIWxMBYYC2NhLDAWxsJYYCyMhbHAWBgLY4GxMBbGAmNhLIwFxsJYGAuMhbEwFhgLY2EsMBbGwlhgLIyFscBYGAtjgbEwFsYCY2EsjAXGwlgYC4yFsTAWGAtjYSwwFsbCWGAsjIWxwFgYC2OBsTAWxgJjYSyMBcbCWBgLjIWxMBYYC2NhLIxlLIyFsTAWGAtjYSwwFsbCWGAsjIWxwFgYC2OBsTAWxgJjYSyMBcbCWBgLjIWxMBYYC2NhLDAWxsJYYCyMhbHAWBgLY4GxMBbGAmNhLIwFxsJYGAuMhbEwFhgLY2EsMBbGwlhgLIyFscBYGAtjgbEwFsYCY2EsjAXGwlgYC4yFsTAWGAtjYSwwFsbCWGAsjIWxwFgYC2NhLBEwFsbCWGAsjIWxwFgYC2OBsTAWxgJjYSyMBcbCWBgLjIWxMBYYC2NhLDAWxsJYYCyMhbHAWBgLY4GxMBbGAmNhLIwFxsJYGAuMhbEwFhgLY2EsMBbGwlhgLIyFscBYGAtjgbEwFsYCY2EsjAXGwlgYC4yFsTAWGAtjYSwwFsbCWGAsjIWxwFgYC2OBsTAWxsJYxsJYGAtjgbEwFsYCY2EsjAXGwlgYC4yFsTAWGAtj8csCAzEXjttcMXQAAAAASUVORK5CYII='
@@ -272,10 +272,10 @@ function Main() {
       )
     } else {
       return (
-        <Image
+        <Card.Img
           className="gameImage"
           variant="top"
-          width={'45%'}
+          style={{ width: '45%' }}
           // height={'100%'}
           src={image}
           onClick={() =>
@@ -502,6 +502,7 @@ function Main() {
               marginLeft: '0px',
               background: 'rgba(0, 0, 0, 0.5)',
               borderColor: 'white',
+              borderRadius: '0px'
             }}
             onClick={() => handleModalCreate()}
           >
@@ -515,6 +516,7 @@ function Main() {
               marginLeft: '5px',
               background: 'rgba(0, 0, 0, 0.5)',
               borderColor: 'white',
+              borderRadius: '0px'
             }}
             onClick={() => handleFindAll()}
           >
@@ -534,6 +536,7 @@ function Main() {
               borderColor: 'white',
               width: '40%',
               height: '43px',
+              borderRadius: '0px'
             }}
             placeholder={t('searchGame')}
             onChange={(e) => handleSearch(e.target.value)}
@@ -564,10 +567,11 @@ function Main() {
                       float: 'left',
                       color: 'white',
                       marginLeft: '0px',
-                      background: '#007bff',
-                      borderColor: '#007bff',
+                      background: 'rgba(41, 98, 255, 0.9)',
+                      borderColor: 'transparent',
                       position: 'absolute',
                       top: '45%',
+                      borderRadius: '0px'
                     }}
                     onClick={() =>
                       goToGameDetails(
@@ -681,6 +685,7 @@ function Main() {
                           color: 'white',
                           borderColor: 'white',
                           width: '100%',
+                          borderRadius: '0px'
                         }}
                       // onClick={() =>
                       //   handlePlay(app.Executable, app.Path, app.Id)
@@ -702,6 +707,7 @@ function Main() {
                           color: 'white',
                           borderColor: 'white',
                           width: '100%',
+                          borderRadius: '0px',
                         }}
                         onClick={() =>
                           handlePlay(app.Name, app.Executable, app.Path, app.Id)
@@ -753,6 +759,7 @@ function Main() {
                   background: '#212121',
                   borderColor: 'grey',
                   color: 'white',
+                  borderRadius: '0px'
                 }}
                 placeholder={t('enterGameName')}
                 onChange={(value) => setName(value.target.value)}
@@ -779,6 +786,7 @@ function Main() {
                   background: 'transparent',
                   borderColor: 'white',
                   width: '100%',
+                  borderRadius: '0px'
                 }}
                 onClick={() => handleFindFile()}
               >
@@ -817,6 +825,7 @@ function Main() {
                 background: 'transparent',
                 color: 'white',
                 borderColor: 'white',
+                borderRadius: '0px',
               }}
               onClick={() => setModalShow(false)}
             >
@@ -836,6 +845,7 @@ function Main() {
                   background: 'transparent',
                   color: 'white',
                   borderColor: 'white',
+                  borderRadius: '0px'
                 }}
                 onClick={() => handleCreate()}
               >
@@ -875,6 +885,7 @@ function Main() {
                   background: '#212121',
                   borderColor: 'grey',
                   color: 'white',
+                  borderRadius: '0px'
                 }}
                 placeholder={t('enterGameName')}
                 onChange={(value) => setName(value.target.value)}
@@ -901,6 +912,7 @@ function Main() {
                   background: 'transparent',
                   borderColor: 'white',
                   width: '100%',
+                  borderRadius: '0px'
                 }}
                 onClick={() => handleFindFile()}
               >
@@ -939,6 +951,7 @@ function Main() {
                 background: 'transparent',
                 color: 'white',
                 borderColor: 'white',
+                borderRadius: '0px'
               }}
               onClick={() => setModalEditShow(false)}
             >
@@ -949,6 +962,7 @@ function Main() {
                 background: 'transparent',
                 color: 'white',
                 borderColor: 'white',
+                borderRadius: '0px'
               }}
               onClick={() => handleUpdate()}
             >
@@ -994,6 +1008,7 @@ function Main() {
                 background: 'transparent',
                 color: 'white',
                 borderColor: 'white',
+                borderRadius: '0px'
               }}
               onClick={() => setModalDeleteShow(false)}
             >
@@ -1004,6 +1019,7 @@ function Main() {
                 background: 'transparent',
                 color: 'white',
                 borderColor: 'white',
+                borderRadius: '0px'
               }}
               onClick={() => handleDelete()}
             >

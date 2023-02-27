@@ -386,6 +386,7 @@ function Howlongtobeat() {
                 borderColor: 'white',
                 width: '40%',
                 height: '43px',
+                borderRadius: '0px'
               }}
               placeholder={t('searchGame')}
               onChange={(e) => handleSearch(e.target.value)}
@@ -400,6 +401,7 @@ function Howlongtobeat() {
               marginLeft: '5px',
               background: 'rgba(0, 0, 0, 0.5)',
               borderColor: 'white',
+              borderRadius: '0px'
             }}
             onClick={(e) => handleSearchBtn(e)}
           >
