@@ -17,7 +17,7 @@
     !define INFO_PRODUCTVERSION "1.7.0"
 !endif
 !ifndef INFO_COPYRIGHT
-    !define INFO_COPYRIGHT "Copyright@2022 Alejandro Castillo Valdés"
+    !define INFO_COPYRIGHT "Copyright@2023 Illud"
 !endif
 !ifndef PRODUCT_EXECUTABLE
     !define PRODUCT_EXECUTABLE "${INFO_PROJECTNAME}.exe"

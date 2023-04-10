@@ -1,1 +1,0 @@
-start /d "C:\Users\illud\Desktop\testdto\" main.exe

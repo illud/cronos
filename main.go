@@ -114,9 +114,10 @@ func createBatFile(executable string, path string) {
 func (a *App) Play(name string, path string) {
 	fmt.Println(path, name)
 
-	createBatFile(name, path)
+	//createBatFile(name, path)
 
-	appToRun := exec.Command("cmd", "/c", "cronos.bat")
+	appToRun := exec.Command(path + name)
+	// appToRun := exec.Command("cmd", "/c", "cronos.bat")
 	appToRun.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 	appToRunOut, err := appToRun.Output()
 	if err != nil {

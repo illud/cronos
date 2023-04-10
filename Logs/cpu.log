@@ -1,0 +1,6 @@
+4/10 15:09:31.603  vendor: GenuineIntel
+4/10 15:09:31.603  branding: Intel(R) Core(TM) i7-10700K CPU @ 3.80GHz
+4/10 15:09:31.603  features: lahf64 cmpxchg16b sse sse2 sse3 ssse3 sse41 sse42 avx avx2 aesni clmul rdrand 
+4/10 15:09:31.603  sockets: 1
+4/10 15:09:31.603  cores: 8
+4/10 15:09:31.603  threads: 16
