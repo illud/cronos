@@ -220,7 +220,6 @@ func (a *App) FindOne(gameId int64) models.AppData {
 
 func (a *App) FindTotalTimePlayed() int64 {
 	var total int64
-	// db.Table("game_historicals").Select("SUM(time)").Where("deleted_at IS NULL").Row().Scan(&total)
 	db.Table("game_historicals").Select("SUM(time)").Row().Scan(&total)
 	return total
 }
@@ -283,8 +282,6 @@ func (a *App) FindTotalTimePlayedLastYear(today string, lastYear string) int64 {
 
 func (a *App) FindTotalGamesPlayedLastWeek(today string, lastWeek string) []models.AppData {
 	var appData []models.AppData
-	// db.Order("updated_at desc").Where("updated_at >= ? AND updated_at <= ?", lastWeek, today).Find(&appData)
-
 	db.Raw("SELECT * from app_data WHERE updated_at >= ? AND updated_at <= ? ORDER BY updated_at desc", lastWeek, today).Scan(&appData)
 	return appData
 }
@@ -309,19 +306,6 @@ func (a *App) GameExePath() string {
 }
 
 func (a *App) HowlongtobeatRequest(search string) interface{} {
-	// spaceToPorcent := strings.ReplaceAll(search, " ", "%20")
-
-	// resp, err := http.Get("https://node-hltb-api.herokuapp.com/?search=" + spaceToPorcent)
-	// if err != nil {
-	// 	log.Fatalln(err)
-	// }
-	// //We Read the response body on the line below.
-	// body, err := ioutil.ReadAll(resp.Body)
-	// if err != nil {
-	// 	log.Fatalln(err)
-	// }
-	// //Convert the body to type string
-	// return string(body)
 	checkCoon := utils.Connected()
 
 	if checkCoon {
