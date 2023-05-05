@@ -62,10 +62,6 @@ export function GameExePath() {
   return window['go']['main']['App']['GameExePath']();
 }
 
-export function Greet(arg1) {
-  return window['go']['main']['App']['Greet'](arg1);
-}
-
 export function HowlongtobeatRequest(arg1) {
   return window['go']['main']['App']['HowlongtobeatRequest'](arg1);
 }

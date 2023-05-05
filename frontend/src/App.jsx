@@ -14,7 +14,6 @@ import katalyzt from './public/katalyzt.png'
 import { MemoryRouter, Switch, Route } from 'react-router-dom'
 // import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import './i18n'
-import { Greet } from '../wailsjs/go/main/App'
 
 function App() {
   const randomImage = () => {
@@ -35,10 +34,6 @@ function App() {
   const [name, setName] = useState('')
   const updateName = (e) => setName(e.target.value)
   const updateResultText = (result) => setResultText(result)
-
-  function greet() {
-    Greet(name).then(updateResultText)
-  }
 
   return (
     <div id="App">
