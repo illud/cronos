@@ -1,3 +1,4 @@
+// Converts secinds to time format
 export default function secondsToTime(e) {
     var h = Math.floor(e / 3600)
         .toString()

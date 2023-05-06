@@ -2,8 +2,8 @@ package main
 
 import (
 	"context"
-	models "cronos/models"
-	utils "cronos/utils"
+	models "cronos/backend/models"
+	utils "cronos/backend/utils"
 	"database/sql"
 	"fmt"
 	"log"
@@ -37,22 +37,26 @@ func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
 }
 
+// Inserts new data into the appdata table
 func (a *App) Create(image string, name string, path string, executable string, time int64) {
 	// Create
 	db.Client().Create(&models.AppData{Image: image, Name: name, Path: path, Executable: executable, Time: time, Running: false})
 }
 
+// Updates data in the appdata table
 func (a *App) Update(id int64, name string, path string, executable string) {
 	// Update
 	db.Client().Model(&models.AppData{}).Omit("updated_at").Where("id = ?", id).UpdateColumns(models.AppData{Name: name, Path: path, Executable: executable})
 }
 
+// Deletes data from the appdata table
 func (a *App) DeleteApp(id int64) {
 	// Delete
 	var appData models.AppData
 	db.Client().Delete(&appData, id)
 }
 
+// Creates a bat file to run the game
 func createBatFile(executable string, path string) {
 	f, err := os.Create("cronos_runner.bat")
 
@@ -72,6 +76,7 @@ func createBatFile(executable string, path string) {
 	fmt.Println("done")
 }
 
+// Executes the bat file
 func (a *App) Play(name string, path string) {
 	fmt.Println(path, name)
 
@@ -87,6 +92,7 @@ func (a *App) Play(name string, path string) {
 	fmt.Println(string(appToRunOut))
 }
 
+// Checks if the game is running
 func (a *App) CheckRunningProcess(name string, id int64, today string, tomorrow string) {
 	// fmt.Println(name)
 
@@ -165,6 +171,7 @@ func (a *App) CheckRunningProcess(name string, id int64, today string, tomorrow 
 	select {}
 }
 
+// Finds all data in the appdata table order by updated_at
 func (a *App) FindAll() []models.AppData {
 	// Read
 	var appData []models.AppData
@@ -172,6 +179,7 @@ func (a *App) FindAll() []models.AppData {
 	return appData
 }
 
+// Find one data in the appdata table order by id
 func (a *App) FindOne(gameId int64) models.AppData {
 	// Read
 	var appData models.AppData
@@ -179,18 +187,21 @@ func (a *App) FindOne(gameId int64) models.AppData {
 	return appData
 }
 
+// Finds total time played
 func (a *App) FindTotalTimePlayed() int64 {
 	var total int64
 	db.Client().Table("game_historicals").Select("SUM(time)").Row().Scan(&total)
 	return total
 }
 
+// Finds most played game
 func (a *App) FindMostPlayedGame() models.MosPlayedGame {
 	var mostPlayedGame models.MosPlayedGame
 	db.Client().Table("app_data").Select("name, MAX(time) AS total").Where("deleted_at IS NULL").Find(&mostPlayedGame)
 	return mostPlayedGame
 }
 
+// finds most played game today
 func (a *App) FindTotalTimePlayedGameToday(today string, tomorrow string, id []int64) []int64 {
 	var totalPlayedToday []int64
 
@@ -204,6 +215,7 @@ func (a *App) FindTotalTimePlayedGameToday(today string, tomorrow string, id []i
 	return totalPlayedToday
 }
 
+// finds most played game this week
 func (a *App) FindTotalTimePlayedGameThisWeek(today string, lastWeek string, id []int64) []int64 {
 	var totalPlayedThisWeek []int64
 
@@ -217,6 +229,7 @@ func (a *App) FindTotalTimePlayedGameThisWeek(today string, lastWeek string, id 
 	return totalPlayedThisWeek
 }
 
+// finds most played game this week
 func (a *App) FindTotalTimePlayedLastWeek(today string, lastWeek string) int64 {
 	var total int64
 	db.Client().Table("game_historicals").Select("SUM(time)").Where("created_at >= ? AND created_at <= ?", lastWeek, today).Row().Scan(&total)
@@ -229,24 +242,28 @@ func (a *App) FindTotalTimePlayedToday(today string, tomorrow string) int64 {
 	return total
 }
 
+// Finds total time played this month
 func (a *App) FindTotalTimePlayedLastMonth(today string, lastMonth string) int64 {
 	var total int64
 	db.Client().Table("game_historicals").Select("SUM(time)").Where("created_at >= ? AND created_at <= ?", lastMonth, today).Row().Scan(&total)
 	return total
 }
 
+// Finds total time played this year
 func (a *App) FindTotalTimePlayedLastYear(today string, lastYear string) int64 {
 	var total int64
 	db.Client().Table("game_historicals").Select("SUM(time)").Where("created_at >= ? AND created_at <= ?", lastYear, today).Row().Scan(&total)
 	return total
 }
 
+// Finds games played this week
 func (a *App) FindTotalGamesPlayedLastWeek(today string, lastWeek string) []models.AppData {
 	var appData []models.AppData
 	db.Client().Raw("SELECT * from app_data WHERE updated_at >= ? AND updated_at <= ? ORDER BY updated_at desc", lastWeek, today).Scan(&appData)
 	return appData
 }
 
+// Excutes file search doalog
 func (a *App) GameExePath() string {
 	selection, err := runtime.OpenFileDialog(a.ctx, runtime.OpenDialogOptions{
 		Title:           "Search game EXE",
@@ -266,6 +283,7 @@ func (a *App) GameExePath() string {
 	return selection
 }
 
+// Fetches game data from howlongtobeat
 func (a *App) HowlongtobeatRequest(search string) interface{} {
 	checkCoon := utils.Connected()
 
@@ -275,6 +293,7 @@ func (a *App) HowlongtobeatRequest(search string) interface{} {
 	return false
 }
 
+// Finds time played this week by day
 func (a *App) TimePlayedByDayThisWeek(one models.WeekDay, two models.WeekDay, three models.WeekDay, four models.WeekDay,
 	five models.WeekDay, six models.WeekDay, seven models.WeekDay, gameId int) models.Datas {
 

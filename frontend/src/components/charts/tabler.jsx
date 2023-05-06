@@ -1,27 +1,6 @@
-import React, { useRef, useState, useEffect } from 'react'
-// import Modal from 'react-modal';
-import Row from 'react-bootstrap/Row'
-import Card from 'react-bootstrap/Card'
-import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
-import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
-import Badge from 'react-bootstrap/Badge'
+import React, { useEffect } from 'react'
 import '../Main.css'
-import Chart from 'react-apexcharts'
 
-import Drawer from 'react-modern-drawer'
-import {
-  DeviceAnalytics,
-  DeviceDesktop,
-  Clock,
-  ArrowLeft,
-  LetterH,
-  Cpu2,
-  BrandPatreon,
-} from 'tabler-icons-react'
-import toast, { Toaster } from 'react-hot-toast'
-import { useHistory } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Table from 'react-bootstrap/Table'
 
@@ -32,8 +11,6 @@ let daysArray = []
 
 function Tabler({ tableDatas }) {
   const { t, i18n } = useTranslation()
-
-  const [apps, setApps] = useState([])
 
   if (day == 1) {
     daysArray.push(t('tuesday'))

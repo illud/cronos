@@ -1,7 +1,7 @@
 package testutils
 
 import (
-	utils "cronos/utils"
+	utils "cronos/backend/utils"
 	"testing"
 )
 

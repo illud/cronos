@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 // import Modal from 'react-modal';
 
 import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar'
 
 function SideMenu() {
-  useEffect(() => {}, [])
+  useEffect(() => { }, [])
 
   return (
     <ProSidebar>

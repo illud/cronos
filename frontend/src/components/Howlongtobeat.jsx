@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 // import Modal from 'react-modal';
 import Row from 'react-bootstrap/Row'
 import Card from 'react-bootstrap/Card'
@@ -7,9 +7,7 @@ import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Badge from 'react-bootstrap/Badge'
-import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import './Main.css'
-// import Menu from './Menu';
 import Drawer from 'react-modern-drawer'
 import {
   DeviceAnalytics,
@@ -20,19 +18,11 @@ import {
   Cpu2,
   BrandPatreon,
 } from 'tabler-icons-react'
-// import { ToastContainer, toast } from 'react-toastify';
 import toast, { Toaster } from 'react-hot-toast'
 import { useHistory } from 'react-router-dom'
-import { format } from 'date-fns'
 import { useTranslation } from 'react-i18next'
-import axios from 'axios'
 import { FindAll, HowlongtobeatRequest } from '../../wailsjs/go/main/App'
 import ReactLoading from 'react-loading'
-
-// import { HowLongToBeatService } from "howlongtobeat";
-// const hltbService = new HowLongToBeatService();
-
-// import howlongtobeat from 'howlongtobeat-api'
 
 function Howlongtobeat() {
   let history = useHistory()
@@ -43,8 +33,6 @@ function Howlongtobeat() {
   const [apps, setApps] = useState([])
 
   const [howlongtobeatData, setHowlongtobeat] = useState([])
-
-  const inputRef = useRef()
 
   const [isOpen, setIsOpen] = useState(true)
 

@@ -1,7 +1,7 @@
 package db
 
 import (
-	"cronos/models"
+	"cronos/backend/models"
 	"fmt"
 
 	"gorm.io/driver/sqlite"

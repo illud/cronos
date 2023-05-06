@@ -1,29 +1,7 @@
-import React, { useRef, useState, useEffect } from 'react'
-// import Modal from 'react-modal';
-import Row from 'react-bootstrap/Row'
-import Card from 'react-bootstrap/Card'
-import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
-import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
-import Badge from 'react-bootstrap/Badge'
+import React, { useState, useEffect } from 'react'
 import '../Main.css'
 import Chart from 'react-apexcharts'
-// import Menu from './Menu';
-import Drawer from 'react-modern-drawer'
-import {
-  DeviceAnalytics,
-  DeviceDesktop,
-  Clock,
-  ArrowLeft,
-  LetterH,
-  Cpu2,
-  BrandPatreon,
-} from 'tabler-icons-react'
-// import { ToastContainer, toast } from 'react-toastify';
-import toast, { Toaster } from 'react-hot-toast'
-import { useHistory } from 'react-router-dom'
-import { format } from 'date-fns'
+
 import { useTranslation } from 'react-i18next'
 
 var today = new Date()

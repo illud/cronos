@@ -6,7 +6,7 @@ import (
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
 
-	models "cronos/models"
+	models "cronos/backend/models"
 
 	db "cronos/backend/db"
 )
