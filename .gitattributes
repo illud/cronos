@@ -1,4 +1,4 @@
 *.go linguist-detectable=true
-*.js linguist-detectable=false
-*.jsx linguist-detectable=true
+*.js linguist-detectable=true
+*.jsx linguist-detectable=false
 *.html linguist-detectable=false
