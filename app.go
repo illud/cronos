@@ -37,6 +37,7 @@ func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
 }
 
+// Main START
 // Inserts new data into the appdata table
 func (a *App) Create(image string, name string, path string, executable string, time int64) {
 	// Create
@@ -55,6 +56,172 @@ func (a *App) DeleteApp(id int64) {
 	var appData models.AppData
 	db.Client().Delete(&appData, id)
 }
+
+// Finds all data in the appdata table order by updated_at
+func (a *App) FindAll() []models.AppData {
+	// Read
+	var appData []models.AppData
+	db.Client().Order("updated_at desc").Find(&appData)
+	return appData
+}
+
+// Find one data in the appdata table order by id
+func (a *App) FindOne(gameId int64) models.AppData {
+	// Read
+	var appData models.AppData
+	db.Client().Where("id = ?", gameId).Find(&appData)
+	return appData
+}
+
+// Main END
+
+// GamesStats START
+
+// Finds total time played (gets sum of all game time)
+func (a *App) FindTotalTimePlayed() int64 {
+	var total int64
+	db.Client().Table("game_historicals").Select("SUM(time)").Row().Scan(&total)
+	return total
+}
+
+// Finds most played game
+func (a *App) FindMostPlayedGame() models.MosPlayedGame {
+	var mostPlayedGame models.MosPlayedGame
+	db.Client().Table("app_data").Select("name, MAX(time) AS total").Where("deleted_at IS NULL").Find(&mostPlayedGame)
+	return mostPlayedGame
+}
+
+// finds total time played by game today
+func (a *App) FindTotalTimePlayedByGameToday(today string, tomorrow string, id []int64) []int64 {
+	var totalPlayedToday []int64
+
+	var total int64
+	for i := 0; i < len(id); i++ {
+		total = 0 // resets total for each loop
+		db.Client().Table("game_historicals").Select("SUM(time)").Where("created_at >= ? AND created_at <= ? AND game_id = ?", today, tomorrow, id[i]).Row().Scan(&total)
+		totalPlayedToday = append(totalPlayedToday, total)
+	}
+
+	return totalPlayedToday
+}
+
+// finds total time played by game this week
+func (a *App) FindTotalTimePlayedByGameThisWeek(today string, lastWeek string, id []int64) []int64 {
+	var totalPlayedThisWeek []int64
+
+	var total int64
+	for i := 0; i < len(id); i++ {
+		total = 0 // resets total for each loop
+		db.Client().Table("game_historicals").Select("SUM(time)").Where("created_at >= ? AND created_at <= ? AND game_id = ?", lastWeek, today, id[i]).Row().Scan(&total)
+		totalPlayedThisWeek = append(totalPlayedThisWeek, total)
+	}
+
+	return totalPlayedThisWeek
+}
+
+// finds total time played this week
+func (a *App) FindTotalTimePlayedLastWeek(today string, lastWeek string) int64 {
+	var total int64
+	db.Client().Table("game_historicals").Select("SUM(time)").Where("created_at >= ? AND created_at <= ?", lastWeek, today).Row().Scan(&total)
+	return total
+}
+
+func (a *App) FindTotalTimePlayedToday(today string, tomorrow string) int64 {
+	var total int64
+	db.Client().Table("game_historicals").Select("SUM(time)").Where("created_at >= ? AND created_at <= ?", today, tomorrow).Row().Scan(&total)
+	return total
+}
+
+// Finds total time played this month
+func (a *App) FindTotalTimePlayedLastMonth(today string, lastMonth string) int64 {
+	var total int64
+	db.Client().Table("game_historicals").Select("SUM(time)").Where("created_at >= ? AND created_at <= ?", lastMonth, today).Row().Scan(&total)
+	return total
+}
+
+// Finds total time played this year
+func (a *App) FindTotalTimePlayedLastYear(today string, lastYear string) int64 {
+	var total int64
+	db.Client().Table("game_historicals").Select("SUM(time)").Where("created_at >= ? AND created_at <= ?", lastYear, today).Row().Scan(&total)
+	return total
+}
+
+// Finds games played this week
+func (a *App) FindTotalGamesPlayedLastWeek(today string, lastWeek string) []models.AppData {
+	var appData []models.AppData
+	db.Client().Raw("SELECT * from app_data WHERE updated_at >= ? AND updated_at <= ? ORDER BY updated_at desc", lastWeek, today).Scan(&appData)
+	return appData
+}
+
+// GamesStats END
+
+// GameDetails START
+// Finds time played this week by day
+func (a *App) TimePlayedByDayThisWeek(one models.WeekDay, two models.WeekDay, three models.WeekDay, four models.WeekDay,
+	five models.WeekDay, six models.WeekDay, seven models.WeekDay, gameId int) models.Datas {
+
+	var countOne sql.NullInt64
+	var countTwo sql.NullInt64
+	var countThree sql.NullInt64
+	var countFour sql.NullInt64
+	var countFive sql.NullInt64
+	var countSix sql.NullInt64
+	var countSeven sql.NullInt64
+
+	oneDay := db.Client().Raw("SELECT SUM(time) FROM game_historicals WHERE created_at >= ? AND created_at <= ? AND game_id = ?", one.Yesterday, one.Today, gameId).Scan(&countOne)
+
+	if oneDay != nil {
+		fmt.Println(oneDay)
+	}
+
+	twoDay := db.Client().Raw("SELECT SUM(time) FROM game_historicals WHERE created_at >= ? AND created_at <= ? AND game_id = ?", two.Yesterday, two.Today, gameId).Scan(&countTwo)
+
+	if twoDay != nil {
+		fmt.Println(twoDay)
+	}
+
+	threDay := db.Client().Raw("SELECT SUM(time) FROM game_historicals WHERE created_at >= ? AND created_at <= ? AND game_id = ?", three.Yesterday, three.Today, gameId).Scan(&countThree)
+
+	if threDay != nil {
+		fmt.Println(threDay)
+	}
+
+	fourDay := db.Client().Raw("SELECT SUM(time) FROM game_historicals WHERE created_at >= ? AND created_at <= ? AND game_id = ?", four.Yesterday, four.Today, gameId).Scan(&countFour)
+
+	if fourDay != nil {
+		fmt.Println(fourDay)
+	}
+
+	fiveDay := db.Client().Raw("SELECT SUM(time) FROM game_historicals WHERE created_at >= ? AND created_at <= ? AND game_id = ?", five.Yesterday, five.Today, gameId).Scan(&countFive)
+
+	if fiveDay != nil {
+		fmt.Println(fiveDay)
+	}
+
+	sixDay := db.Client().Raw("SELECT SUM(time) FROM game_historicals WHERE created_at >= ? AND created_at <= ? AND game_id = ?", six.Yesterday, six.Today, gameId).Scan(&countSix)
+
+	if sixDay != nil {
+		fmt.Println(sixDay)
+	}
+
+	sevenDay := db.Client().Raw("SELECT SUM(time) FROM game_historicals WHERE created_at >= ? AND created_at <= ? AND game_id = ?", seven.Yesterday, seven.Today, gameId).Scan(&countSeven)
+
+	if sevenDay != nil {
+		fmt.Println(sevenDay)
+	}
+
+	return models.Datas{
+		CountOne:   countOne.Int64,
+		CountTwo:   countTwo.Int64,
+		CountThree: countThree.Int64,
+		CountFour:  countFour.Int64,
+		CountFive:  countFive.Int64,
+		CountSix:   countSix.Int64,
+		CountSeven: countSeven.Int64,
+	}
+}
+
+// GameDetails END
 
 // Creates a bat file to run the game
 func createBatFile(executable string, path string) {
@@ -171,98 +338,6 @@ func (a *App) CheckRunningProcess(name string, id int64, today string, tomorrow 
 	select {}
 }
 
-// Finds all data in the appdata table order by updated_at
-func (a *App) FindAll() []models.AppData {
-	// Read
-	var appData []models.AppData
-	db.Client().Order("updated_at desc").Find(&appData)
-	return appData
-}
-
-// Find one data in the appdata table order by id
-func (a *App) FindOne(gameId int64) models.AppData {
-	// Read
-	var appData models.AppData
-	db.Client().Where("id = ?", gameId).Find(&appData)
-	return appData
-}
-
-// Finds total time played
-func (a *App) FindTotalTimePlayed() int64 {
-	var total int64
-	db.Client().Table("game_historicals").Select("SUM(time)").Row().Scan(&total)
-	return total
-}
-
-// Finds most played game
-func (a *App) FindMostPlayedGame() models.MosPlayedGame {
-	var mostPlayedGame models.MosPlayedGame
-	db.Client().Table("app_data").Select("name, MAX(time) AS total").Where("deleted_at IS NULL").Find(&mostPlayedGame)
-	return mostPlayedGame
-}
-
-// finds most played game today
-func (a *App) FindTotalTimePlayedGameToday(today string, tomorrow string, id []int64) []int64 {
-	var totalPlayedToday []int64
-
-	var total int64
-	for i := 0; i < len(id); i++ {
-		total = 0 // resets total for each loop
-		db.Client().Table("game_historicals").Select("SUM(time)").Where("created_at >= ? AND created_at <= ? AND game_id = ?", today, tomorrow, id[i]).Row().Scan(&total)
-		totalPlayedToday = append(totalPlayedToday, total)
-	}
-
-	return totalPlayedToday
-}
-
-// finds most played game this week
-func (a *App) FindTotalTimePlayedGameThisWeek(today string, lastWeek string, id []int64) []int64 {
-	var totalPlayedThisWeek []int64
-
-	var total int64
-	for i := 0; i < len(id); i++ {
-		total = 0 // resets total for each loop
-		db.Client().Table("game_historicals").Select("SUM(time)").Where("created_at >= ? AND created_at <= ? AND game_id = ?", lastWeek, today, id[i]).Row().Scan(&total)
-		totalPlayedThisWeek = append(totalPlayedThisWeek, total)
-	}
-
-	return totalPlayedThisWeek
-}
-
-// finds most played game this week
-func (a *App) FindTotalTimePlayedLastWeek(today string, lastWeek string) int64 {
-	var total int64
-	db.Client().Table("game_historicals").Select("SUM(time)").Where("created_at >= ? AND created_at <= ?", lastWeek, today).Row().Scan(&total)
-	return total
-}
-
-func (a *App) FindTotalTimePlayedToday(today string, tomorrow string) int64 {
-	var total int64
-	db.Client().Table("game_historicals").Select("SUM(time)").Where("created_at >= ? AND created_at <= ?", today, tomorrow).Row().Scan(&total)
-	return total
-}
-
-// Finds total time played this month
-func (a *App) FindTotalTimePlayedLastMonth(today string, lastMonth string) int64 {
-	var total int64
-	db.Client().Table("game_historicals").Select("SUM(time)").Where("created_at >= ? AND created_at <= ?", lastMonth, today).Row().Scan(&total)
-	return total
-}
-
-// Finds total time played this year
-func (a *App) FindTotalTimePlayedLastYear(today string, lastYear string) int64 {
-	var total int64
-	db.Client().Table("game_historicals").Select("SUM(time)").Where("created_at >= ? AND created_at <= ?", lastYear, today).Row().Scan(&total)
-	return total
-}
-
-// Finds games played this week
-func (a *App) FindTotalGamesPlayedLastWeek(today string, lastWeek string) []models.AppData {
-	var appData []models.AppData
-	db.Client().Raw("SELECT * from app_data WHERE updated_at >= ? AND updated_at <= ? ORDER BY updated_at desc", lastWeek, today).Scan(&appData)
-	return appData
-}
-
 // Excutes file search doalog
 func (a *App) GameExePath() string {
 	selection, err := runtime.OpenFileDialog(a.ctx, runtime.OpenDialogOptions{
@@ -291,71 +366,6 @@ func (a *App) HowlongtobeatRequest(search string) interface{} {
 		return howlongtobeat.Search(search)
 	}
 	return false
-}
-
-// Finds time played this week by day
-func (a *App) TimePlayedByDayThisWeek(one models.WeekDay, two models.WeekDay, three models.WeekDay, four models.WeekDay,
-	five models.WeekDay, six models.WeekDay, seven models.WeekDay, gameId int) models.Datas {
-
-	var countOne sql.NullInt64
-	var countTwo sql.NullInt64
-	var countThree sql.NullInt64
-	var countFour sql.NullInt64
-	var countFive sql.NullInt64
-	var countSix sql.NullInt64
-	var countSeven sql.NullInt64
-
-	oneDay := db.Client().Raw("SELECT SUM(time) FROM game_historicals WHERE created_at >= ? AND created_at <= ? AND game_id = ?", one.Yesterday, one.Today, gameId).Scan(&countOne)
-
-	if oneDay != nil {
-		fmt.Println(oneDay)
-	}
-
-	twoDay := db.Client().Raw("SELECT SUM(time) FROM game_historicals WHERE created_at >= ? AND created_at <= ? AND game_id = ?", two.Yesterday, two.Today, gameId).Scan(&countTwo)
-
-	if twoDay != nil {
-		fmt.Println(twoDay)
-	}
-
-	threDay := db.Client().Raw("SELECT SUM(time) FROM game_historicals WHERE created_at >= ? AND created_at <= ? AND game_id = ?", three.Yesterday, three.Today, gameId).Scan(&countThree)
-
-	if threDay != nil {
-		fmt.Println(threDay)
-	}
-
-	fourDay := db.Client().Raw("SELECT SUM(time) FROM game_historicals WHERE created_at >= ? AND created_at <= ? AND game_id = ?", four.Yesterday, four.Today, gameId).Scan(&countFour)
-
-	if fourDay != nil {
-		fmt.Println(fourDay)
-	}
-
-	fiveDay := db.Client().Raw("SELECT SUM(time) FROM game_historicals WHERE created_at >= ? AND created_at <= ? AND game_id = ?", five.Yesterday, five.Today, gameId).Scan(&countFive)
-
-	if fiveDay != nil {
-		fmt.Println(fiveDay)
-	}
-
-	sixDay := db.Client().Raw("SELECT SUM(time) FROM game_historicals WHERE created_at >= ? AND created_at <= ? AND game_id = ?", six.Yesterday, six.Today, gameId).Scan(&countSix)
-
-	if sixDay != nil {
-		fmt.Println(sixDay)
-	}
-
-	sevenDay := db.Client().Raw("SELECT SUM(time) FROM game_historicals WHERE created_at >= ? AND created_at <= ? AND game_id = ?", seven.Yesterday, seven.Today, gameId).Scan(&countSeven)
-
-	if sevenDay != nil {
-		fmt.Println(sevenDay)
-	}
-
-	return models.Datas{
-		CountOne:   countOne.Int64,
-		CountTwo:   countTwo.Int64,
-		CountThree: countThree.Int64,
-		CountFour:  countFour.Int64,
-		CountFive:  countFive.Int64,
-		CountSix:   countSix.Int64,
-		CountSeven: countSeven.Int64,
-	}
 }
 
 // SysInfo gets system information

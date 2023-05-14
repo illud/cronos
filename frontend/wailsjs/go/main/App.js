@@ -34,12 +34,12 @@ export function FindTotalTimePlayed() {
   return window['go']['main']['App']['FindTotalTimePlayed']();
 }
 
-export function FindTotalTimePlayedGameThisWeek(arg1, arg2, arg3) {
-  return window['go']['main']['App']['FindTotalTimePlayedGameThisWeek'](arg1, arg2, arg3);
+export function FindTotalTimePlayedByGameThisWeek(arg1, arg2, arg3) {
+  return window['go']['main']['App']['FindTotalTimePlayedByGameThisWeek'](arg1, arg2, arg3);
 }
 
-export function FindTotalTimePlayedGameToday(arg1, arg2, arg3) {
-  return window['go']['main']['App']['FindTotalTimePlayedGameToday'](arg1, arg2, arg3);
+export function FindTotalTimePlayedByGameToday(arg1, arg2, arg3) {
+  return window['go']['main']['App']['FindTotalTimePlayedByGameToday'](arg1, arg2, arg3);
 }
 
 export function FindTotalTimePlayedLastMonth(arg1, arg2) {

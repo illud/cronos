@@ -23,8 +23,8 @@ import Image from 'react-bootstrap/Image'
 import {
   FindAll,
   FindTotalTimePlayed,
-  FindTotalTimePlayedGameToday,
-  FindTotalTimePlayedGameThisWeek,
+  FindTotalTimePlayedByGameToday,
+  FindTotalTimePlayedByGameThisWeek,
   FindTotalTimePlayedToday,
   FindTotalTimePlayedLastWeek,
   FindTotalTimePlayedLastMonth,
@@ -43,8 +43,8 @@ function GamesStats() {
 
   const [apps, setApps] = useState([])
   const [totalTimePlayed, setTotalTimePlayed] = useState(0)
-  const [totalTimePlayedGameToday, setTotalTimePlayedGameToday] = useState([])
-  const [totalTimePlayedGameThisWeek, setTotalTimePlayedGameThisWeek] =
+  const [totalTimePlayedByGameToday, setTotalTimePlayedByGameToday] = useState([])
+  const [totalTimePlayedByGameThisWeek, setTotalTimePlayedByGameThisWeek] =
     useState([])
   const [totalTimePlayedToday, setTotalTimePlayedToday] = useState(0)
   const [totalTimePlayedLastWeek, setTotalTimePlayedLastWeek] = useState(0)
@@ -158,12 +158,12 @@ function GamesStats() {
           'yyyy-MM-dd',
         )
 
-        FindTotalTimePlayedGameToday(
+        FindTotalTimePlayedByGameToday(
           today,
           tomorrow,
           totalTimePlayedGameTodayArrays,
         ).then((result) => {
-          setTotalTimePlayedGameToday(result)
+          setTotalTimePlayedByGameToday(result)
         })
 
         //__TIME PLAYED THIS WEEK__
@@ -184,13 +184,13 @@ function GamesStats() {
           totalTimePlayedGameThisWeekArray.push(result[index].Id)
         }
 
-        FindTotalTimePlayedGameThisWeek(
+        FindTotalTimePlayedByGameThisWeek(
           toDay,
           lastWeek,
           totalTimePlayedGameThisWeekArray,
         ).then((result) => {
           // arrayOfGameTimesWeek.push(result)
-          setTotalTimePlayedGameThisWeek(result)
+          setTotalTimePlayedByGameThisWeek(result)
         })
 
         setIsLoading(false)
@@ -648,7 +648,7 @@ function GamesStats() {
                           textAlign: 'left',
                         }}
                       >
-                        {secondsToTime(totalTimePlayedGameToday[index])}{' '}
+                        {secondsToTime(totalTimePlayedByGameToday[index])}{' '}
                       </td>
                       <td
                         style={{
@@ -657,7 +657,7 @@ function GamesStats() {
                           textAlign: 'left',
                         }}
                       >
-                        {secondsToTime(totalTimePlayedGameThisWeek[index])}{' '}
+                        {secondsToTime(totalTimePlayedByGameThisWeek[index])}{' '}
                       </td>
                       <td
                         style={{

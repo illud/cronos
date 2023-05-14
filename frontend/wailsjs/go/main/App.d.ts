@@ -18,9 +18,9 @@ export function FindTotalGamesPlayedLastWeek(arg1:string,arg2:string):Promise<Ar
 
 export function FindTotalTimePlayed():Promise<number>;
 
-export function FindTotalTimePlayedGameThisWeek(arg1:string,arg2:string,arg3:Array<number>):Promise<Array<number>>;
+export function FindTotalTimePlayedByGameThisWeek(arg1:string,arg2:string,arg3:Array<number>):Promise<Array<number>>;
 
-export function FindTotalTimePlayedGameToday(arg1:string,arg2:string,arg3:Array<number>):Promise<Array<number>>;
+export function FindTotalTimePlayedByGameToday(arg1:string,arg2:string,arg3:Array<number>):Promise<Array<number>>;
 
 export function FindTotalTimePlayedLastMonth(arg1:string,arg2:string):Promise<number>;
 
