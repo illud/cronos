@@ -31,7 +31,7 @@ import {
   FindMostPlayedGame,
   FindTotalGamesPlayedLastWeek,
   FindTotalTimePlayedLastYear,
-} from '../../wailsjs/go/main/App'
+} from '../../wailsjs/go/backend/App'
 import { format } from 'date-fns'
 import { useTranslation } from 'react-i18next'
 //utils

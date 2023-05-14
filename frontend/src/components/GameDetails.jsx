@@ -30,7 +30,7 @@ import {
   Play,
   FindOne,
   FindAll,
-} from '../../wailsjs/go/main/App'
+} from '../../wailsjs/go/backend/App'
 
 import Tabler from './charts/tabler'
 import { format } from 'date-fns'

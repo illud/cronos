@@ -43,7 +43,7 @@ import {
   GameExePath,
   Update,
   HowlongtobeatRequest,
-} from '../../wailsjs/go/main/App'
+} from '../../wailsjs/go/backend/App'
 import ReactLoading from 'react-loading'
 import Image from 'react-bootstrap/Image'
 //utils

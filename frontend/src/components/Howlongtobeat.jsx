@@ -21,7 +21,7 @@ import {
 import toast, { Toaster } from 'react-hot-toast'
 import { useHistory } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { FindAll, HowlongtobeatRequest } from '../../wailsjs/go/main/App'
+import { FindAll, HowlongtobeatRequest } from '../../wailsjs/go/backend/App'
 import ReactLoading from 'react-loading'
 
 function Howlongtobeat() {

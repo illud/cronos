@@ -23,7 +23,7 @@ import MetricCard from 'react-metric-card'
 import 'react-metric-card/dist/index.css'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import { FindAll, Pcspecs } from '../../wailsjs/go/main/App'
+import { FindAll, Pcspecs } from '../../wailsjs/go/backend/App'
 import { format } from 'date-fns'
 import { useTranslation } from 'react-i18next'
 

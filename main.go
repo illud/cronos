@@ -8,6 +8,7 @@ import (
 
 	models "cronos/backend/models"
 
+	"cronos/backend"
 	db "cronos/backend/db"
 )
 
@@ -19,7 +20,7 @@ func main() {
 	db.Connect()
 
 	// Create an instance of the app structure
-	app := NewApp()
+	app := backend.NewApp()
 
 	// Create application with options
 	err := wails.Run(&options.App{
@@ -27,7 +28,7 @@ func main() {
 		Width:     1220,
 		Height:    720,
 		Assets:    assets,
-		OnStartup: app.startup,
+		OnStartup: app.Startup,
 		Bind: []interface{}{
 			app,
 			&models.AppData{},
