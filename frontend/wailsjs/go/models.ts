@@ -1,7 +1,5 @@
 export namespace models {
 	
-	
-	
 	export class WeekDay {
 	    yesterday: string;
 	    today: string;
@@ -40,6 +38,7 @@ export namespace models {
 	        this.countSeven = source["countSeven"];
 	    }
 	}
+	
 
 }
 

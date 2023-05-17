@@ -27,6 +27,8 @@ func main() {
 		Title:     "Cronos",
 		Width:     1220,
 		Height:    720,
+		MinWidth:  1220,
+		MinHeight: 720,
 		Assets:    assets,
 		OnStartup: app.Startup,
 		Bind: []interface{}{
