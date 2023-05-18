@@ -58,14 +58,14 @@ func (a *App) CheckRunningProcess(name string, id int64, today string, tomorrow 
 	// fmt.Println(name)
 
 	// Sets running to true
-	db.Client().Model(&models.AppData{}).Where("id = ?", id).Update("running", true)
+	db.Client().Model(&models.Games{}).Where("id = ?", id).Update("running", true)
 
 	// Insert into historical if dosn't exist
-	var gameHistorical []models.GameHistorical
-	db.Client().Where("game_id = ? AND created_at >= ? AND created_at < ?", id, today, tomorrow).Find(&gameHistorical)
+	var gameHistoricals []models.GameHistoricals
+	db.Client().Where("game_id = ? AND created_at >= ? AND created_at < ?", id, today, tomorrow).Find(&gameHistoricals)
 
-	if len(gameHistorical) <= 0 {
-		db.Client().Create(&models.GameHistorical{GameId: id, Time: 0})
+	if len(gameHistoricals) <= 0 {
+		db.Client().Create(&models.GameHistoricals{GameId: id, Time: 0})
 	}
 
 	c := cron.New(cron.WithParser(cron.NewParser(cron.SecondOptional | cron.Minute | cron.Hour | cron.Dom | cron.Month | cron.Dow)))
@@ -97,19 +97,19 @@ func (a *App) CheckRunningProcess(name string, id int64, today string, tomorrow 
 		if utils.Contains(processRunning, name) {
 			// fmt.Println("ok")
 			// Read
-			var appData models.AppData
-			db.Client().Find(&appData, id)
-			timing := appData.Time
-			db.Client().Model(&models.AppData{}).Where("id = ?", id).Update("time", timing+30)
-			db.Client().Model(&models.AppData{}).Where("id = ?", id).Update("running", true)
+			var games models.Games
+			db.Client().Find(&games, id)
+			timing := games.Time
+			db.Client().Model(&models.Games{}).Where("id = ?", id).Update("time", timing+30)
+			db.Client().Model(&models.Games{}).Where("id = ?", id).Update("running", true)
 			timing = 0
 
 			// updates time historical by created_at
-			var gameHistorical models.GameHistorical
-			db.Client().Where("game_id = ? AND created_at >= ? AND created_at < ?", id, today, tomorrow).Find(&gameHistorical)
-			gameTiming := gameHistorical.Time
+			var gameHistoricals models.GameHistoricals
+			db.Client().Where("game_id = ? AND created_at >= ? AND created_at < ?", id, today, tomorrow).Find(&gameHistoricals)
+			gameTiming := gameHistoricals.Time
 
-			db.Client().Model(&models.GameHistorical{}).Where("id = ?", gameHistorical.Id).Update("time", gameTiming+30)
+			db.Client().Model(&models.GameHistoricals{}).Where("id = ?", gameHistoricals.Id).Update("time", gameTiming+30)
 			gameTiming = 0
 
 			// fmt.Println(p.Name())
@@ -120,7 +120,7 @@ func (a *App) CheckRunningProcess(name string, id int64, today string, tomorrow 
 			// return p.Kill()
 		} else {
 			// fmt.Println("false")
-			db.Client().Model(&models.AppData{}).Omit("updated_at").Where("id = ?", id).Update("running", false)
+			db.Client().Model(&models.Games{}).Omit("updated_at").Where("id = ?", id).Update("running", false)
 
 			// Stop the cron job when playing again
 			c.Stop()

@@ -8,13 +8,13 @@ export function Create(arg1:string,arg2:string,arg3:string,arg4:string,arg5:numb
 
 export function DeleteApp(arg1:number):void;
 
-export function FindAll():Promise<Array<models.AppData>>;
+export function FindAll():Promise<Array<models.Games>>;
 
 export function FindMostPlayedGame():Promise<models.MosPlayedGame>;
 
-export function FindOne(arg1:number):Promise<models.AppData>;
+export function FindOne(arg1:number):Promise<models.Games>;
 
-export function FindTotalGamesPlayedLastWeek(arg1:string,arg2:string):Promise<Array<models.AppData>>;
+export function FindTotalGamesPlayedLastWeek(arg1:string,arg2:string):Promise<Array<models.Games>>;
 
 export function FindTotalTimePlayed():Promise<number>;
 

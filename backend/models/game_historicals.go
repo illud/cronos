@@ -2,7 +2,7 @@ package models
 
 import "gorm.io/gorm"
 
-type GameHistorical struct {
+type GameHistoricals struct {
 	gorm.Model
 	Id     int64
 	GameId int64

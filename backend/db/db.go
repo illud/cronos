@@ -22,14 +22,14 @@ func Connect() {
 	}
 
 	// Migrate the schema
-	dbCon.AutoMigrate(&models.AppData{}, &models.GameHistorical{})
+	dbCon.AutoMigrate(&models.Games{}, &models.GameHistoricals{})
 
 	// defer dbCon.Close()
 	db = dbCon
 	fmt.Println("CONNECTED")
 
 	// Sets all collumn running to false
-	dbCon.Model(&models.AppData{}).Where("id > 0 AND running = ?", true).Update("running", false)
+	dbCon.Model(&models.Games{}).Where("id > 0 AND running = ?", true).Update("running", false)
 
 }
 

@@ -4,12 +4,12 @@
 
 Cronos is a app built with  [Wails](https://wails.io/) that allows you to track the time of apps running, games, in app howlongtobeat and pc specs.
 
-![Alt text](images/inapp/1.jpeg?raw=true "Games")
-![Alt text](images/inapp/2.jpeg?raw=true "Stats")
-![Alt text](images/inapp/3.jpeg?raw=true "HowLongTobeat")
-![Alt text](images/inapp/4.jpeg?raw=true "Pc Specs")
+![Alt text](images/inapp/1.jpg?raw=true "Games")
+![Alt text](images/inapp/2.jpg?raw=true "Stats")
+![Alt text](images/inapp/3.jpg?raw=true "HowLongTobeat")
+![Alt text](images/inapp/4.jpg?raw=true "Pc Specs")
 
-## ¿Why Wails and not Tauri?
+## ¿Why [Wails](https://wails.io/)  and not [Tauri](https://tauri.app/) ?
 
 Wails is enough to run all the process also with Go is easy to add and use Sqlite besides easy to use packages for cron jobs, computer process etc.
 

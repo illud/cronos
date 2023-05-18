@@ -2,7 +2,7 @@ package models
 
 import "gorm.io/gorm"
 
-type AppData struct {
+type Games struct {
 	gorm.Model
 	Id         int64
 	Image      string

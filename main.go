@@ -33,7 +33,7 @@ func main() {
 		OnStartup: app.Startup,
 		Bind: []interface{}{
 			app,
-			&models.AppData{},
+			&models.Games{},
 		},
 	})
 

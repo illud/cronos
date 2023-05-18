@@ -15,7 +15,7 @@ func (a *App) FindTotalTimePlayed() int64 {
 // Finds most played game
 func (a *App) FindMostPlayedGame() models.MosPlayedGame {
 	var mostPlayedGame models.MosPlayedGame
-	db.Client().Table("app_data").Select("name, MAX(time) AS total").Where("deleted_at IS NULL").Find(&mostPlayedGame)
+	db.Client().Table("games").Select("name, MAX(time) AS total").Where("deleted_at IS NULL").Find(&mostPlayedGame)
 	return mostPlayedGame
 }
 
@@ -75,8 +75,8 @@ func (a *App) FindTotalTimePlayedLastYear(today string, lastYear string) int64 {
 }
 
 // Finds games played this week
-func (a *App) FindTotalGamesPlayedLastWeek(today string, lastWeek string) []models.AppData {
-	var appData []models.AppData
-	db.Client().Raw("SELECT * from app_data WHERE updated_at >= ? AND updated_at <= ? ORDER BY updated_at desc", lastWeek, today).Scan(&appData)
-	return appData
+func (a *App) FindTotalGamesPlayedLastWeek(today string, lastWeek string) []models.Games {
+	var games []models.Games
+	db.Client().Raw("SELECT * from games WHERE updated_at >= ? AND updated_at <= ? ORDER BY updated_at desc", lastWeek, today).Scan(&games)
+	return games
 }
