@@ -3,10 +3,11 @@ package main
 import (
 	"embed"
 
+	models "cronos/backend/models"
+
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
-
-	models "cronos/backend/models"
+	"github.com/wailsapp/wails/v2/pkg/options/windows"
 
 	"cronos/backend"
 	db "cronos/backend/db"
@@ -34,6 +35,16 @@ func main() {
 		Bind: []interface{}{
 			app,
 			&models.Games{},
+		},
+		Windows: &windows.Options{
+			WebviewIsTransparent: false,
+			WindowIsTranslucent:  false,
+			// BackdropType:                      windows.Mica,
+			DisableWindowIcon:                 false,
+			DisableFramelessWindowDecorations: false,
+			WebviewUserDataPath:               "",
+			WebviewBrowserPath:                "",
+			Theme:                             windows.Dark,
 		},
 	})
 

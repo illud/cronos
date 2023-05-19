@@ -7,9 +7,9 @@ import Howlongtobeat from './components/Howlongtobeat'
 import PcSpecs from './components/PcSpecs'
 import GameDetails from './components/GameDetails'
 import deathloop from './public/deathloop.jpg'
-import deathloop_2 from './public/deathloop_2.jpg'
 import mh from './public/mh.jpg'
 import dishonored_2 from './public/dishonored_2.jpg'
+import csgo from './public/csgo.jpg'
 import katalyzt from './public/katalyzt.png'
 import { MemoryRouter, Switch, Route } from 'react-router-dom'
 // import 'mdb-react-ui-kit/dist/css/mdb.min.css';
@@ -19,10 +19,10 @@ function App() {
   const randomImage = () => {
     const imgArray = [
       deathloop,
-      deathloop_2,
       mh,
       dishonored_2,
       katalyzt,
+      csgo,
     ]
 
     return imgArray[Math.floor(Math.random() * imgArray.length)]

@@ -64,13 +64,13 @@
 
 /*Start of the  scrollbar*/
 ::-webkit-scrollbar {
-  width: 8px;
-  background-color: #686868;
+  width: 5px;
+  background-color: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background-color: #000000;
+  border-radius: 5px;
+  background-color: #ffffff86;
 }
 
 /*End of the scrollbar*/

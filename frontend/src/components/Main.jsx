@@ -488,17 +488,17 @@ function Main() {
             marginBottom: 0
           }}
         >
-          <a style={{ color: 'white', marginTop: '-15px', fontSize: 15, position: 'fixed' }}>
+          <a style={{ color: 'white', marginTop: '-10px', fontSize: 15, position: 'fixed' }}>
             v1.0.0
           </a>
           <br></br>
-          <a style={{ color: 'grey', marginTop: '-15px', fontSize: 10, position: 'fixed', marginLeft: -43 }}>
+          <a style={{ color: 'grey', marginTop: '-15px', fontSize: 10, position: 'fixed', marginLeft: -43, fontFamily: 'cursive' }}>
             <a
               style={{ color: 'grey' }}
-              href="https://github.com/saturnavt"
+              href="https://github.com/illud"
               target="_blank"
             >
-              Created by Illud (Colombia)
+              Created By Illud (Colombia)
             </a>
           </a>
         </div>
