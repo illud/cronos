@@ -1,8 +1,8 @@
 # CRONOS
-
+Created by Illud (Colombia)
 ## About
 
-Cronos is a app built with  [Wails](https://wails.io/) that allows you to track the time of apps running, games, in app howlongtobeat and pc specs.
+Cronos is a app built with  [Wails](https://wails.io/) that allows you to track the time of apps running, games, in app HowLongToBeat and pc specs.
 
 ![Alt text](images/inapp/1.jpg?raw=true "Games")
 ![Alt text](images/inapp/2.jpg?raw=true "Stats")

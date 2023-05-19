@@ -329,7 +329,7 @@ function GamesStats() {
             // color={'#D9D9D9'}
             style={{ marginTop: '-6px' }}
           />{' '}
-          {t('allGames')}{' '}
+          {t('games')}{' '}
           <Badge pill bg="primary" style={{ background: 'green' }}>
             {apps.length}
           </Badge>
@@ -455,7 +455,19 @@ function GamesStats() {
             marginLeft: '40%',
           }}
         >
-          v1.0.0
+          <a style={{ color: 'white', marginTop: '-15px', fontSize: 15, position: 'fixed' }}>
+            v1.0.0
+          </a>
+          <br></br>
+          <a style={{ color: 'grey', marginTop: '-15px', fontSize: 10, position: 'fixed', marginLeft: -43 }}>
+            <a
+              style={{ color: 'grey' }}
+              href="https://github.com/saturnavt"
+              target="_blank"
+            >
+              Created by Illud (Colombia)
+            </a>
+          </a>
         </div>
       </Drawer>
       <div style={{ marginLeft: '320px' }}>

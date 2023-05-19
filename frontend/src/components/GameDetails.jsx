@@ -247,7 +247,7 @@ function GameDetails() {
             color={'white'}
             style={{ marginTop: '-6px' }}
           />{' '}
-          {t('allGames')}{' '}
+          {t('games')}{' '}
           <Badge pill bg="primary" style={{ background: 'green' }}>
             {apps.length}
           </Badge>

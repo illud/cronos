@@ -1,3 +1,4 @@
+// Games
 import React, { useRef, useState, useEffect } from 'react'
 // import Modal from 'react-modal';
 import Row from 'react-bootstrap/Row'
@@ -327,7 +328,6 @@ function Main() {
           />
           NOS
         </h4>
-
         <br></br>
         <hr style={{ color: 'white', height: '1px', marginTop: '-10px' }}></hr>
         {/* <div style={{ color: 'white', float: 'left', marginLeft: '40px' }}>
@@ -359,7 +359,7 @@ function Main() {
             color={'white'}
             style={{ marginTop: '-6px' }}
           />{' '}
-          {t('allGames')}{' '}
+          {t('games')}{' '}
           <Badge pill bg="primary" style={{ background: 'green' }}>
             {apps.length}
           </Badge>
@@ -485,10 +485,24 @@ function Main() {
             position: 'absolute',
             left: 0,
             marginLeft: '40%',
+            marginBottom: 0
           }}
         >
-          v1.0.0
+          <a style={{ color: 'white', marginTop: '-15px', fontSize: 15, position: 'fixed' }}>
+            v1.0.0
+          </a>
+          <br></br>
+          <a style={{ color: 'grey', marginTop: '-15px', fontSize: 10, position: 'fixed', marginLeft: -43 }}>
+            <a
+              style={{ color: 'grey' }}
+              href="https://github.com/saturnavt"
+              target="_blank"
+            >
+              Created by Illud (Colombia)
+            </a>
+          </a>
         </div>
+
       </Drawer>
       <Container className="Container">
         <br></br>
