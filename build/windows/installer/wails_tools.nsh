@@ -8,7 +8,7 @@
     !define INFO_PROJECTNAME "cronos"
 !endif
 !ifndef INFO_COMPANYNAME
-    !define INFO_COMPANYNAME "Saturnavt"
+    !define INFO_COMPANYNAME "Illud"
 !endif
 !ifndef INFO_PRODUCTNAME
     !define INFO_PRODUCTNAME "Cronos"
