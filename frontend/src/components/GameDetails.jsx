@@ -155,12 +155,12 @@ function GameDetails() {
       setPlayedHoursWeek(
         secondsToHours(
           result.countOne +
-          result.countTwo +
-          result.countThree +
-          result.countFour +
-          result.countFive +
-          result.countSix +
-          result.countSeven,
+            result.countTwo +
+            result.countThree +
+            result.countFour +
+            result.countFive +
+            result.countSix +
+            result.countSeven,
         ),
       )
     })
@@ -375,19 +375,26 @@ function GameDetails() {
             marginLeft: '40%',
           }}
         >
-          <a style={{ color: 'white', marginTop: '-10px', fontSize: 15, position: 'fixed' }}>
+          <a
+            style={{
+              color: 'white',
+              marginTop: '3px',
+              fontSize: 15,
+              position: 'fixed',
+            }}
+          >
             v1.0.0
           </a>
           <br></br>
-          <a style={{ color: 'grey', marginTop: '-15px', fontSize: 10, position: 'fixed', marginLeft: -43, fontFamily: 'cursive' }}>
+          {/* <a style={{ color: 'grey', marginTop: '-15px', fontSize: 10, position: 'fixed', marginLeft: -43, fontFamily: 'cursive' }}>
             <a
               style={{ color: 'grey' }}
               href="https://github.com/illud"
               target="_blank"
             >
-              Created By Illud (Colombia)
+              Created By
             </a>
-          </a>
+          </a> */}
         </div>
       </Drawer>
       <Container className="Container">

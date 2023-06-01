@@ -4,7 +4,7 @@ import React, { useEffect } from 'react'
 import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar'
 
 function SideMenu() {
-  useEffect(() => { }, [])
+  useEffect(() => {}, [])
 
   return (
     <ProSidebar>

@@ -17,13 +17,7 @@ import './i18n'
 
 function App() {
   const randomImage = () => {
-    const imgArray = [
-      deathloop,
-      mh,
-      dishonored_2,
-      katalyzt,
-      csgo,
-    ]
+    const imgArray = [deathloop, mh, dishonored_2, katalyzt, csgo]
 
     return imgArray[Math.floor(Math.random() * imgArray.length)]
   }

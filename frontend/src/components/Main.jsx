@@ -107,12 +107,9 @@ function Main() {
     localStorage.setItem('gameName', gameName)
     localStorage.setItem('gameId', id)
 
-    setTimeout(
-      function () {
-        history.push('/GameDetails')
-      },
-      1000,
-    )
+    setTimeout(function () {
+      history.push('/GameDetails')
+    }, 1000)
   }
 
   const handleSearchBtn = async (gameName) => {
@@ -247,7 +244,12 @@ function Main() {
     }
   }
 
-  const goToGameDetails = async (gameExecutable, gamePath, gameName, gameId) => {
+  const goToGameDetails = async (
+    gameExecutable,
+    gamePath,
+    gameName,
+    gameId,
+  ) => {
     localStorage.setItem('gameExecutable', gameExecutable)
     localStorage.setItem('gamePath', gamePath)
     localStorage.setItem('gameName', gameName)
@@ -485,24 +487,30 @@ function Main() {
             position: 'absolute',
             left: 0,
             marginLeft: '40%',
-            marginBottom: 0
+            marginBottom: 0,
           }}
         >
-          <a style={{ color: 'white', marginTop: '-10px', fontSize: 15, position: 'fixed' }}>
+          <a
+            style={{
+              color: 'white',
+              marginTop: '3px',
+              fontSize: 15,
+              position: 'fixed',
+            }}
+          >
             v1.0.0
           </a>
           <br></br>
-          <a style={{ color: 'grey', marginTop: '-15px', fontSize: 10, position: 'fixed', marginLeft: -43, fontFamily: 'cursive' }}>
+          {/* <a style={{ color: 'grey', marginTop: '-15px', fontSize: 10, position: 'fixed', marginLeft: -43, fontFamily: 'cursive' }}>
             <a
               style={{ color: 'grey' }}
               href="https://github.com/illud"
               target="_blank"
             >
-              Created By Illud (Colombia)
+              Created By
             </a>
-          </a>
+          </a> */}
         </div>
-
       </Drawer>
       <Container className="Container">
         <br></br>
@@ -516,7 +524,7 @@ function Main() {
               marginLeft: '0px',
               background: 'rgba(0, 0, 0, 0.5)',
               borderColor: 'white',
-              borderRadius: '0px'
+              borderRadius: '0px',
             }}
             onClick={() => handleModalCreate()}
           >
@@ -530,7 +538,7 @@ function Main() {
               marginLeft: '5px',
               background: 'rgba(0, 0, 0, 0.5)',
               borderColor: 'white',
-              borderRadius: '0px'
+              borderRadius: '0px',
             }}
             onClick={() => handleFindAll()}
           >
@@ -550,7 +558,7 @@ function Main() {
               borderColor: 'white',
               width: '40%',
               height: '43px',
-              borderRadius: '0px'
+              borderRadius: '0px',
             }}
             placeholder={t('searchGame')}
             onChange={(e) => handleSearch(e.target.value)}
@@ -585,7 +593,7 @@ function Main() {
                       borderColor: 'transparent',
                       position: 'absolute',
                       top: '45%',
-                      borderRadius: '0px'
+                      borderRadius: '0px',
                     }}
                     onClick={() =>
                       goToGameDetails(
@@ -699,11 +707,11 @@ function Main() {
                           color: 'white',
                           borderColor: 'white',
                           width: '100%',
-                          borderRadius: '0px'
+                          borderRadius: '0px',
                         }}
-                      // onClick={() =>
-                      //   handlePlay(app.Executable, app.Path, app.Id)
-                      // }
+                        // onClick={() =>
+                        //   handlePlay(app.Executable, app.Path, app.Id)
+                        // }
                       >
                         <DeviceGamepad
                           size={30}
@@ -773,7 +781,7 @@ function Main() {
                   background: '#212121',
                   borderColor: 'grey',
                   color: 'white',
-                  borderRadius: '0px'
+                  borderRadius: '0px',
                 }}
                 placeholder={t('enterGameName')}
                 onChange={(value) => setName(value.target.value)}
@@ -800,7 +808,7 @@ function Main() {
                   background: 'transparent',
                   borderColor: 'white',
                   width: '100%',
-                  borderRadius: '0px'
+                  borderRadius: '0px',
                 }}
                 onClick={() => handleFindFile()}
               >
@@ -859,7 +867,7 @@ function Main() {
                   background: 'transparent',
                   color: 'white',
                   borderColor: 'white',
-                  borderRadius: '0px'
+                  borderRadius: '0px',
                 }}
                 onClick={() => handleCreate()}
               >
@@ -899,7 +907,7 @@ function Main() {
                   background: '#212121',
                   borderColor: 'grey',
                   color: 'white',
-                  borderRadius: '0px'
+                  borderRadius: '0px',
                 }}
                 placeholder={t('enterGameName')}
                 onChange={(value) => setName(value.target.value)}
@@ -926,7 +934,7 @@ function Main() {
                   background: 'transparent',
                   borderColor: 'white',
                   width: '100%',
-                  borderRadius: '0px'
+                  borderRadius: '0px',
                 }}
                 onClick={() => handleFindFile()}
               >
@@ -965,7 +973,7 @@ function Main() {
                 background: 'transparent',
                 color: 'white',
                 borderColor: 'white',
-                borderRadius: '0px'
+                borderRadius: '0px',
               }}
               onClick={() => setModalEditShow(false)}
             >
@@ -976,7 +984,7 @@ function Main() {
                 background: 'transparent',
                 color: 'white',
                 borderColor: 'white',
-                borderRadius: '0px'
+                borderRadius: '0px',
               }}
               onClick={() => handleUpdate()}
             >
@@ -991,7 +999,7 @@ function Main() {
           size="lg"
           aria-labelledby="contained-modal-title-vcenter"
           centered
-        // style={{ opacity: 0.9, borderColor: 'transparent' }}
+          // style={{ opacity: 0.9, borderColor: 'transparent' }}
         >
           <Modal.Header
             closeButton
@@ -1022,7 +1030,7 @@ function Main() {
                 background: 'transparent',
                 color: 'white',
                 borderColor: 'white',
-                borderRadius: '0px'
+                borderRadius: '0px',
               }}
               onClick={() => setModalDeleteShow(false)}
             >
@@ -1033,7 +1041,7 @@ function Main() {
                 background: 'transparent',
                 color: 'white',
                 borderColor: 'white',
-                borderRadius: '0px'
+                borderRadius: '0px',
               }}
               onClick={() => handleDelete()}
             >
