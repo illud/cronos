@@ -4,8 +4,8 @@ go 1.17
 
 require (
 	github.com/robfig/cron/v3 v3.0.1
-	github.com/saturnavt/howlongtobeat v0.0.0-20220914224910-02744dbb178b
-	github.com/saturnavt/pcspecs v0.0.0-20221108230916-f76c927ec5f8
+	github.com/illud/howlongtobeat v0.0.0-20220914224910-02744dbb178b
+	github.com/illud/pcspecs v0.0.0-20221108230916-f76c927ec5f8
 	github.com/shirou/gopsutil v3.21.11+incompatible
 	github.com/wailsapp/wails/v2 v2.0.0-beta.44.2
 	gorm.io/driver/sqlite v1.3.4
