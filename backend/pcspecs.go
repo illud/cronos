@@ -1,7 +1,7 @@
 package backend
 
 import (
-	pcs "github.com/saturnavt/pcspecs"
+	pcs "github.com/illud/pcspecs"
 )
 
 // SysInfo gets system information

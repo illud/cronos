@@ -11,8 +11,8 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/illud/howlongtobeat"
 	"github.com/robfig/cron/v3"
-	"github.com/saturnavt/howlongtobeat"
 	"github.com/shirou/gopsutil/process"
 	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
